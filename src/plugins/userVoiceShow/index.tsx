@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2023 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -51,7 +51,7 @@ export default definePlugin({
     name: "UserVoiceShow",
     description: "Shows an indicator when a user is in a Voice Channel",
     tags: ["Voice", "Appearance", "Friends"],
-    authors: [Devs.Nuckyz, Devs.LordElias],
+    authors: [Devs.o0],
     dependencies: ["MemberListDecoratorsAPI", "MessageDecorationsAPI"],
     settings,
 

@@ -1,9 +1,9 @@
-﻿/* eslint-disable simple-header/header */
+/* eslint-disable simple-header/header */
 
 /*!
  * BetterDiscord addon meta parser
  * Copyright 2023 BetterDiscord contributors
- * Copyright 2023 Vendicated and Gambcord contributors
+ * Copyright 2023 Vendicated and Gambo contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.

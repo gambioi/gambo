@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2024 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -38,7 +38,7 @@ export default definePlugin({
     name: "StreamerModeOnStream",
     description: "Automatically enables streamer mode when you start streaming in Discord",
     tags: ["Privacy", "Utility"],
-    authors: [Devs.IcedMarina],
+    authors: [Devs.o0],
     flux: {
         STREAM_CREATE: d => toggleStreamerMode(d, true),
         STREAM_DELETE: d => toggleStreamerMode(d, false)

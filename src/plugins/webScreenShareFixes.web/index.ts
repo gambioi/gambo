@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a Discord client mod
+/*
+ * Gambo, a Discord client mod
  * Copyright (c) 2024 Vendicated and contributors
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
@@ -9,7 +9,7 @@ import definePlugin from "@utils/types";
 
 export default definePlugin({
     name: "WebScreenShareFixes",
-    authors: [Devs.Kaitlyn],
+    authors: [Devs.o0],
     description: "Removes 2500kbps bitrate cap on chromium and vesktop clients.",
     tags: ["Voice"],
     enabledByDefault: true,

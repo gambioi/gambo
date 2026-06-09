@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2022 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -23,7 +23,7 @@ export default definePlugin({
     name: "NoOnboardingDelay",
     description: "Skips the slow and annoying onboarding delay",
     tags: ["Utility", "Servers"],
-    authors: [Devs.nekohaxx],
+    authors: [Devs.o0],
     patches: [
         {
             find: "#{intl::ONBOARDING_COVER_WELCOME_SUBTITLE}",

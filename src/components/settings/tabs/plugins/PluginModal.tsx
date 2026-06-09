@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2022 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -24,13 +24,13 @@ import { useSettings } from "@api/Settings";
 import { BaseText } from "@components/BaseText";
 import ErrorBoundary from "@components/ErrorBoundary";
 import { debounce } from "@shared/debounce";
-import { gitRemote } from "@shared/gambcordUserAgent";
+import { gitRemote } from "@shared/gamboUserAgent";
 import { classNameFactory } from "@utils/css";
 import { proxyLazy } from "@utils/lazy";
 import { Margins } from "@utils/margins";
 import { classes } from "@utils/misc";
 import { OptionType, Plugin, PluginTag } from "@utils/types";
-import { RenderModalProps, User } from "@gambcord/discord-types";
+import { RenderModalProps, User } from "@gambo/discord-types";
 import { findCssClassesLazy } from "@webpack";
 import { Clickable, FluxDispatcher, Forms, Modal,openModal, React, Text, Tooltip, useEffect, useMemo, UserStore, UserSummaryItem, UserUtils, useState } from "@webpack/common";
 import { Constructor } from "type-fest";
@@ -178,7 +178,7 @@ export default function PluginModal({ plugin, onRestartNeeded, onClose, transiti
                         <div className="vc-settings-modal-links">
                             <WebsiteButton
                                 text="View more info"
-                                href={`https://gambcord.dev/plugins/${plugin.name}`}
+                                href={`https://gambo.dev/plugins/${plugin.name}`}
                             />
                             <GithubButton
                                 text="View source code"

@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2023 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,7 +22,7 @@ import { Button, MediaEngineStore, showToast, Toasts, useState } from "@webpack/
 import type { VoiceRecorder } from ".";
 import { settings } from "./settings";
 
-const Native = GambcordNative.pluginHelpers.VoiceMessages as PluginNative<typeof import("./native")>;
+const Native = GamboNative.pluginHelpers.VoiceMessages as PluginNative<typeof import("./native")>;
 
 export const VoiceRecorderDesktop: VoiceRecorder = ({ setAudioBlob, onRecordingChange }) => {
     const [recording, setRecording] = useState(false);

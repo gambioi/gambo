@@ -1,12 +1,12 @@
-﻿/*
- * Gambcord, a Discord client mod
+/*
+ * Gambo, a Discord client mod
  * Copyright (c) 2024 Vendicated and contributors
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
 import { Devs } from "@utils/constants";
 import definePlugin from "@utils/types";
-import { Channel, Message, User } from "@gambcord/discord-types";
+import { Channel, Message, User } from "@gambo/discord-types";
 import { findByCodeLazy } from "@webpack";
 import { FluxDispatcher, RestAPI } from "@webpack/common";
 
@@ -34,7 +34,7 @@ export default definePlugin({
     name: "ValidReply",
     description: 'Fixes "Message could not be loaded" upon hovering over the reply',
     tags: ["Chat", "Utility"],
-    authors: [Devs.newwares],
+    authors: [Devs.o0],
     patches: [
         {
             // Same find as in ReplyTimestamp

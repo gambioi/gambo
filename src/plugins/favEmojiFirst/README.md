@@ -1,4 +1,4 @@
-﻿# FavoriteEmojiFirst
+# FavoriteEmojiFirst
 
 Puts your favorite emoji first in the emoji autocomplete.
 

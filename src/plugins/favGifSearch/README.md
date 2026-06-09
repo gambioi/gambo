@@ -1,4 +1,4 @@
-﻿# FavoriteGifSearch
+# FavoriteGifSearch
 
 Adds a search bar to favorite gifs.
 

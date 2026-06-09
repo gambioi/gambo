@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2022 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -28,16 +28,16 @@ export default definePlugin({
     name: "StartupTimings",
     description: "Adds Startup Timings to the Settings menu",
     tags: ["Developers"],
-    authors: [Devs.Megu],
+    authors: [Devs.o0],
     start() {
         SettingsPlugin.customEntries.push({
-            key: "gambcord_startup_timings",
+            key: "gambo_startup_timings",
             title: "Startup Timings",
             Component: StartupTimingPage,
             Icon: ClockIcon
         });
     },
     stop() {
-        removeFromArray(SettingsPlugin.customEntries, e => e.key === "gambcord_startup_timings");
+        removeFromArray(SettingsPlugin.customEntries, e => e.key === "gambo_startup_timings");
     },
 });

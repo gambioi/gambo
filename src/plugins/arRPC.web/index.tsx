@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2022 OpenAsar
  *
  * This program is free software: you can redistribute it and/or modify
@@ -41,7 +41,7 @@ export default definePlugin({
     name: "WebRichPresence (arRPC)",
     description: "Client plugin for arRPC to enable RPC on Discord Web (experimental)",
     tags: ["Activity", "Utility"],
-    authors: [Devs.Ducko],
+    authors: [Devs.o0],
     reporterTestable: ReporterTestable.None,
     hidden: IS_VESKTOP || "legcord" in window,
 

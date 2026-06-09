@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2023 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -26,8 +26,8 @@ import { TooltipContainer } from "@components/TooltipContainer";
 import { Devs } from "@utils/constants";
 import { classes } from "@utils/misc";
 import definePlugin, { OptionType } from "@utils/types";
-import type { Guild, RoleOrUserPermission } from "@gambcord/discord-types";
-import { PermissionOverwriteType } from "@gambcord/discord-types/enums";
+import type { Guild, RoleOrUserPermission } from "@gambo/discord-types";
+import { PermissionOverwriteType } from "@gambo/discord-types/enums";
 import { findCssClassesLazy } from "@webpack";
 import { Button, ChannelStore, Dialog, GuildMemberStore, GuildRoleStore, GuildStore, match, Menu, PermissionsBits, Popout, useEffect, useRef, UserStore } from "@webpack/common";
 
@@ -161,7 +161,7 @@ export default definePlugin({
     name: "PermissionsViewer",
     description: "View the permissions a user or channel has, and the roles of a server",
     tags: ["Servers", "Roles", "Utility"],
-    authors: [Devs.Nuckyz, Devs.Ven],
+    authors: [Devs.o0],
     settings,
 
     patches: [

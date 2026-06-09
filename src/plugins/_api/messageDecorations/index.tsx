@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2022 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -24,7 +24,7 @@ import managedStyle from "./style.css?managed";
 export default definePlugin({
     name: "MessageDecorationsAPI",
     description: "API to add decorations to messages",
-    authors: [Devs.TheSun],
+    authors: [Devs.o0],
 
     managedStyle,
 
@@ -33,7 +33,7 @@ export default definePlugin({
             find: "#{intl::GUILD_COMMUNICATION_DISABLED_ICON_TOOLTIP_BODY}",
             replacement: {
                 match: /#{intl::GUILD_COMMUNICATION_DISABLED_BOTTOM_SHEET_TITLE}.+?renderPopout:.+?(?=\])/,
-                replace: "$&,Gambcord.Api.MessageDecorations.__addDecorationsToMessage(arguments[0])"
+                replace: "$&,Gambo.Api.MessageDecorations.__addDecorationsToMessage(arguments[0])"
             }
         }
     ]

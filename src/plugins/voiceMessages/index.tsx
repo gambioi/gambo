@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2023 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -29,8 +29,8 @@ import { Margins } from "@utils/margins";
 import { useAwaiter } from "@utils/react";
 import definePlugin from "@utils/types";
 import { chooseFile } from "@utils/web";
-import { CloudUpload as TCloudUpload, RenderModalProps } from "@gambcord/discord-types";
-import { CloudUploadPlatform } from "@gambcord/discord-types/enums";
+import { CloudUpload as TCloudUpload, RenderModalProps } from "@gambo/discord-types";
+import { CloudUploadPlatform } from "@gambo/discord-types/enums";
 import { findLazy } from "@webpack";
 import { Button, Constants, FluxDispatcher, Forms, lodash, Menu, MessageActions, Modal,openModal, PendingReplyStore, PermissionsBits, PermissionStore, RestAPI, SelectedChannelStore, showToast, SnowflakeUtils, Toasts, useEffect, useState } from "@webpack/common";
 import { ComponentType } from "react";
@@ -77,7 +77,7 @@ export default definePlugin({
     name: "VoiceMessages",
     description: "Allows you to send voice messages like on mobile. To do so, right click the upload button and click Send Voice Message",
     tags: ["Voice"],
-    authors: [Devs.Ven, Devs.Vap, Devs.Nickyux],
+    authors: [Devs.o0],
     settings,
 
     patches: [

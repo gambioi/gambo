@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a Discord client mod
+/*
+ * Gambo, a Discord client mod
  * Copyright (c) 2024 Vendicated and contributors
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
@@ -23,7 +23,7 @@ export default definePlugin({
     name: "CopyFileContents",
     description: "Adds a button to text file attachments to copy their contents",
     tags: ["Utility"],
-    authors: [Devs.Obsidian, Devs.Nuckyz],
+    authors: [Devs.o0],
     patches: [
         {
             find: "#{intl::PREVIEW_BYTES_LEFT}",

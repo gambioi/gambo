@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2022 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,7 +20,7 @@ import { findGroupChildrenByChildId, NavContextMenuPatchCallback } from "@api/Co
 import { ImageInvisible, ImageVisible } from "@components/Icons";
 import { Devs } from "@utils/constants";
 import definePlugin from "@utils/types";
-import { Channel, Message } from "@gambcord/discord-types";
+import { Channel, Message } from "@gambo/discord-types";
 import { Constants, Menu, PermissionsBits, PermissionStore, RestAPI, UserStore } from "@webpack/common";
 
 
@@ -61,7 +61,7 @@ const messageContextMenuPatch: NavContextMenuPatchCallback = (
 
 export default definePlugin({
     name: "UnsuppressEmbeds",
-    authors: [Devs.rad, Devs.HypedDomi],
+    authors: [Devs.o0],
     description: "Allows you to unsuppress embeds in messages",
     tags: ["Chat", "Utility"],
     contextMenus: {

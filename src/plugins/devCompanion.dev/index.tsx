@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2023 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -174,7 +174,7 @@ function initWs(isManual = false) {
 
                     try {
                         const matcher = canonicalizeMatch(parseNode(match));
-                        const replacement = canonicalizeReplace(parseNode(replace), 'Gambcord.Plugins.plugins["PlaceHolderPluginName"]');
+                        const replacement = canonicalizeReplace(parseNode(replace), 'Gambo.Plugins.plugins["PlaceHolderPluginName"]');
 
                         const newSource = src.replace(matcher, replacement as string);
 
@@ -247,7 +247,7 @@ export default definePlugin({
     name: "DevCompanion",
     description: "Dev Companion Plugin",
     tags: ["Developers", "Utility"],
-    authors: [Devs.Ven],
+    authors: [Devs.o0],
     reporterTestable: ReporterTestable.None,
     settings,
 

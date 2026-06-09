@@ -1,4 +1,4 @@
-﻿# CustomIdle
+# CustomIdle
 
 Lets you change the time until your status gets automatically set to idle. You can also prevent idling altogether.
 

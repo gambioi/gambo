@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a Discord client mod
+/*
+ * Gambo, a Discord client mod
  * Copyright (c) 2024 Vendicated and contributors
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
@@ -30,7 +30,7 @@ export default definePlugin({
     name: "CustomIdle",
     description: "Allows you to set the time before Discord goes idle (or disable auto-idle)",
     tags: ["Activity", "Customisation"],
-    authors: [Devs.newwares],
+    authors: [Devs.o0],
     settings,
     patches: [
         {

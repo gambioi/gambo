@@ -1,11 +1,11 @@
-﻿{
+{
     "manifest_version": 3,
     "minimum_chrome_version": "111",
 
-    "name": "Gambcord Web",
+    "name": "Gambo Web",
     "description": "The cutest Discord mod now in your browser",
     "author": "Vendicated",
-    "homepage_url": "https://github.com/Vendicated/Gambcord",
+    "homepage_url": "https://github.com/Vendicated/Gambo",
     "icons": {
         "128": "icon.png"
     },
@@ -28,7 +28,7 @@
         {
             "run_at": "document_start",
             "matches": ["*://*.discord.com/*"],
-            "js": ["dist/Gambcord.js"],
+            "js": ["dist/Gambo.js"],
             "all_frames": true,
             "world": "MAIN"
         }

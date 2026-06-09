@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2023 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -157,7 +157,7 @@ export default definePlugin({
     name: "ImageZoom",
     description: "Lets you zoom in to images and gifs. Use scroll wheel to zoom in and shift + scroll wheel to increase lens radius / size",
     tags: ["Media", "Utility"],
-    authors: [Devs.Aria],
+    authors: [Devs.o0],
     searchTerms: ["ImageUtilities"],
 
     managedStyle,

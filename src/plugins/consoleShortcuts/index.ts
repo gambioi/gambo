@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2022 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -106,8 +106,8 @@ function makeShortcuts() {
         wp: Webpack,
         wpc: { getter: () => Webpack.cache },
         wreq: { getter: () => Webpack.wreq },
-        wpPatcher: { getter: () => Gambcord.WebpackPatcher },
-        wpInstances: { getter: () => Gambcord.WebpackPatcher.allWebpackInstances },
+        wpPatcher: { getter: () => Gambo.WebpackPatcher },
+        wpInstances: { getter: () => Gambo.WebpackPatcher.allWebpackInstances },
         wpsearch: search,
         wpex: extract,
         wpexs: (code: string) => extract(findModuleId(code)!),
@@ -123,11 +123,11 @@ function makeShortcuts() {
         findAllComponentsByCode: (...code: string[]) => findAll(filters.componentByCode(...code)),
         findExportedComponent: (...props: string[]) => findByProps(...props)[props[0]],
         findStore: findStoreWrapper(Webpack.findStore),
-        PluginsApi: { getter: () => Gambcord.Plugins },
-        plugins: { getter: () => Gambcord.Plugins.plugins },
-        Settings: { getter: () => Gambcord.Settings },
-        Api: { getter: () => Gambcord.Api },
-        Util: { getter: () => Gambcord.Util },
+        PluginsApi: { getter: () => Gambo.Plugins },
+        plugins: { getter: () => Gambo.Plugins.plugins },
+        Settings: { getter: () => Gambo.Settings },
+        Api: { getter: () => Gambo.Api },
+        Util: { getter: () => Gambo.Util },
         reload: () => location.reload(),
         restart: IS_WEB ? DESKTOP_ONLY("restart") : relaunch,
         canonicalizeMatch,
@@ -153,7 +153,7 @@ function makeShortcuts() {
 
                     if (s.parentElement?.tagName === "HEAD")
                         doc.head.append(n);
-                    else if (n.id?.startsWith("gambcord-") || n.id?.startsWith("vcd-"))
+                    else if (n.id?.startsWith("gambo-") || n.id?.startsWith("vcd-"))
                         doc.documentElement.append(n);
                     else
                         doc.body.append(n);
@@ -166,7 +166,7 @@ function makeShortcuts() {
             doc.addEventListener("close", () => root.unmount(), { once: true });
         },
 
-        preEnable: (plugin: string) => (Gambcord.Settings.plugins[plugin] ??= { enabled: true }).enabled = true,
+        preEnable: (plugin: string) => (Gambo.Settings.plugins[plugin] ??= { enabled: true }).enabled = true,
 
         channel: { getter: () => getCurrentChannel(), preload: false },
         channelId: { getter: () => Common.SelectedChannelStore.getChannelId(), preload: false },
@@ -203,8 +203,8 @@ function loadAndCacheShortcut(key: string, val: any, forceLoad: boolean) {
     function unwrapProxy(value: any) {
         if (value[SYM_LAZY_GET]) {
             forceLoad ? currentVal[SYM_LAZY_GET]() : currentVal[SYM_LAZY_CACHED];
-        } else if (value.$$gambcordGetWrappedComponent) {
-            return forceLoad ? value.$$gambcordGetWrappedComponent() : value;
+        } else if (value.$$gamboGetWrappedComponent) {
+            return forceLoad ? value.$$gamboGetWrappedComponent() : value;
         }
 
         return value;
@@ -241,7 +241,7 @@ const webpackModulesProbablyLoaded = Webpack.onceReady.then(() => sleep(1000));
 export default definePlugin({
     name: "ConsoleShortcuts",
     description: "Adds shorter Aliases for many things on the window. Run `shortcutList` for a list.",
-    authors: [Devs.Ven],
+    authors: [Devs.o0],
     tags: ["Developers", "Console", "Shortcuts", "Utility"],
     startAt: StartAt.Init,
 
@@ -281,7 +281,7 @@ export default definePlugin({
         this.eagerLoad(false);
 
         if (!IS_WEB) {
-            const Native = GambcordNative.pluginHelpers.ConsoleShortcuts as PluginNative<typeof import("./native")>;
+            const Native = GamboNative.pluginHelpers.ConsoleShortcuts as PluginNative<typeof import("./native")>;
             Native.initDevtoolsOpenEagerLoad();
         }
     },

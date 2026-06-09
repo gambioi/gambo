@@ -1,6 +1,6 @@
-﻿{
-    "name": "@gambcord/discord-types",
-    "author": "Gambcord Contributors",
+{
+    "name": "@gambo/discord-types",
+    "author": "Gambo Contributors",
     "private": false,
     "description": "Typescript definitions for the webpack modules of the Discord Web app",
     "version": "1.0.1",
@@ -9,7 +9,7 @@
     "type": "module",
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/Vendicated/Gambcord.git",
+        "url": "git+https://github.com/Vendicated/Gambo.git",
         "directory": "packages/discord-types"
     },
     "dependencies": {

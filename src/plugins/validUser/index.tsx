@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2023 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,7 +22,7 @@ import { isNonNullish } from "@utils/guards";
 import { sleep } from "@utils/misc";
 import { Queue } from "@utils/Queue";
 import definePlugin from "@utils/types";
-import { ProfileBadge } from "@gambcord/discord-types";
+import { ProfileBadge } from "@gambo/discord-types";
 import { Constants, FluxDispatcher, RestAPI, UserProfileStore, UserStore, useState } from "@webpack/common";
 import { type ComponentType, type ReactNode } from "react";
 
@@ -176,7 +176,7 @@ export default definePlugin({
     name: "ValidUser",
     description: "Fix mentions for unknown users showing up as '@unknown-user' (hover over a mention to fix it)",
     tags: ["Chat", "Utility"],
-    authors: [Devs.Ven, Devs.Dolfies],
+    authors: [Devs.o0],
     searchTerms: ["MentionCacheFix"],
 
     patches: [

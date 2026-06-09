@@ -1,4 +1,4 @@
-﻿# ReplaceGoogleSearch
+# ReplaceGoogleSearch
 
 Replaces the Google search with different Engines
 

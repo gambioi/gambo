@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2023 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,10 +18,10 @@
 
 import * as DataStore from "@api/DataStore";
 import { Settings } from "@api/Settings";
-import { openNotificationSettingsModal } from "@components/settings/tabs/gambcord/NotificationSettings";
+import { openNotificationSettingsModal } from "@components/settings/tabs/gambo/NotificationSettings";
 import { classNameFactory } from "@utils/css";
 import { useAwaiter } from "@utils/react";
-import { RenderModalProps } from "@gambcord/discord-types";
+import { RenderModalProps } from "@gambo/discord-types";
 import { ConfirmModal, Forms, ListScrollerThin, Modal,openModal, React, Timestamp, useEffect, useReducer, useState } from "@webpack/common";
 import { nanoid } from "nanoid";
 import type { DispatchWithoutAction } from "react";

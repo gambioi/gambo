@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a Discord client mod
+/*
+ * Gambo, a Discord client mod
  * Copyright (c) 2024 Vendicated and contributors
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
@@ -43,7 +43,7 @@ export default definePlugin({
     name: "AutoDNDWhilePlaying",
     description: "Automatically updates your online status (online, idle, dnd) when launching games",
     tags: ["Activity", "Utility"],
-    authors: [Devs.thororen],
+    authors: [Devs.o0],
     settings,
     flux: {
         RUNNING_GAMES_CHANGE({ games }) {

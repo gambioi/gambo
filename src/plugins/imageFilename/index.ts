@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a Discord client mod
+/*
+ * Gambo, a Discord client mod
  * Copyright (c) 2025 Vendicated and contributors
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
@@ -21,7 +21,7 @@ const settings = definePluginSettings({
 
 export default definePlugin({
     name: "ImageFilename",
-    authors: [Devs.Ven],
+    authors: [Devs.o0],
     description: "Display the file name of images & GIFs as a tooltip when hovering over them",
     tags: ["Media", "Utility"],
     settings,

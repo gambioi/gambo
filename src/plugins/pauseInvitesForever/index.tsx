@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2023 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -46,7 +46,7 @@ export default definePlugin({
     searchTerms: ["DisableInvitesForever"],
     description: "Brings back the option to pause invites indefinitely that stupit Discord removed.",
     tags: ["Servers"],
-    authors: [Devs.Dolfies, Devs.amia],
+    authors: [Devs.o0],
 
     patches: [
         {

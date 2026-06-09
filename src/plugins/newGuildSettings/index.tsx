@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2022 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -24,7 +24,7 @@ import { definePluginSettings } from "@api/Settings";
 import { CogWheel } from "@components/Icons";
 import { Devs } from "@utils/constants";
 import definePlugin, { OptionType } from "@utils/types";
-import { Guild } from "@gambcord/discord-types";
+import { Guild } from "@gambo/discord-types";
 import { findByCodeLazy, findByPropsLazy, mapMangledModuleLazy } from "@webpack";
 import { Menu, UserStore } from "@webpack/common";
 
@@ -120,7 +120,7 @@ export default definePlugin({
     description: "Automatically mute new servers and change various other settings upon joining",
     tags: ["Servers", "Customisation"],
     searchTerms: ["MuteNewGuild", "mute", "server"],
-    authors: [Devs.Glitch, Devs.Nuckyz, Devs.carince, Devs.Mopi, Devs.GabiRP],
+    authors: [Devs.o0],
     contextMenus: {
         "guild-context": makeContextMenuPatch(false),
         "guild-header-popout": makeContextMenuPatch(true)

@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a Discord client mod
+/*
+ * Gambo, a Discord client mod
  * Copyright (c) 2025 Vendicated and contributors
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
@@ -19,7 +19,7 @@ const settings = definePluginSettings({
 export default definePlugin({
     name: "MoreQuickReactions",
     description: "Increases the number of reactions available in the Quick React hover menu",
-    authors: [Devs.iamme],
+    authors: [Devs.o0],
     tags: ["Emotes", "Reactions", "Customisation", "Shortcuts"],
     settings,
 

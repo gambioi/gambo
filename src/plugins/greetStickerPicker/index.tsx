@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2023 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,7 +19,7 @@
 import { definePluginSettings } from "@api/Settings";
 import { Devs } from "@utils/constants";
 import definePlugin, { OptionType } from "@utils/types";
-import { Channel, Message } from "@gambcord/discord-types";
+import { Channel, Message } from "@gambo/discord-types";
 import { ContextMenuApi, FluxDispatcher, Menu, MessageActions } from "@webpack/common";
 
 enum GreetMode {
@@ -153,7 +153,7 @@ export default definePlugin({
     name: "GreetStickerPicker",
     description: "Allows you to use any greet sticker instead of only the random one by right-clicking the 'Wave to say hi!' button",
     tags: ["Emotes", "Customisation"],
-    authors: [Devs.Ven],
+    authors: [Devs.o0],
 
     settings,
 

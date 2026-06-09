@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2023 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -24,7 +24,7 @@ import { Devs } from "@utils/constants";
 import { isNonNullish } from "@utils/guards";
 import { Logger } from "@utils/Logger";
 import definePlugin from "@utils/types";
-import { Channel, User } from "@gambcord/discord-types";
+import { Channel, User } from "@gambo/discord-types";
 import { findByPropsLazy, findCssClassesLazy } from "@webpack";
 import { Avatar, ChannelStore, Clickable, IconUtils, RelationshipStore, ScrollerThin, Text, useMemo, UserStore } from "@webpack/common";
 import { ComponentType, JSX } from "react";
@@ -88,7 +88,7 @@ export default definePlugin({
     name: "MutualGroupDMs",
     description: "Shows mutual group dms in profiles",
     tags: ["Friends", "Appearance"],
-    authors: [Devs.amia],
+    authors: [Devs.o0],
 
     patches: [
         // User Profile Modal

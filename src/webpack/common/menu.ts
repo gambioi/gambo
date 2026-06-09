@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2023 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,7 +16,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import type * as t from "@gambcord/discord-types";
+import type * as t from "@gambo/discord-types";
 import { filters, mapMangledModuleLazy, waitFor } from "@webpack";
 
 export const Menu = {} as t.Menu;

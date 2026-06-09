@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a Discord client mod
+/*
+ * Gambo, a Discord client mod
  * Copyright (c) 2026 Vendicated and contributors
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
@@ -11,7 +11,7 @@ import { setColorPicker, setCreateScroller } from "@webpack/common";
 export default definePlugin({
     name: "ConcatenatedComponentExtractor",
     description: "Extract components that have been concatenated by the bundler",
-    authors: [Devs.sadan],
+    authors: [Devs.o0],
 
     required: true,
 

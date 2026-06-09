@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2022 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -52,7 +52,7 @@ export default definePlugin({
     name: "SpotifyControls",
     description: "Adds a Spotify player above the account panel",
     tags: ["Media", "Activity"],
-    authors: [Devs.Ven, Devs.afn, Devs.KraXen72, Devs.Av32000, Devs.nin0dev],
+    authors: [Devs.o0],
     settings,
     patches: [
         {
@@ -60,8 +60,8 @@ export default definePlugin({
             replacement: {
                 // react.jsx)(AccountPanel, { ..., showTaglessAccountPanel: blah })
                 match: /(?<=\i\.jsxs?\)\()(\i),{(?=[^}]*?userTag:\i,occluded:)/,
-                // react.jsx(WrapperComponent, { GambcordOriginal: AccountPanel, ...
-                replace: "$self.PanelWrapper,{GambcordOriginal:$1,"
+                // react.jsx(WrapperComponent, { GamboOriginal: AccountPanel, ...
+                replace: "$self.PanelWrapper,{GamboOriginal:$1,"
             }
         },
         {
@@ -96,7 +96,7 @@ export default definePlugin({
 
     start: () => toggleHoverControls(settings.store.hoverControls),
 
-    PanelWrapper({ GambcordOriginal, ...props }) {
+    PanelWrapper({ GamboOriginal, ...props }) {
         return (
             <>
                 <ErrorBoundary
@@ -110,7 +110,7 @@ export default definePlugin({
                     <Player />
                 </ErrorBoundary>
 
-                <GambcordOriginal {...props} />
+                <GamboOriginal {...props} />
             </>
         );
     }

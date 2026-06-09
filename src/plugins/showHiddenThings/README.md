@@ -1,4 +1,4 @@
-﻿# ShowHiddenThings
+# ShowHiddenThings
 
 Displays various hidden & moderator-only things regardless of permissions.
 

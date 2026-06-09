@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2022 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -53,7 +53,7 @@ function patchLatest() {
 
         if (!existsSync(app) || statSync(app).isDirectory()) return;
 
-        console.info("[Gambcord] Detected Host Update. Repatching...");
+        console.info("[Gambo] Detected Host Update. Repatching...");
 
         renameSync(app, _app);
         mkdirSync(app);
@@ -63,7 +63,7 @@ function patchLatest() {
         }));
         writeFileSync(join(app, "index.js"), `require(${JSON.stringify(join(__dirname, "patcher.js"))});`);
     } catch (err) {
-        console.error("[Gambcord] Failed to repatch latest host update", err);
+        console.error("[Gambo] Failed to repatch latest host update", err);
     }
 }
 

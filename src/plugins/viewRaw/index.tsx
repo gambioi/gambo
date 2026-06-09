@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2022 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -26,7 +26,7 @@ import { copyWithToast, getCurrentGuild, getIntlMessage } from "@utils/discord";
 import { isTruthy } from "@utils/guards";
 import { Margins } from "@utils/margins";
 import definePlugin, { IconComponent, OptionType } from "@utils/types";
-import { Message } from "@gambcord/discord-types";
+import { Message } from "@gambo/discord-types";
 import { ChannelStore, Forms, GuildRoleStore, Menu, Modal,openModal } from "@webpack/common";
 
 
@@ -176,7 +176,7 @@ export default definePlugin({
     name: "ViewRaw",
     description: "Copy and view the raw content/data of any message, channel or guild",
     tags: ["Chat", "Developers"],
-    authors: [Devs.KingFish, Devs.Ven, Devs.rad, Devs.ImLvna],
+    authors: [Devs.o0],
     settings,
 
     contextMenus: {

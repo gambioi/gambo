@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2023 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,7 +18,7 @@
 
 import { Devs } from "@utils/constants";
 import definePlugin from "@utils/types";
-import { Emoji } from "@gambcord/discord-types";
+import { Emoji } from "@gambo/discord-types";
 import { EmojiStore } from "@webpack/common";
 
 interface EmojiAutocompleteState {
@@ -35,7 +35,7 @@ interface EmojiAutocompleteState {
 
 export default definePlugin({
     name: "FavoriteEmojiFirst",
-    authors: [Devs.Aria, Devs.Ven],
+    authors: [Devs.o0],
     description: "Puts your favorite emoji first in the emoji autocomplete.",
     tags: ["Emotes", "Customisation"],
     patches: [

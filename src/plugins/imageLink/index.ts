@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a Discord client mod
+/*
+ * Gambo, a Discord client mod
  * Copyright (c) 2024 Vendicated and contributors
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
@@ -11,7 +11,7 @@ export default definePlugin({
     name: "ImageLink",
     description: "Never hide image links in messages, even if it's the only content",
     tags: ["Media", "Appearance"],
-    authors: [Devs.Kyuuhachi, Devs.Sqaaakoi],
+    authors: [Devs.o0],
 
     patches: [
         {

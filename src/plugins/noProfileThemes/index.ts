@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2023 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -24,7 +24,7 @@ export default definePlugin({
     name: "NoProfileThemes",
     description: "Completely removes Nitro profile themes from everyone but yourself",
     tags: ["Appearance"],
-    authors: [Devs.TheKodeToad],
+    authors: [Devs.o0],
     patches: [
         {
             find: "hasThemeColors(){",

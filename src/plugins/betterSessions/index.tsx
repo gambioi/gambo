@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2023 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -53,7 +53,7 @@ const settings = definePluginSettings({
 export default definePlugin({
     name: "BetterSessions",
     description: "Enhances the sessions (devices) menu. Allows you to view exact timestamps, give each session a custom name, and receive notifications about new sessions.",
-    authors: [Devs.amia],
+    authors: [Devs.o0],
     tags: ["Notifications", "Customisation", "Utility"],
     settings: settings,
 

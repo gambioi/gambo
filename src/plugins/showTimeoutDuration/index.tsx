@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a Discord client mod
+/*
+ * Gambo, a Discord client mod
  * Copyright (c) 2024 Vendicated and contributors
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
@@ -13,7 +13,7 @@ import { Devs } from "@utils/constants";
 import { getIntlMessage } from "@utils/discord";
 import { canonicalizeMatch } from "@utils/patches";
 import definePlugin, { OptionType } from "@utils/types";
-import { Message } from "@gambcord/discord-types";
+import { Message } from "@gambo/discord-types";
 import { findComponentLazy } from "@webpack";
 import { ChannelStore, GuildMemberStore, Text } from "@webpack/common";
 import { ReactNode } from "react";
@@ -69,7 +69,7 @@ export default definePlugin({
     name: "ShowTimeoutDuration",
     description: "Shows how much longer a user's timeout will last, either in the timeout icon tooltip or next to it",
     tags: ["Servers", "Utility"],
-    authors: [Devs.Ven, Devs.Sqaaakoi],
+    authors: [Devs.o0],
 
     settings,
 

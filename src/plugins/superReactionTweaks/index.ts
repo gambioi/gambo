@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a Discord client mod
+/*
+ * Gambo, a Discord client mod
  * Copyright (c) 2023 Vendicated, ant0n, FieryFlames and contributors
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
@@ -38,7 +38,7 @@ export default definePlugin({
     name: "SuperReactionTweaks",
     description: "Customize the limit of Super Reactions playing at once, and super react by default",
     tags: ["Reactions", "Emotes"],
-    authors: [Devs.FieryFlames, Devs.ant0n],
+    authors: [Devs.o0],
     patches: [
         {
             find: ",BURST_REACTION_EFFECT_PLAY",

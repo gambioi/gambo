@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2022 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -92,7 +92,7 @@ export default definePlugin({
     name: "CustomCommands",
     description: "Allows you to create custom slash commands / tags",
     searchTerms: ["MessageTags"],
-    authors: [Devs.Ven, Devs.Luna,],
+    authors: [Devs.o0],
     tags: ["Commands", "Customisation", "Utility"],
     settings,
 

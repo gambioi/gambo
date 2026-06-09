@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2023 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -25,7 +25,7 @@ import { classNameFactory } from "@utils/css";
 import { getTheme, insertTextIntoChatInputBox, Theme } from "@utils/discord";
 import { Margins } from "@utils/margins";
 import definePlugin, { IconComponent, OptionType } from "@utils/types";
-import { RenderModalProps } from "@gambcord/discord-types";
+import { RenderModalProps } from "@gambo/discord-types";
 import { Forms, Modal,openModal, Parser, Select, useMemo, useState } from "@webpack/common";
 
 const settings = definePluginSettings({
@@ -154,7 +154,7 @@ export default definePlugin({
     name: "SendTimestamps",
     description: "Send timestamps easily via chat box button & text shortcuts. Read the extended description!",
     tags: ["Chat", "Commands"],
-    authors: [Devs.Ven, Devs.Tyler, Devs.Grzesiek11],
+    authors: [Devs.o0],
     settings,
 
     chatBarButton: {

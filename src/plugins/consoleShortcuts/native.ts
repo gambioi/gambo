@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a Discord client mod
+/*
+ * Gambo, a Discord client mod
  * Copyright (c) 2024 Vendicated and contributors
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
@@ -7,7 +7,7 @@
 import { IpcMainInvokeEvent } from "electron";
 
 export function initDevtoolsOpenEagerLoad(e: IpcMainInvokeEvent) {
-    const handleDevtoolsOpened = () => e.sender.executeJavaScript("Gambcord.Plugins.plugins.ConsoleShortcuts.eagerLoad(true)");
+    const handleDevtoolsOpened = () => e.sender.executeJavaScript("Gambo.Plugins.plugins.ConsoleShortcuts.eagerLoad(true)");
 
     if (e.sender.isDevToolsOpened())
         handleDevtoolsOpened();

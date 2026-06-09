@@ -1,10 +1,10 @@
-﻿/*
- * Gambcord, a Discord client mod
+/*
+ * Gambo, a Discord client mod
  * Copyright (c) 2026 Vendicated and contributors
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
-import * as t from "@gambcord/discord-types";
+import * as t from "@gambo/discord-types";
 import { filters, findByCodeLazy, findExportedComponentLazy, mapMangledModuleLazy } from "@webpack";
 
 export const Modal: t.Modal = findExportedComponentLazy("Modal");

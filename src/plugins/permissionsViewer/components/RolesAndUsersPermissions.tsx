@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2023 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -23,8 +23,8 @@ import { buildExtraRoleContextMenuItems } from "@plugins/betterRoleContext";
 import { cl, getGuildPermissionSpecMap, loadGetGuildPermissionSpecMap } from "@plugins/permissionsViewer/utils";
 import { copyToClipboard } from "@utils/clipboard";
 import { getIntlMessage, getUniqueUsername } from "@utils/discord";
-import { Guild, RenderModalProps, Role, RoleOrUserPermission, UnicodeEmoji, User } from "@gambcord/discord-types";
-import { PermissionOverwriteType } from "@gambcord/discord-types/enums";
+import { Guild, RenderModalProps, Role, RoleOrUserPermission, UnicodeEmoji, User } from "@gambo/discord-types";
+import { PermissionOverwriteType } from "@gambo/discord-types/enums";
 import { findByCodeLazy } from "@webpack";
 import { ContextMenuApi, FluxDispatcher, GuildMemberStore, GuildRoleStore, i18n, Menu, Modal,openModalLazy, PermissionsBits, ScrollerThin, Text, Tooltip, useEffect, useMemo, useRef, UserStore, useState, useStateFromStores } from "@webpack/common";
 

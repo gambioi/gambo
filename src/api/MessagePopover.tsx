@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2022 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,7 +19,7 @@
 import ErrorBoundary from "@components/ErrorBoundary";
 import { Logger } from "@utils/Logger";
 import { IconComponent } from "@utils/types";
-import { Channel, Message } from "@gambcord/discord-types";
+import { Channel, Message } from "@gambo/discord-types";
 import type { ComponentType, MouseEventHandler } from "react";
 
 import { useSettings } from "./Settings";
@@ -64,7 +64,7 @@ export function removeMessagePopoverButton(identifier: string) {
     MessagePopoverButtonMap.delete(identifier);
 }
 
-function GambcordPopoverButtons(props: { Component: React.ComponentType<MessagePopoverButtonItem>, message: Message; }) {
+function GamboPopoverButtons(props: { Component: React.ComponentType<MessagePopoverButtonItem>, message: Message; }) {
     const { Component, message } = props;
 
     const { messagePopoverButtons } = useSettings(["uiElements.messagePopoverButtons.*"]).uiElements;
@@ -95,5 +95,5 @@ export function _buildPopoverElements(
     Component: React.ComponentType<MessagePopoverButtonItem>,
     message: Message
 ) {
-    return <GambcordPopoverButtons Component={Component} message={message} />;
+    return <GamboPopoverButtons Component={Component} message={message} />;
 }

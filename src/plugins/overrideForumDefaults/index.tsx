@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a Discord client mod
+/*
+ * Gambo, a Discord client mod
  * Copyright (c) 2024 Vendicated and contributors
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
@@ -31,7 +31,7 @@ export default definePlugin({
     name: "OverrideForumDefaults",
     description: "Allows you to override default forum layout/sort order. you can still change it on a per-channel basis",
     tags: ["Servers", "Organisation", "Customisation"],
-    authors: [Devs.Inbestigator],
+    authors: [Devs.o0],
     patches: [
         {
             find: "getDefaultLayout(){",

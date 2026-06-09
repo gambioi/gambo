@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a Discord client mod
+/*
+ * Gambo, a Discord client mod
  * Copyright (c) 2023 Vendicated and contributors
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
@@ -28,7 +28,7 @@ export default definePlugin({
     name: "PermissionFreeWill",
     description: "Disables the client-side restrictions for channel permission management.",
     tags: ["Servers", "Roles"],
-    authors: [Devs.lewisakura],
+    authors: [Devs.o0],
 
     patches: [
         // Permission lockout, just set the check to true

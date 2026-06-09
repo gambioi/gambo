@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2022 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -38,7 +38,7 @@ const nameMap = {
 export default definePlugin({
     name: "ContextMenuAPI",
     description: "API for adding/removing items to/from context menus.",
-    authors: [Devs.Nuckyz, Devs.Ven, Devs.Kyuuhachi],
+    authors: [Devs.o0],
     required: true,
 
     patches: [
@@ -67,7 +67,7 @@ export default definePlugin({
                 // Patch the central context menu handler
                 {
                     match: /(?=let{navId:)(?<=function \i\((\i)\).+?)/,
-                    replace: "$1=Gambcord.Api.ContextMenu._usePatchContextMenu($1);"
+                    replace: "$1=Gambo.Api.ContextMenu._usePatchContextMenu($1);"
                 },
 
                 // Demangle Discord's Menu Item module

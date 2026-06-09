@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2023 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -26,7 +26,7 @@ import { resetLanguageDefaults, settings } from "./settings";
 
 export const cl = classNameFactory("vc-trans-");
 
-const Native = GambcordNative.pluginHelpers.Translate as PluginNative<typeof import("./native")>;
+const Native = GamboNative.pluginHelpers.Translate as PluginNative<typeof import("./native")>;
 
 interface GoogleData {
     translation: string;

@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2022 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,9 +20,9 @@ import { debounce } from "@shared/debounce";
 import { IpcEvents } from "@shared/IpcEvents";
 import { contextBridge, webFrame } from "electron/renderer";
 
-import GambcordNative, { invoke, sendSync } from "./GambcordNative";
+import GamboNative, { invoke, sendSync } from "./GamboNative";
 
-contextBridge.exposeInMainWorld("GambcordNative", GambcordNative);
+contextBridge.exposeInMainWorld("GamboNative", GamboNative);
 
 // Discord
 if (location.protocol !== "data:") {
@@ -35,7 +35,7 @@ if (location.protocol !== "data:") {
     }
 } // Monaco popout
 else {
-    contextBridge.exposeInMainWorld("setCss", debounce(GambcordNative.quickCss.set));
-    contextBridge.exposeInMainWorld("getCurrentCss", GambcordNative.quickCss.get);
-    contextBridge.exposeInMainWorld("getTheme", GambcordNative.quickCss.getEditorTheme);
+    contextBridge.exposeInMainWorld("setCss", debounce(GamboNative.quickCss.set));
+    contextBridge.exposeInMainWorld("getCurrentCss", GamboNative.quickCss.get);
+    contextBridge.exposeInMainWorld("getTheme", GamboNative.quickCss.getEditorTheme);
 }

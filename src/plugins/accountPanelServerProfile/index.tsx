@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a Discord client mod
+/*
+ * Gambo, a Discord client mod
  * Copyright (c) 2024 Vendicated and contributors
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
@@ -9,7 +9,7 @@ import ErrorBoundary from "@components/ErrorBoundary";
 import { Devs } from "@utils/constants";
 import { getCurrentChannel } from "@utils/discord";
 import definePlugin, { OptionType } from "@utils/types";
-import { User } from "@gambcord/discord-types";
+import { User } from "@gambo/discord-types";
 import { findComponentByCodeLazy } from "@webpack";
 import { ContextMenuApi, Menu } from "@webpack/common";
 
@@ -63,7 +63,7 @@ export default definePlugin({
     name: "AccountPanelServerProfile",
     description: "Right click your account panel in the bottom left to view your profile in the current server",
     tags: ["Appearance", "Servers"],
-    authors: [Devs.Nuckyz, Devs.relitrix],
+    authors: [Devs.o0],
     settings,
 
     patches: [
@@ -113,7 +113,7 @@ export default definePlugin({
         }
 
         const currentChannel = getCurrentChannel();
-        if (currentChannel?.getGuildId() == null || !UserProfile.$$gambcordGetWrappedComponent()) {
+        if (currentChannel?.getGuildId() == null || !UserProfile.$$gamboGetWrappedComponent()) {
             return originalRenderPopout();
         }
 

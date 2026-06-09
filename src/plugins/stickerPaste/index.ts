@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a Discord client mod
+/*
+ * Gambo, a Discord client mod
  * Copyright (c) 2024 Vendicated and contributors
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
@@ -11,7 +11,7 @@ export default definePlugin({
     name: "StickerPaste",
     description: "Makes picking a sticker in the sticker picker insert it into the chatbox instead of instantly sending",
     tags: ["Emotes", "Chat"],
-    authors: [Devs.ImBanana],
+    authors: [Devs.o0],
 
     patches: [
         {

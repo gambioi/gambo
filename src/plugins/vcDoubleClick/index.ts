@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2022 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -29,7 +29,7 @@ export default definePlugin({
     name: "VoiceChatDoubleClick",
     description: "Join voice chats via double click instead of single click",
     tags: ["Voice"],
-    authors: [Devs.Ven, Devs.D3SOX],
+    authors: [Devs.o0],
     patches: [
         // Stage Channels & Voice Channels
         // the find is for stage channels, but it also handles voice

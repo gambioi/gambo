@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2023 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,7 +20,7 @@ import { definePluginSettings } from "@api/Settings";
 import { Devs } from "@utils/constants";
 import { Logger } from "@utils/Logger";
 import definePlugin, { OptionType, PluginSettingDef } from "@utils/types";
-import { GuildMember, Role } from "@gambcord/discord-types";
+import { GuildMember, Role } from "@gambo/discord-types";
 
 const opt = (description: string) => ({
     type: OptionType.BOOLEAN,
@@ -40,7 +40,7 @@ export default definePlugin({
     searchTerms: ["ShowTimeouts", "ShowInvitesPaused", "ShowModView", "DisableDiscoveryFilters"],
     description: "Displays various hidden & moderator-only things regardless of permissions.",
     tags: ["Servers", "Utility"],
-    authors: [Devs.Dolfies],
+    authors: [Devs.o0],
     settings,
 
     patches: [

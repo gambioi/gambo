@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2023 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -25,8 +25,8 @@ import { Readable } from "stream";
 import { finished } from "stream/promises";
 import { fileURLToPath } from "url";
 
-const BASE_URL = "https://github.com/Gambcord/Installer/releases/latest/download/";
-const INSTALLER_PATH_DARWIN = "GambcordInstaller.app/Contents/MacOS/GambcordInstaller";
+const BASE_URL = "https://github.com/Gambo/Installer/releases/latest/download/";
+const INSTALLER_PATH_DARWIN = "GamboInstaller.app/Contents/MacOS/GamboInstaller";
 
 const BASE_DIR = join(dirname(fileURLToPath(import.meta.url)), "..");
 const FILE_DIR = join(BASE_DIR, "dist", "Installer");
@@ -35,11 +35,11 @@ const ETAG_FILE = join(FILE_DIR, "etag.txt");
 function getFilename() {
     switch (process.platform) {
         case "win32":
-            return "GambcordInstallerCli.exe";
+            return "GamboInstallerCli.exe";
         case "darwin":
-            return "GambcordInstaller.MacOS.zip";
+            return "GamboInstaller.MacOS.zip";
         case "linux":
-            return "GambcordInstallerCli-linux";
+            return "GamboInstallerCli-linux";
         default:
             throw new Error("Unsupported platform: " + process.platform);
     }
@@ -53,7 +53,7 @@ async function ensureBinary() {
 
     const downloadName = join(FILE_DIR, filename);
     const outputFile = process.platform === "darwin"
-        ? join(FILE_DIR, "GambcordInstaller")
+        ? join(FILE_DIR, "GamboInstaller")
         : downloadName;
 
     const etag = existsSync(outputFile) && existsSync(ETAG_FILE)
@@ -62,7 +62,7 @@ async function ensureBinary() {
 
     const res = await fetch(BASE_URL + filename, {
         headers: {
-            "User-Agent": "Gambcord (https://github.com/Vendicated/Gambcord)",
+            "User-Agent": "Gambo (https://github.com/Vendicated/Gambo)",
             "If-None-Match": etag
         }
     });
@@ -96,7 +96,7 @@ async function ensureBinary() {
                 execSync(cmd);
             } catch { }
         };
-        logAndRun(`sudo spctl --add '${outputFile}' --label "Gambcord Installer"`);
+        logAndRun(`sudo spctl --add '${outputFile}' --label "Gambo Installer"`);
         logAndRun(`sudo xattr -d com.apple.quarantine '${outputFile}'`);
     } else {
         // WHY DOES NODE FETCH RETURN A WEB STREAM OH MY GOD
@@ -126,8 +126,8 @@ try {
         stdio: "inherit",
         env: {
             ...process.env,
-            GAMBCORD_USER_DATA_DIR: BASE_DIR,
-            GAMBCORD_DEV_INSTALL: "1"
+            GAMBO_USER_DATA_DIR: BASE_DIR,
+            GAMBO_DEV_INSTALL: "1"
         }
     });
 } catch {

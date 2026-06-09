@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2022 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,7 +19,7 @@
 import { definePluginSettings } from "@api/Settings";
 import { Devs } from "@utils/constants";
 import definePlugin, { OptionType } from "@utils/types";
-import type { Message } from "@gambcord/discord-types";
+import type { Message } from "@gambo/discord-types";
 import { ChannelStore, GuildMemberStore } from "@webpack/common";
 
 const settings = definePluginSettings({
@@ -63,7 +63,7 @@ export default definePlugin({
     name: "NoReplyMention",
     description: "Disables reply pings by default",
     tags: ["Chat", "Notifications"],
-    authors: [Devs.DustyAngel47, Devs.rae, Devs.pylix, Devs.outfoxxed],
+    authors: [Devs.o0],
     settings,
 
     shouldMention(message: Message, isHoldingShift: boolean) {

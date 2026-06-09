@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2022 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -51,7 +51,7 @@ export default definePlugin({
     name: "ClearURLs",
     description: "Automatically removes tracking elements from URLs you send",
     tags: ["Privacy", "Utility"],
-    authors: [Devs.adryd, Devs.thororen],
+    authors: [Devs.o0],
 
     rules: [] as RuleSet[],
 

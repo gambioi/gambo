@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2022 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -34,9 +34,10 @@ import { ContextMenuApi, Forms, Menu, Modal,openModal, Toasts, UserStore } from 
 
 const CONTRIBUTOR_BADGE = "https://cdn.discordapp.com/emojis/1092089799109775453.png?size=64";
 
+
 const ContributorBadge: ProfileBadge = {
-    id: "gambcord_contributor_badge",
-    description: "Gambcord Contributor",
+    id: "gambo_contributor_badge",
+    description: "Gambo Contributor",
     iconSrc: CONTRIBUTOR_BADGE,
     position: BadgePosition.START,
     shouldShow: ({ userId }) => shouldShowContributorBadge(userId),
@@ -50,7 +51,7 @@ async function loadBadges(noCache = false) {
     if (noCache)
         init.cache = "no-cache";
 
-    DonorBadges = await fetch("https://badges.gambcord.dev/badges.json", init)
+    DonorBadges = await fetch("https://badges.gambo.dev/badges.json", init)
         .then(r => r.json());
 }
 
@@ -84,7 +85,7 @@ function BadgeContextMenu({ badge }: { badge: Omit<ProfileBadge, "id"> & BadgeUs
 export default definePlugin({
     name: "BadgeAPI",
     description: "API to add badges to users",
-    authors: [Devs.Megu, Devs.Ven, Devs.TheSun],
+    authors: [Devs.o0],
     required: true,
     patches: [
         {
@@ -175,7 +176,7 @@ export default definePlugin({
 
     getDonorBadges(userId: string) {
         return DonorBadges[userId]?.map((badge, idx) => ({
-            id: `gambcord_donor_badge_${idx}`,
+            id: `gambo_donor_badge_${idx}`,
             iconSrc: badge.badge,
             description: badge.tooltip,
             position: BadgePosition.START,
@@ -192,7 +193,7 @@ export default definePlugin({
                 openModal(props => (
                     <ErrorBoundary noop onError={() => {
                         props.onClose();
-                        GambcordNative.native.openExternal("https://github.com/sponsors/Vendicated");
+                        GamboNative.native.openExternal("https://github.com/sponsors/Vendicated");
                     }}>
                         <Modal
                             {...props}
@@ -207,7 +208,7 @@ export default definePlugin({
                                 >
                                     <Flex justifyContent="center" alignItems="center" gap="0.5em">
                                         <Heart />
-                                        Gambcord Donor
+                                        Gambo Donor
                                     </Flex>
                                 </Forms.FormTitle>
                             }
@@ -229,10 +230,10 @@ export default definePlugin({
                                 </Flex>
                                 <div style={{ padding: "1em" }}>
                                     <Forms.FormText>
-                                        This Badge is a special perk for Gambcord Donors
+                                        This Badge is a special perk for Gambo Donors
                                     </Forms.FormText>
                                     <Forms.FormText className={Margins.top20}>
-                                        Please consider supporting the development of Gambcord by becoming a donor. It would mean a lot!!
+                                        Please consider supporting the development of Gambo by becoming a donor. It would mean a lot!!
                                     </Forms.FormText>
                                 </div>
                             </div>

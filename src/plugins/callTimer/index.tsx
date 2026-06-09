@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2022 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -72,7 +72,7 @@ export default definePlugin({
     name: "CallTimer",
     description: "Adds a timer to vcs",
     tags: ["Voice", "Utility"],
-    authors: [Devs.Ven],
+    authors: [Devs.o0],
     managedStyle: alignedChatInputFix,
     settings,
 

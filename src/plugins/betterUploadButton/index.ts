@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2022 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -21,7 +21,7 @@ import definePlugin from "@utils/types";
 
 export default definePlugin({
     name: "BetterUploadButton",
-    authors: [Devs.fawn, Devs.Ven],
+    authors: [Devs.o0],
     description: "Upload with a single click, open menu with right click",
     tags: ["Utility", "Shortcuts"],
     patches: [

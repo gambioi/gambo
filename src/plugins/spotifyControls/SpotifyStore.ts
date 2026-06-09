@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2022 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -96,7 +96,7 @@ export const SpotifyStore = proxyLazyWebpack(() => {
                 ? "spotify:" + path.replaceAll("/", (_, idx) => idx === 0 ? "" : ":")
                 : "https://open.spotify.com" + path;
 
-            GambcordNative.native.openExternal(url);
+            GamboNative.native.openExternal(url);
         }
 
         // Need to keep track of this manually
@@ -162,7 +162,7 @@ export const SpotifyStore = proxyLazyWebpack(() => {
                     position_ms: Math.round(ms)
                 }
             }).catch((e: any) => {
-                console.error("[GambcordSpotifyControls] Failed to seek", e);
+                console.error("[GamboSpotifyControls] Failed to seek", e);
                 this.isSettingPosition = false;
             });
         }

@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a Discord client mod
+/*
+ * Gambo, a Discord client mod
  * Copyright (c) 2025 Vendicated and contributors
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
@@ -56,7 +56,7 @@ async function onFileUpload(e: SyntheticEvent<HTMLInputElement>) {
         return new Promise<void>((resolve, reject) => {
             const reader = new FileReader();
             reader.onload = () => {
-                GambcordNative.themes.uploadTheme(name, reader.result as string)
+                GamboNative.themes.uploadTheme(name, reader.result as string)
                     .then(resolve)
                     .catch(reject);
             };
@@ -79,7 +79,7 @@ export function LocalThemesTab() {
     }, []);
 
     async function refreshLocalThemes() {
-        const themes = await GambcordNative.themes.getThemesList();
+        const themes = await GamboNative.themes.getThemesList();
         setUserThemes(themes);
     }
 
@@ -128,7 +128,7 @@ export function LocalThemesTab() {
                             ) : (
                                 <QuickAction
                                     text="Open Themes Folder"
-                                    action={() => GambcordNative.themes.openFolder()}
+                                    action={() => GamboNative.themes.openFolder()}
                                     Icon={FolderIcon}
                                 />
                             )}
@@ -139,7 +139,7 @@ export function LocalThemesTab() {
                         />
                         <QuickAction
                             text="Edit QuickCSS"
-                            action={() => GambcordNative.quickCss.openEditor()}
+                            action={() => GamboNative.quickCss.openEditor()}
                             Icon={PaintbrushIcon}
                         />
 
@@ -161,7 +161,7 @@ export function LocalThemesTab() {
                             onChange={enabled => onLocalThemeChange(theme.fileName, enabled)}
                             onDelete={async () => {
                                 onLocalThemeChange(theme.fileName, false);
-                                await GambcordNative.themes.deleteTheme(theme.fileName);
+                                await GamboNative.themes.deleteTheme(theme.fileName);
                                 refreshLocalThemes();
                             }}
                             theme={theme}

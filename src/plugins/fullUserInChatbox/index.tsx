@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a Discord client mod
+/*
+ * Gambo, a Discord client mod
  * Copyright (c) 2024 Vendicated and contributors
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
@@ -24,7 +24,7 @@ export default definePlugin({
     name: "FullUserInChatbox",
     description: "Makes the user mention in the chatbox have more functionalities, like left/right clicking",
     tags: ["Shortcuts", "Utility"],
-    authors: [Devs.sadan],
+    authors: [Devs.o0],
 
     patches: [
         {

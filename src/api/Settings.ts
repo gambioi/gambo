@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2022 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -123,13 +123,13 @@ const DefaultSettings: Settings = {
 
     cloud: {
         authenticated: false,
-        url: "https://api.gambcord.dev/",
+        url: "https://api.gambo.dev/",
         settingsSync: false,
         settingsSyncVersion: 0
     }
 };
 
-const settings = !IS_REPORTER ? GambcordNative.settings.get() : {} as Settings;
+const settings = !IS_REPORTER ? GamboNative.settings.get() : {} as Settings;
 mergeDefaults(settings, DefaultSettings);
 
 export const SettingsStore = new SettingsStoreClass(settings, {
@@ -174,7 +174,7 @@ export const SettingsStore = new SettingsStoreClass(settings, {
 if (!IS_REPORTER) {
     SettingsStore.addGlobalChangeListener((_, path) => {
         SettingsStore.plain.cloud.settingsSyncVersion = Date.now();
-        GambcordNative.settings.set(SettingsStore.plain, path);
+        GamboNative.settings.set(SettingsStore.plain, path);
     });
 }
 

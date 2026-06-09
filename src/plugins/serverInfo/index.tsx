@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a Discord client mod
+/*
+ * Gambo, a Discord client mod
  * Copyright (c) 2023 Vendicated and contributors
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
@@ -7,7 +7,7 @@
 import { findGroupChildrenByChildId, NavContextMenuPatchCallback } from "@api/ContextMenu";
 import { Devs } from "@utils/constants";
 import definePlugin from "@utils/types";
-import { Guild } from "@gambcord/discord-types";
+import { Guild } from "@gambo/discord-types";
 import { Menu } from "@webpack/common";
 
 import { openGuildInfoModal } from "./GuildInfoModal";
@@ -28,7 +28,7 @@ export default definePlugin({
     name: "ServerInfo",
     description: "Allows you to view info about a server",
     tags: ["Servers", "Utility"],
-    authors: [Devs.Ven, Devs.Nuckyz],
+    authors: [Devs.o0],
     dependencies: ["DynamicImageModalAPI"],
     searchTerms: ["guild", "info", "ServerProfile"],
 

@@ -1,6 +1,6 @@
-﻿#!/usr/bin/node
+#!/usr/bin/node
 /*
- * Gambcord, a modification for Discord's desktop app
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2022 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -31,9 +31,9 @@ import { BUILD_TIMESTAMP, commonOpts, globPlugins, IS_DEV, IS_REPORTER, IS_ANTI_
  */
 const commonOptions = {
     ...commonOpts,
-    entryPoints: ["browser/Gambcord.ts"],
+    entryPoints: ["browser/Gambo.ts"],
     format: "iife",
-    globalName: "Gambcord",
+    globalName: "Gambo",
     external: ["~plugins", "~git-hash", "/assets/*"],
     target: ["esnext"],
     plugins: [
@@ -84,7 +84,7 @@ const buildConfigs = [
     {
         ...commonOptions,
         outfile: "dist/browser.js",
-        footer: { js: "//# sourceURL=file:///GambcordWeb" }
+        footer: { js: "//# sourceURL=file:///GamboWeb" }
     },
     {
         ...commonOptions,
@@ -93,7 +93,7 @@ const buildConfigs = [
             ...commonOptions.define,
             IS_EXTENSION: "true"
         },
-        footer: { js: "//# sourceURL=file:///GambcordWeb" }
+        footer: { js: "//# sourceURL=file:///GamboWeb" }
     },
     {
         ...commonOptions,
@@ -103,13 +103,13 @@ const buildConfigs = [
             IS_USERSCRIPT: "true",
             window: "unsafeWindow",
         },
-        outfile: "dist/Gambcord.user.js",
+        outfile: "dist/Gambo.user.js",
         banner: {
             js: readFileSync("browser/userscript.meta.js", "utf-8").replace("%version%", `${VERSION}.${new Date().getTime()}`)
         },
         footer: {
-            // UserScripts get wrapped in an iife, so define Gambcord prop on window that returns our local
-            js: "Object.defineProperty(unsafeWindow,'Gambcord',{get:()=>Gambcord});"
+            // UserScripts get wrapped in an iife, so define Gambo prop on window that returns our local
+            js: "Object.defineProperty(unsafeWindow,'Gambo',{get:()=>Gambo});"
         }
     }
 ];
@@ -146,8 +146,8 @@ async function loadDir(dir, basePath = "") {
  */
 async function buildExtension(target, files) {
     const entries = {
-        "dist/Gambcord.js": await readFile("dist/extension.js"),
-        "dist/Gambcord.css": await readFile("dist/extension.css"),
+        "dist/Gambo.js": await readFile("dist/extension.js"),
+        "dist/Gambo.css": await readFile("dist/extension.css"),
         ...await loadDir("dist/vendor/monaco", "dist/"),
         ...Object.fromEntries(await Promise.all(files.map(async f => {
             let content = await readFile(join("browser", f));
@@ -175,10 +175,10 @@ async function buildExtension(target, files) {
     console.info("Unpacked Extension written to dist/" + target);
 }
 
-const appendCssRuntime = readFile("dist/Gambcord.user.css", "utf-8").then(content => {
+const appendCssRuntime = readFile("dist/Gambo.user.css", "utf-8").then(content => {
     const cssRuntime = `unsafeWindow._vcUserScriptRendererCss=\`${content.replaceAll("`", "\\`")}\``;
 
-    return appendFile("dist/Gambcord.user.js", cssRuntime);
+    return appendFile("dist/Gambo.user.js", cssRuntime);
 });
 
 if (!process.argv.includes("--skip-extension")) {

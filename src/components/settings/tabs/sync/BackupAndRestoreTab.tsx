@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2022 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -35,9 +35,9 @@ function BackupAndRestoreTab() {
                 </Card>
 
                 <Text variant="text-md/normal" className={Margins.bottom8}>
-                    You can import and export your Gambcord settings as a JSON file.
+                    You can import and export your Gambo settings as a JSON file.
                     This allows you to easily transfer your settings to another device,
-                    or recover your settings after reinstalling Gambcord or Discord.
+                    or recover your settings after reinstalling Gambo or Discord.
                 </Text>
 
                 <Heading tag="h4">Settings Export contains:</Heading>

@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2022 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,10 +18,10 @@
 
 import { Settings, SettingsStore } from "@api/Settings";
 import { createAndAppendStyle } from "@utils/css";
-import { ThemeStore } from "@gambcord/discord-types";
+import { ThemeStore } from "@gambo/discord-types";
 import { PopoutWindowStore } from "@webpack/common";
 
-import { userStyleRootNode, gambcordRootNode } from "./Styles";
+import { userStyleRootNode, gamboRootNode } from "./Styles";
 
 let style: HTMLStyleElement;
 let themesStyle: HTMLStyleElement;
@@ -29,21 +29,21 @@ let themesStyle: HTMLStyleElement;
 async function toggle(isEnabled: boolean) {
     if (!style) {
         if (isEnabled) {
-            style = createAndAppendStyle("gambcord-custom-css", userStyleRootNode);
-            GambcordNative.quickCss.addChangeListener(css => {
+            style = createAndAppendStyle("gambo-custom-css", userStyleRootNode);
+            GamboNative.quickCss.addChangeListener(css => {
                 style.textContent = css;
                 // At the time of writing this, changing textContent resets the disabled state
                 style.disabled = !Settings.useQuickCss;
                 updatePopoutWindows();
             });
-            style.textContent = await GambcordNative.quickCss.get();
+            style.textContent = await GamboNative.quickCss.get();
         }
     } else
         style.disabled = !isEnabled;
 }
 
 async function initThemes() {
-    themesStyle ??= createAndAppendStyle("gambcord-themes", userStyleRootNode);
+    themesStyle ??= createAndAppendStyle("gambo-themes", userStyleRootNode);
 
     const { themeLinks, enabledThemes } = Settings;
 
@@ -67,13 +67,13 @@ async function initThemes() {
 
     if (IS_WEB) {
         for (const theme of enabledThemes) {
-            const themeData = await GambcordNative.themes.getThemeData(theme);
+            const themeData = await GamboNative.themes.getThemeData(theme);
             if (!themeData) continue;
             const blob = new Blob([themeData], { type: "text/css" });
             links.push(URL.createObjectURL(blob));
         }
     } else {
-        const localThemes = enabledThemes.map(theme => `gambcord:///themes/${theme}?v=${Date.now()}`);
+        const localThemes = enabledThemes.map(theme => `gambo:///themes/${theme}?v=${Date.now()}`);
         links.push(...localThemes);
     }
 
@@ -88,9 +88,9 @@ function applyToPopout(popoutWindow: Window | undefined, key: string) {
 
     const doc = popoutWindow.document;
 
-    doc.querySelector("gambcord-root")?.remove();
+    doc.querySelector("gambo-root")?.remove();
 
-    doc.documentElement.appendChild(gambcordRootNode.cloneNode(true));
+    doc.documentElement.appendChild(gamboRootNode.cloneNode(true));
 }
 
 function updatePopoutWindows() {
@@ -120,7 +120,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     if (!IS_WEB) {
-        GambcordNative.quickCss.addThemeChangeListener(initThemes);
+        GamboNative.quickCss.addThemeChangeListener(initThemes);
     }
 }, { once: true });
 

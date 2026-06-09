@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2022 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -25,7 +25,7 @@ export default definePlugin({
     name: "PlainFolderIcon",
     description: "Dont show the small guild icons in folders",
     tags: ["Appearance", "Customisation"],
-    authors: [Devs.botato],
+    authors: [Devs.o0],
 
     patches: [
         {

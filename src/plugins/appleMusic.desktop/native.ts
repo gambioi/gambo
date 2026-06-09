@@ -1,10 +1,10 @@
-﻿/*
- * Gambcord, a Discord client mod
+/*
+ * Gambo, a Discord client mod
  * Copyright (c) 2024 Vendicated and contributors
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
-import { GAMBCORD_USER_AGENT } from "@shared/gambcordUserAgent";
+import { GAMBO_USER_AGENT } from "@shared/gamboUserAgent";
 import { execFile } from "child_process";
 import { promisify } from "util";
 
@@ -40,7 +40,7 @@ async function fetchRemoteData({ id, name, artist, album }: { id: string, name: 
 
         const songData = await fetch(dataUrl, {
             headers: {
-                "user-agent": GAMBCORD_USER_AGENT,
+                "user-agent": GAMBO_USER_AGENT,
             },
         })
             .then(r => r.json())

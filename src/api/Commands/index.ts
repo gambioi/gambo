@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2022 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,16 +18,16 @@
 
 import { Logger } from "@utils/Logger";
 import { makeCodeblock } from "@utils/text";
-import { CommandArgument, CommandContext, CommandOption } from "@gambcord/discord-types";
+import { CommandArgument, CommandContext, CommandOption } from "@gambo/discord-types";
 
 import { sendBotMessage } from "./commandHelpers";
-import { ApplicationCommandInputType, ApplicationCommandOptionType, ApplicationCommandType, GambcordCommand } from "./types";
+import { ApplicationCommandInputType, ApplicationCommandOptionType, ApplicationCommandType, GamboCommand } from "./types";
 
 export * from "./commandHelpers";
 export * from "./types";
 
-export let BUILT_IN: GambcordCommand[];
-export const commands = {} as Record<string, GambcordCommand>;
+export let BUILT_IN: GamboCommand[];
+export const commands = {} as Record<string, GamboCommand>;
 
 // hack for plugins being evaluated before we can grab these from webpack
 const OptPlaceholder = Symbol("OptionalMessageOption") as any as CommandOption;
@@ -50,7 +50,7 @@ export let RequiredMessageOption: CommandOption = ReqPlaceholder;
 // Add this offset to every added command to keep them unique
 let commandIdOffset: number;
 
-export const _init = function (cmds: GambcordCommand[]) {
+export const _init = function (cmds: GamboCommand[]) {
     try {
         BUILT_IN = cmds;
         OptionalMessageOption = cmds.find(c => (c.untranslatedName || c.displayName) === "shrug")!.options![0];
@@ -62,8 +62,8 @@ export const _init = function (cmds: GambcordCommand[]) {
     return cmds;
 } as never;
 
-export const _handleCommand = function (cmd: GambcordCommand, args: CommandArgument[], ctx: CommandContext) {
-    if (!cmd.isGambcordCommand)
+export const _handleCommand = function (cmd: GamboCommand, args: CommandArgument[], ctx: CommandContext) {
+    if (!cmd.isGamboCommand)
         return cmd.execute(args, ctx);
 
     const handleError = (err: any) => {
@@ -75,7 +75,7 @@ export const _handleCommand = function (cmd: GambcordCommand, args: CommandArgum
         sendBotMessage(ctx.channel.id, {
             content: `${msg}:\n${makeCodeblock(reason)}`,
             author: {
-                username: "Gambcord"
+                username: "Gambo"
             }
         });
     };
@@ -93,7 +93,7 @@ export const _handleCommand = function (cmd: GambcordCommand, args: CommandArgum
  * Prepare a Command Option for Discord by filling missing fields
  * @param opt
  */
-export function prepareOption<O extends CommandOption | GambcordCommand>(opt: O): O {
+export function prepareOption<O extends CommandOption | GamboCommand>(opt: O): O {
     opt.displayName ||= opt.name;
     opt.displayDescription ||= opt.description;
     opt.options?.forEach((opt, i, opts) => {
@@ -110,7 +110,7 @@ export function prepareOption<O extends CommandOption | GambcordCommand>(opt: O)
 // Yes, Discord registers individual commands for each subcommand
 // TODO: This probably doesn't support nested subcommands. If that is ever needed,
 // investigate
-function registerSubCommands(cmd: GambcordCommand, plugin: string) {
+function registerSubCommands(cmd: GamboCommand, plugin: string) {
     cmd.options?.forEach(o => {
         if (o.type !== ApplicationCommandOptionType.SUB_COMMAND)
             throw new Error("When specifying sub-command options, all options must be sub-commands.");
@@ -133,7 +133,7 @@ function registerSubCommands(cmd: GambcordCommand, plugin: string) {
     });
 }
 
-export function registerCommand<C extends GambcordCommand>(command: C, plugin: string) {
+export function registerCommand<C extends GamboCommand>(command: C, plugin: string) {
     if (!BUILT_IN) {
         console.warn(
             "[CommandsAPI]",
@@ -146,7 +146,7 @@ export function registerCommand<C extends GambcordCommand>(command: C, plugin: s
     if (BUILT_IN.some(c => c.name === command.name))
         throw new Error(`Command '${command.name}' already exists.`);
 
-    command.isGambcordCommand = true;
+    command.isGamboCommand = true;
     command.untranslatedName ??= command.name;
     command.untranslatedDescription ??= command.description;
     command.id ??= `-${BUILT_IN.length + commandIdOffset + 1}`;

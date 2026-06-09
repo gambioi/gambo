@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2022 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,7 +17,7 @@
 */
 
 import { Heart } from "@components/Heart";
-import { ButtonProps } from "@gambcord/discord-types";
+import { ButtonProps } from "@gambo/discord-types";
 import { Button } from "@webpack/common";
 
 export default function DonateButton({
@@ -30,7 +30,7 @@ export default function DonateButton({
             {...props}
             look={look}
             color={color}
-            onClick={() => GambcordNative.native.openExternal("https://github.com/sponsors/Vendicated")}
+            onClick={() => GamboNative.native.openExternal("https://github.com/sponsors/Vendicated")}
             className="vc-donate-button"
         >
             <Heart />

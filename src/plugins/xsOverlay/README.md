@@ -1,4 +1,4 @@
-﻿# XSOverlay Notifier
+# XSOverlay Notifier
 
 Sends Discord messages to [XSOverlay](https://store.steampowered.com/app/1173510/XSOverlay/) for easier viewing while using VR.
 

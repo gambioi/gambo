@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2022 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -23,7 +23,7 @@ import ErrorBoundary from "@components/ErrorBoundary";
 import { Devs } from "@utils/constants";
 import { classNameFactory } from "@utils/css";
 import definePlugin, { OptionType } from "@utils/types";
-import { FluxStore } from "@gambcord/discord-types";
+import { FluxStore } from "@gambo/discord-types";
 import { findStoreLazy } from "@webpack";
 
 import { MemberCount } from "./MemberCount";
@@ -63,7 +63,7 @@ export default definePlugin({
     name: "MemberCount",
     description: "Shows the number of online members, total members, and users in voice channels on the server — in the member list and tooltip.",
     tags: ["Servers", "Utility"],
-    authors: [Devs.Ven, Devs.Commandtechno, Devs.Apexo],
+    authors: [Devs.o0],
     settings,
 
     patches: [

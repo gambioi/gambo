@@ -1,4 +1,4 @@
-﻿# Summaries
+# Summaries
 
 Enables Discord's experimental Summaries feature on every server, displaying AI generated summaries of conversations.
 

@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a Discord client mod
+/*
+ * Gambo, a Discord client mod
  * Copyright (c) 2024 Vendicated and contributors
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
@@ -10,7 +10,7 @@ import definePlugin from "@utils/types";
 export default definePlugin({
     name: "BetterGifPicker",
     description: "Makes the gif picker open the favourite category by default",
-    authors: [Devs.Samwich],
+    authors: [Devs.o0],
     tags: ["Emotes", "Customisation"],
     patches: [
         {

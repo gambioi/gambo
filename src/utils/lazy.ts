@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2022 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -35,8 +35,8 @@ const unconfigurable = ["arguments", "caller", "prototype"];
 
 const handler: ProxyHandler<any> = {};
 
-export const SYM_LAZY_GET = Symbol.for("gambcord.lazy.get");
-export const SYM_LAZY_CACHED = Symbol.for("gambcord.lazy.cached");
+export const SYM_LAZY_GET = Symbol.for("gambo.lazy.get");
+export const SYM_LAZY_CACHED = Symbol.for("gambo.lazy.cached");
 
 for (const method of [
     "apply",

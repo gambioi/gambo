@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a Discord client mod
+/*
+ * Gambo, a Discord client mod
  * Copyright (c) 2024 Vendicated and contributors
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
@@ -13,7 +13,7 @@ import { getCurrentChannel, getCurrentGuild, openImageModal } from "@utils/disco
 import { isTruthy } from "@utils/guards";
 import { classes } from "@utils/misc";
 import definePlugin, { OptionType } from "@utils/types";
-import { Guild, PopoutProps, Role } from "@gambcord/discord-types";
+import { Guild, PopoutProps, Role } from "@gambo/discord-types";
 import { findByCodeLazy, findByPropsLazy, findCssClassesLazy } from "@webpack";
 import { GuildRoleStore, Menu, PermissionStore, Popout, useRef } from "@webpack/common";
 import { ComponentType } from "react";
@@ -175,7 +175,7 @@ export default definePlugin({
     name: "BetterRoleContext",
     description: "Adds options to copy role color / edit role / view role icon when right clicking roles in the user profile",
     tags: ["Roles", "Appearance"],
-    authors: [Devs.Ven, Devs.goodbee],
+    authors: [Devs.o0],
     dependencies: ["UserSettingsAPI"],
 
     settings,

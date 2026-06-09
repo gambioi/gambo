@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2022 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -21,7 +21,7 @@ import definePlugin from "@utils/types";
 
 export default definePlugin({
     name: "BetterGifAltText",
-    authors: [Devs.Ven],
+    authors: [Devs.o0],
     description:
         "Change GIF alt text from simply being 'GIF' to containing the gif tags / filename",
     tags: ["Media", "Accessibility", "Customisation"],

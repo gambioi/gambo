@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a Discord client mod
+/*
+ * Gambo, a Discord client mod
  * Copyright (c) 2023 Vendicated and contributors
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
@@ -21,7 +21,7 @@ export default definePlugin({
     name: "SecretRingToneEnabler",
     description: "Always play the secret version of the discord ringtone (except during special ringtone events)",
     tags: ["Notifications", "Fun"],
-    authors: [Devs.AndrewDLO, Devs.FieryFlames, Devs.RamziAH],
+    authors: [Devs.o0],
     settings,
     patches: [
         {

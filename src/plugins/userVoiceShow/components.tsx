@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a Discord client mod
+/*
+ * Gambo, a Discord client mod
  * Copyright (c) 2024 Vendicated and contributors
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
@@ -9,7 +9,7 @@ import ErrorBoundary from "@components/ErrorBoundary";
 import ShowHiddenChannelsPlugin from "@plugins/showHiddenChannels";
 import { classNameFactory } from "@utils/css";
 import { classes } from "@utils/misc";
-import { Channel } from "@gambcord/discord-types";
+import { Channel } from "@gambo/discord-types";
 import { findByPropsLazy, findCssClassesLazy } from "@webpack";
 import { ChannelRouter, ChannelStore, Parser, PermissionsBits, PermissionStore, React, showToast, Text, Toasts, Tooltip, useMemo, UserStore, UserSummaryItem, useStateFromStores, VoiceStateStore } from "@webpack/common";
 import { PropsWithChildren } from "react";

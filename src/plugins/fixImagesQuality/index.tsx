@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a Discord client mod
+/*
+ * Gambo, a Discord client mod
  * Copyright (c) 2024 Vendicated and contributors
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
@@ -25,7 +25,7 @@ export default definePlugin({
     name: "FixImagesQuality",
     description: "Improves quality of images by loading them at their original resolution",
     tags: ["Media", "Appearance"],
-    authors: [Devs.Nuckyz, Devs.Ven],
+    authors: [Devs.o0],
     settings,
 
     patches: [

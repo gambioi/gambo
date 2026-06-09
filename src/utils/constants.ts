@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2022 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,9 +16,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-export const REACT_GLOBAL = "Gambcord.Webpack.Common.React";
+export const REACT_GLOBAL = "Gambo.Webpack.Common.React";
 export const VENBOT_USER_ID = "1017176847865352332";
-export const GAMBCORD_GUILD_ID = "1015060230222131221";
+export const GAMBO_GUILD_ID = "1015060230222131221";
 export const DONOR_ROLE_ID = "1042507929485586532";
 export const CONTRIB_ROLE_ID = "1026534353167208489";
 export const REGULAR_ROLE_ID = "1026504932959977532";
@@ -47,6 +47,10 @@ export interface Dev {
  * If you are fine with attribution but don't want the badge, add badge: false
  */
 export const Devs = /* #__PURE__*/ Object.freeze({
+    o0: {
+        name: "_o0",
+        id: 976573494353616897n
+    },
     Ven: {
         name: "V",
         id: 343383572805058560n

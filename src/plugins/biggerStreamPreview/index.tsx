@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2023 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -21,7 +21,7 @@ import { ScreenshareIcon } from "@components/Icons";
 import { Devs } from "@utils/constants";
 import { openImageModal } from "@utils/discord";
 import definePlugin from "@utils/types";
-import { ApplicationStream, Channel, Stream, User } from "@gambcord/discord-types";
+import { ApplicationStream, Channel, Stream, User } from "@gambo/discord-types";
 import { ApplicationStreamingStore, ApplicationStreamPreviewStore, Menu } from "@webpack/common";
 
 export interface UserContextProps {
@@ -90,7 +90,7 @@ export default definePlugin({
     name: "BiggerStreamPreview",
     description: "This plugin allows you to enlarge stream previews",
     tags: ["Media", "Appearance"],
-    authors: [Devs.phil],
+    authors: [Devs.o0],
     contextMenus: {
         "user-context": userContextPatch,
         "stream-context": streamContextPatch

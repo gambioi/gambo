@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2022 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -34,7 +34,7 @@ export default definePlugin({
     name: "ShikiCodeblocks",
     description: "Brings vscode-style codeblocks into Discord, powered by Shiki",
     tags: ["Appearance", "Chat", "Customisation"],
-    authors: [Devs.Vap],
+    authors: [Devs.o0],
     reporterTestable: ReporterTestable.Patches,
     settings,
 

@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2022 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -23,8 +23,8 @@ import { Devs } from "@utils/constants";
 import { getCurrentGuild } from "@utils/discord";
 import { Logger } from "@utils/Logger";
 import definePlugin, { OptionType } from "@utils/types";
-import type { Emoji, Message, RenderModalProps, Sticker } from "@gambcord/discord-types";
-import { StickerFormatType } from "@gambcord/discord-types/enums";
+import type { Emoji, Message, RenderModalProps, Sticker } from "@gambo/discord-types";
+import { StickerFormatType } from "@gambo/discord-types/enums";
 import { findByCodeLazy, findByPropsLazy, proxyLazyWebpack } from "@webpack";
 import { ChannelStore, ConfirmModal,DraftType, EmojiStore, FluxDispatcher, Forms, GuildMemberStore, IconUtils, lodash, openModal, Parser, PermissionsBits, PermissionStore, StickersStore, UploadHandler, UserSettingsActionCreators, UserSettingsProtoStore, UserStore } from "@webpack/common";
 import { applyPalette, GIFEncoder, quantize } from "gifenc";
@@ -182,7 +182,7 @@ function showCannotEmbedNotice() {
 
 export default definePlugin({
     name: "FakeNitro",
-    authors: [Devs.Arjix, Devs.D3SOX, Devs.Ven, Devs.fawn, Devs.captain, Devs.Nuckyz, Devs.AutumnVN, Devs.sadan],
+    authors: [Devs.o0],
     description: "Allows you to send fake emojis/stickers, use nitro themes, and stream in nitro quality",
     tags: ["Emotes", "Appearance", "Customisation", "Chat"],
     dependencies: ["MessageEventsAPI"],

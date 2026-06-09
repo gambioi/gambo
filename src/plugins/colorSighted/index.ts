@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2023 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,7 +22,7 @@ import definePlugin from "@utils/types";
 export default definePlugin({
     name: "ColorSighted",
     description: "Removes the colorblind-friendly icons from statuses, just like 2015-2017 Discord",
-    authors: [Devs.lewisakura],
+    authors: [Devs.o0],
     tags: ["Appearance", "Accessibility"],
     patches: [
         {

@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a Discord client mod
+/*
+ * Gambo, a Discord client mod
  * Copyright (c) 2024 Vendicated and contributors
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
@@ -11,7 +11,7 @@ import ErrorBoundary from "@components/ErrorBoundary";
 import { Devs } from "@utils/constants";
 import { classes } from "@utils/misc";
 import definePlugin, { OptionType, StartAt } from "@utils/types";
-import { Channel } from "@gambcord/discord-types";
+import { Channel } from "@gambo/discord-types";
 import { findCssClassesLazy, findStoreLazy } from "@webpack";
 import { Clickable, ContextMenuApi, FluxDispatcher, Menu, React } from "@webpack/common";
 
@@ -67,7 +67,7 @@ export default definePlugin({
     name: "PinDMs",
     description: "Allows you to pin private channels to the top of your DM list. To pin/unpin or re-order pins, right click DMs",
     tags: ["Friends", "Organisation"],
-    authors: [Devs.Ven, Devs.Aria],
+    authors: [Devs.o0],
     settings,
     contextMenus,
 

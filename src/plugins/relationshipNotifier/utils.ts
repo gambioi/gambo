@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2023 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,8 +20,8 @@ import * as DataStore from "@api/DataStore";
 import { popNotice, showNotice } from "@api/Notices";
 import { showNotification } from "@api/Notifications";
 import { getUniqueUsername, openUserProfile } from "@utils/discord";
-import { FluxStore } from "@gambcord/discord-types";
-import { ChannelType, RelationshipType } from "@gambcord/discord-types/enums";
+import { FluxStore } from "@gambo/discord-types";
+import { ChannelType, RelationshipType } from "@gambo/discord-types/enums";
 import { findStoreLazy } from "@webpack";
 import { ChannelStore, GuildMemberStore, GuildStore, RelationshipStore, UserStore, UserUtils } from "@webpack/common";
 

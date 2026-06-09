@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2023 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -23,7 +23,7 @@ export default definePlugin({
     name: "FixCodeblockGap",
     description: "Removes the gap between codeblocks and text below it",
     tags: ["Appearance"],
-    authors: [Devs.Grzesiek11],
+    authors: [Devs.o0],
     patches: [
         {
             find: String.raw`/^${"```"}(?:([a-z0-9_+\-.#]+?)\n)?\n*([^\n][^]*?)\n*${"```"}`,

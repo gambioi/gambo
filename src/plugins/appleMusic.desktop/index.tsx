@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a Discord client mod
+/*
+ * Gambo, a Discord client mod
  * Copyright (c) 2024 Vendicated and contributors
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
@@ -7,11 +7,11 @@
 import { definePluginSettings } from "@api/Settings";
 import { Devs, IS_MAC } from "@utils/constants";
 import definePlugin, { OptionType, PluginNative, ReporterTestable } from "@utils/types";
-import { Activity, ActivityAssets, ActivityButton } from "@gambcord/discord-types";
-import { ActivityFlags, ActivityStatusDisplayType, ActivityType } from "@gambcord/discord-types/enums";
+import { Activity, ActivityAssets, ActivityButton } from "@gambo/discord-types";
+import { ActivityFlags, ActivityStatusDisplayType, ActivityType } from "@gambo/discord-types/enums";
 import { ApplicationAssetUtils, FluxDispatcher, Forms } from "@webpack/common";
 
-const Native = GambcordNative.pluginHelpers.AppleMusicRichPresence as PluginNative<typeof import("./native")>;
+const Native = GamboNative.pluginHelpers.AppleMusicRichPresence as PluginNative<typeof import("./native")>;
 
 export interface TrackData {
     name: string;
@@ -155,7 +155,7 @@ export default definePlugin({
     name: "AppleMusicRichPresence",
     description: "Discord rich presence for your Apple Music!",
     tags: ["Activity", "Media"],
-    authors: [Devs.RyanCaoDev],
+    authors: [Devs.o0],
     hidden: !IS_MAC,
     reporterTestable: ReporterTestable.None,
 

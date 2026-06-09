@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2022 Vendicated and Megumin
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,7 +18,7 @@
 
 import { definePluginSettings } from "@api/Settings";
 import { BackupRestoreIcon, CloudIcon, MainSettingsIcon, PaintbrushIcon, PatchHelperIcon, PlaceholderIcon, PluginsIcon, UpdaterIcon, VesktopSettingsIcon } from "@components/Icons";
-import { BackupAndRestoreTab, CloudTab, PatchHelperTab, PluginsTab, ThemesTab, UpdaterTab, GambcordTab } from "@components/settings/tabs";
+import { BackupAndRestoreTab, CloudTab, PatchHelperTab, PluginsTab, ThemesTab, UpdaterTab, GamboTab } from "@components/settings/tabs";
 import { Devs } from "@utils/constants";
 import { isTruthy } from "@utils/guards";
 import definePlugin, { IconProps, OptionType } from "@utils/types";
@@ -80,7 +80,7 @@ interface SettingsLayoutBuilder {
 const settings = definePluginSettings({
     settingsLocation: {
         type: OptionType.SELECT,
-        description: "Where to put the Gambcord settings section",
+        description: "Where to put the Gambo settings section",
         options: [
             { label: "At the very top", value: "top" },
             { label: "Above the Nitro section", value: "aboveNitro", default: true },
@@ -90,9 +90,9 @@ const settings = definePluginSettings({
             { label: "At the very bottom", value: "bottom" },
         ] as { label: string; value: SettingsLocation; default?: boolean; }[]
     },
-    includeGambcordInfoWhenCopying: {
+    includeGamboInfoWhenCopying: {
         type: OptionType.BOOLEAN,
-        description: "Also copy Gambcord info (Gambcord, Electron, Chromium) when clicking the version info in the bottom left area of the Settings page",
+        description: "Also copy Gambo info (Gambo, Electron, Chromium) when clicking the version info in the bottom left area of the Settings page",
         default: true
     }
 });
@@ -100,7 +100,7 @@ const settings = definePluginSettings({
 export default definePlugin({
     name: "Settings",
     description: "Adds Settings UI and debug info",
-    authors: [Devs.Ven, Devs.Megu],
+    authors: [Devs.o0],
     required: true,
 
     settings,
@@ -164,52 +164,52 @@ export default definePlugin({
         if (originalLayoutBuilder.key !== "$Root") return layout;
         if (!Array.isArray(layout)) return layout;
 
-        if (layout.some(s => s?.key === "gambcord_section")) return layout;
+        if (layout.some(s => s?.key === "gambo_section")) return layout;
 
         const { buildEntry } = this;
 
-        const gambcordEntries: SettingsLayoutNode[] = [
+        const gamboEntries: SettingsLayoutNode[] = [
             buildEntry({
-                key: "gambcord_main",
-                title: "Gambcord",
-                panelTitle: "Gambcord Settings",
-                Component: GambcordTab,
+                key: "gambo_main",
+                title: "Gambo",
+                panelTitle: "Gambo Settings",
+                Component: GamboTab,
                 Icon: MainSettingsIcon
             }),
             buildEntry({
-                key: "gambcord_plugins",
+                key: "gambo_plugins",
                 title: "Plugins",
                 Component: PluginsTab,
                 Icon: PluginsIcon
             }),
             buildEntry({
-                key: "gambcord_themes",
+                key: "gambo_themes",
                 title: "Themes",
                 Component: ThemesTab,
                 Icon: PaintbrushIcon
             }),
             !IS_UPDATER_DISABLED && UpdaterTab && buildEntry({
-                key: "gambcord_updater",
+                key: "gambo_updater",
                 title: "Updater",
-                panelTitle: "Gambcord Updater",
+                panelTitle: "Gambo Updater",
                 Component: UpdaterTab,
                 Icon: UpdaterIcon
             }),
             buildEntry({
-                key: "gambcord_cloud",
+                key: "gambo_cloud",
                 title: "Cloud",
-                panelTitle: "Gambcord Cloud",
+                panelTitle: "Gambo Cloud",
                 Component: CloudTab,
                 Icon: CloudIcon
             }),
             buildEntry({
-                key: "gambcord_backup_restore",
+                key: "gambo_backup_restore",
                 title: "Backup & Restore",
                 Component: BackupAndRestoreTab,
                 Icon: BackupRestoreIcon
             }),
             !IS_STANDALONE && PatchHelperTab && buildEntry({
-                key: "gambcord_patch_helper",
+                key: "gambo_patch_helper",
                 title: "Patch Helper",
                 Component: PatchHelperTab,
                 Icon: PatchHelperIcon
@@ -221,7 +221,7 @@ export default definePlugin({
                 if (Object.values(FallbackSectionTypes).includes(section)) return null;
 
                 return buildEntry({
-                    key: `gambcord_deprecated_custom_${section}`,
+                    key: `gambo_deprecated_custom_${section}`,
                     title: label,
                     Component: element,
                     Icon: section === "Vesktop" ? VesktopSettingsIcon : PlaceholderIcon
@@ -229,11 +229,11 @@ export default definePlugin({
             })
         ].filter(isTruthy);
 
-        const gambcordSection: SettingsLayoutNode = {
-            key: "gambcord_section",
+        const gamboSection: SettingsLayoutNode = {
+            key: "gambo_section",
             type: LayoutTypes.SECTION,
-            useTitle: () => "Gambcord Settings",
-            buildLayout: () => gambcordEntries
+            useTitle: () => "Gambo Settings",
+            buildLayout: () => gamboEntries
         };
 
         const { settingsLocation } = settings.store;
@@ -256,7 +256,7 @@ export default definePlugin({
             idx += 1;
         }
 
-        layout.splice(idx, 0, gambcordSection);
+        layout.splice(idx, 0, gamboSection);
 
         return layout;
     },
@@ -266,12 +266,12 @@ export default definePlugin({
     customEntries: [] as EntryOptions[],
 
     get electronVersion() {
-        return GambcordNative.native.getVersions().electron || window.legcord?.electron || null;
+        return GamboNative.native.getVersions().electron || window.legcord?.electron || null;
     },
 
     get chromiumVersion() {
         try {
-            return GambcordNative.native.getVersions().chrome
+            return GamboNative.native.getVersions().chrome
                 // @ts-expect-error Typescript will add userAgentData IMMEDIATELY
                 || navigator.userAgentData?.brands?.find(b => b.brand === "Chromium" || b.brand === "Google Chrome")?.version
                 || null;
@@ -291,7 +291,7 @@ export default definePlugin({
     getInfoRows() {
         const { electronVersion, chromiumVersion, additionalInfo } = this;
 
-        const rows = [`Gambcord ${gitHash}${additionalInfo}`];
+        const rows = [`Gambo ${gitHash}${additionalInfo}`];
 
         if (electronVersion) rows.push(`Electron ${electronVersion}`);
         if (chromiumVersion) rows.push(`Chromium ${chromiumVersion}`);
@@ -300,7 +300,7 @@ export default definePlugin({
     },
 
     getInfoString() {
-        if (!settings.store.includeGambcordInfoWhenCopying) return "";
+        if (!settings.store.includeGamboInfoWhenCopying) return "";
         return "\n" + this.getInfoRows().join("\n");
     },
 

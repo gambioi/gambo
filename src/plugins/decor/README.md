@@ -1,4 +1,4 @@
-﻿# Decor
+# Decor
 
 Custom avatar decorations!
 

@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a Discord client mod
+/*
+ * Gambo, a Discord client mod
  * Copyright (c) 2023 Vendicated and contributors
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
@@ -12,7 +12,7 @@ import { cl, DecorationModalClasses, requireAvatarDecorationModal, requireCreate
 import { AvatarDecorationModalPreview } from "@plugins/decor/ui/components";
 import { openInviteModal } from "@utils/discord";
 import { Margins } from "@utils/margins";
-import { RenderModalProps } from "@gambcord/discord-types";
+import { RenderModalProps } from "@gambo/discord-types";
 import { filters, findComponentByCodeLazy, mapMangledModuleLazy } from "@webpack";
 import { closeAllModals, FluxDispatcher, Forms, GuildStore, Modal, NavigationRouter, openModal, Text, TextInput, useEffect, useMemo, UserStore, useState } from "@webpack/common";
 

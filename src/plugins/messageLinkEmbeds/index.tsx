@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2022 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -24,7 +24,7 @@ import { Devs } from "@utils/constants.js";
 import { classes } from "@utils/misc";
 import { Queue } from "@utils/Queue";
 import definePlugin, { OptionType } from "@utils/types";
-import { Channel, Message } from "@gambcord/discord-types";
+import { Channel, Message } from "@gambo/discord-types";
 import { findComponentByCodeLazy, findComponentLazy, findCssClassesLazy } from "@webpack";
 import {
     Button,
@@ -217,7 +217,7 @@ function computeWidthAndHeight(width: number, height: number) {
 function withEmbeddedBy(message: Message, embeddedBy: string[]) {
     return new Proxy(message, {
         get(_, prop) {
-            if (prop === "gambcordEmbeddedBy") return embeddedBy;
+            if (prop === "gamboEmbeddedBy") return embeddedBy;
             // @ts-expect-error ts so bad
             return Reflect.get(...arguments);
         }
@@ -227,7 +227,7 @@ function withEmbeddedBy(message: Message, embeddedBy: string[]) {
 
 function MessageEmbedAccessory({ message }: { message: Message; }) {
     // @ts-expect-error
-    const embeddedBy: string[] = message.gambcordEmbeddedBy ?? [];
+    const embeddedBy: string[] = message.gamboEmbeddedBy ?? [];
 
     const accessories = [] as (JSX.Element | null)[];
 
@@ -368,7 +368,7 @@ export default definePlugin({
     name: "MessageLinkEmbeds",
     description: "Adds a preview to messages that link another message",
     tags: ["Chat", "Appearance"],
-    authors: [Devs.TheSun, Devs.Ven, Devs.RyanCaoDev],
+    authors: [Devs.o0],
     dependencies: ["MessageAccessoriesAPI", "MessageUpdaterAPI", "UserSettingsAPI"],
 
     settings,

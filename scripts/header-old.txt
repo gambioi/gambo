@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Gambcord, a modification for Discord's desktop app
  * Copyright (c) {year} {author}
  *

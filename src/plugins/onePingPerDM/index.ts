@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a Discord client mod
+/*
+ * Gambo, a Discord client mod
  * Copyright (c) 2023 Vendicated and contributors
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
@@ -7,8 +7,8 @@
 import { definePluginSettings } from "@api/Settings";
 import { Devs } from "@utils/constants";
 import definePlugin, { OptionType } from "@utils/types";
-import { MessageJSON } from "@gambcord/discord-types";
-import { ChannelType } from "@gambcord/discord-types/enums";
+import { MessageJSON } from "@gambo/discord-types";
+import { ChannelType } from "@gambo/discord-types/enums";
 import { ChannelStore, ReadStateStore, UserStore } from "@webpack/common";
 
 const settings = definePluginSettings({
@@ -37,7 +37,7 @@ export default definePlugin({
     name: "OnePingPerDM",
     description: "If unread messages are sent by a user in DMs multiple times, you'll only receive one audio ping. Read the messages to reset the limit",
     tags: ["Notifications", "Customisation"],
-    authors: [Devs.ProffDea],
+    authors: [Devs.o0],
     settings,
     patches: [
         {

@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a Discord client mod
+/*
+ * Gambo, a Discord client mod
  * Copyright (c) 2025 Vendicated and contributors
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
@@ -12,7 +12,7 @@ import { Heading } from "@components/Heading";
 import { resolveError } from "@components/settings/tabs/plugins/components/Common";
 import { debounce } from "@shared/debounce";
 import { classNameFactory } from "@utils/css";
-import { ActivityType } from "@gambcord/discord-types/enums";
+import { ActivityType } from "@gambo/discord-types/enums";
 import { Select, Text, TextInput, useState } from "@webpack/common";
 
 import CustomRPCPlugin, { setRpc, settings, TimestampMode } from ".";

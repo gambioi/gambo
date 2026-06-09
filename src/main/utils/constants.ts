@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2022 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,10 +19,10 @@
 import { app } from "electron";
 import { join } from "path";
 
-export const DATA_DIR = process.env.GAMBCORD_USER_DATA_DIR ?? (
+export const DATA_DIR = process.env.GAMBO_USER_DATA_DIR ?? (
     process.env.DISCORD_USER_DATA_DIR
-        ? join(process.env.DISCORD_USER_DATA_DIR, "..", "GambcordData")
-        : join(app.getPath("userData"), "..", "Gambcord")
+        ? join(process.env.DISCORD_USER_DATA_DIR, "..", "GamboData")
+        : join(app.getPath("userData"), "..", "Gambo")
 );
 export const SETTINGS_DIR = join(DATA_DIR, "settings");
 export const THEMES_DIR = join(DATA_DIR, "themes");

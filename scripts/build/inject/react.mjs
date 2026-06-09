@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2022 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,6 +16,6 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-export const GambcordFragment = /* #__PURE__*/ Symbol.for("react.fragment");
-export let GambcordCreateElement =
-    (...args) => (GambcordCreateElement = Gambcord.Webpack.Common.React.createElement)(...args);
+export const GamboFragment = /* #__PURE__*/ Symbol.for("react.fragment");
+export let GamboCreateElement =
+    (...args) => (GamboCreateElement = Gambo.Webpack.Common.React.createElement)(...args);

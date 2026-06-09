@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2022 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,7 +18,7 @@
 
 import { fetchBuffer, fetchJson } from "@main/utils/http";
 import { IpcEvents } from "@shared/IpcEvents";
-import { GAMBCORD_USER_AGENT } from "@shared/gambcordUserAgent";
+import { GAMBO_USER_AGENT } from "@shared/gamboUserAgent";
 import { ipcMain } from "electron";
 import { writeFile } from "fs/promises";
 import { join } from "path";
@@ -26,7 +26,7 @@ import { join } from "path";
 import gitHash from "~git-hash";
 import gitRemote from "~git-remote";
 
-import { serializeErrors, GAMBCORD_FILES } from "./common";
+import { serializeErrors, GAMBO_FILES } from "./common";
 
 const API_BASE = `https://api.github.com/repos/${gitRemote}`;
 let PendingUpdates = [] as [string, string][];
@@ -37,7 +37,7 @@ async function githubGet<T = any>(endpoint: string) {
             Accept: "application/vnd.github+json",
             // "All API requests MUST include a valid User-Agent header.
             // Requests with no User-Agent header will be rejected."
-            "User-Agent": GAMBCORD_USER_AGENT
+            "User-Agent": GAMBO_USER_AGENT
         }
     });
 }
@@ -46,14 +46,23 @@ async function calculateGitChanges() {
     const isOutdated = await fetchUpdates();
     if (!isOutdated) return [];
 
-    const data = await githubGet(`/compare/${gitHash}...HEAD`);
+    // Le changelog (compare) nécessite que les deux commits existent dans le repo.
+    // Si ça échoue (build sans source poussée, hash manquant, etc.), on n'empêche
+    // PAS la mise à jour : on renvoie une entrée générique pour que le bouton
+    // "Update Now" s'affiche quand même.
+    try {
+        const data = await githubGet(`/compare/${gitHash}...HEAD`);
+        const commits = data?.commits?.map((c: any) => ({
+            hash: c.sha.slice(0, 7),
+            author: c.author?.login ?? "?",
+            message: c.commit.message.split("\n")[0]
+        })) ?? [];
+        if (commits.length) return commits;
+    } catch {
+        // ignore — on retombe sur l'entrée générique ci-dessous
+    }
 
-    return data.commits.map((c: any) => ({
-        // github api only sends the long sha
-        hash: c.sha.slice(0, 7),
-        author: c.author.login,
-        message: c.commit.message.split("\n")[0]
-    }));
+    return [{ hash: "update", author: "Gambo", message: "Nouvelle mise à jour disponible" }];
 }
 
 async function fetchUpdates() {
@@ -64,7 +73,7 @@ async function fetchUpdates() {
         return false;
 
     data.assets.forEach(({ name, browser_download_url }) => {
-        if (GAMBCORD_FILES.some(s => name.startsWith(s))) {
+        if (GAMBO_FILES.some(s => name.startsWith(s))) {
             PendingUpdates.push([name, browser_download_url]);
         }
     });

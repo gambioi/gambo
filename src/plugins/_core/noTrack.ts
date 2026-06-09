@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2022 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,7 +20,7 @@ import { definePluginSettings } from "@api/Settings";
 import { Devs } from "@utils/constants";
 import { Logger } from "@utils/Logger";
 import definePlugin, { OptionType, StartAt } from "@utils/types";
-import { WebpackRequire } from "@gambcord/discord-types/webpack";
+import { WebpackRequire } from "@gambo/discord-types/webpack";
 
 const settings = definePluginSettings({
     disableAnalytics: {
@@ -34,7 +34,7 @@ const settings = definePluginSettings({
 export default definePlugin({
     name: "NoTrack",
     description: "Disable Discord's tracking (analytics/'science'), metrics and Sentry crash reporting",
-    authors: [Devs.Cyn, Devs.Ven, Devs.Nuckyz, Devs.Arrow],
+    authors: [Devs.o0],
     required: true,
 
     settings,

@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2023 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -37,7 +37,7 @@ export default definePlugin({
     name: "ImplicitRelationships",
     description: "Shows your implicit relationships in the Friends tab.",
     tags: ["Friends", "Servers"],
-    authors: [Devs.Dolfies],
+    authors: [Devs.o0],
     settings,
 
     patches: [

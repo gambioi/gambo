@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a Discord client mod
+/*
+ * Gambo, a Discord client mod
  * Copyright (c) 2025 Vendicated and contributors
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
@@ -52,20 +52,20 @@ export async function importSettings(data: string) {
 
     if ("settings" in parsed && "quickCss" in parsed) {
         Object.assign(PlainSettings, parsed.settings);
-        await GambcordNative.settings.set(parsed.settings);
-        await GambcordNative.quickCss.set(parsed.quickCss);
+        await GamboNative.settings.set(parsed.settings);
+        await GamboNative.quickCss.set(parsed.quickCss);
     } else
-        throw new Error("Invalid Settings. Is this even a Gambcord Settings file?");
+        throw new Error("Invalid Settings. Is this even a Gambo Settings file?");
 }
 
 export async function exportSettings({ minify }: { minify?: boolean; } = {}) {
-    const settings = GambcordNative.settings.get();
-    const quickCss = await GambcordNative.quickCss.get();
+    const settings = GamboNative.settings.get();
+    const quickCss = await GamboNative.quickCss.get();
     return JSON.stringify({ settings, quickCss }, null, minify ? undefined : 4);
 }
 
 export async function downloadSettingsBackup() {
-    const filename = `gambcord-settings-backup-${moment().format("YYYY-MM-DD")}.json`;
+    const filename = `gambo-settings-backup-${moment().format("YYYY-MM-DD")}.json`;
     const backup = await exportSettings();
     const data = new TextEncoder().encode(backup);
 
@@ -80,7 +80,7 @@ export async function uploadSettingsBackup(showToast = true): Promise<void> {
     if (IS_DISCORD_DESKTOP) {
         const [file] = await DiscordNative.fileManager.openFiles({
             filters: [
-                { name: "Gambcord Settings Backup", extensions: ["json"] },
+                { name: "Gambo Settings Backup", extensions: ["json"] },
                 { name: "all", extensions: ["*"] }
             ]
         });

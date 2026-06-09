@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2022 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,7 +22,7 @@ import definePlugin from "@utils/types";
 export default definePlugin({
     name: "UserSettingsAPI",
     description: "Patches Discord's UserSettings to expose their group and name.",
-    authors: [Devs.Nuckyz],
+    authors: [Devs.o0],
 
     patches: [
         {

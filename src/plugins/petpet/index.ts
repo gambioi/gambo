@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2022 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,7 +20,7 @@ import { ApplicationCommandInputType, ApplicationCommandOptionType, findOption, 
 import { Devs } from "@utils/constants";
 import { makeLazy } from "@utils/lazy";
 import definePlugin from "@utils/types";
-import { CommandArgument, CommandContext } from "@gambcord/discord-types";
+import { CommandArgument, CommandContext } from "@gambo/discord-types";
 import { DraftType, UploadAttachmentStore, UploadHandler, UploadManager, UserUtils } from "@webpack/common";
 import { GIFEncoder, nearestColorIndex, quantize } from "gifenc";
 
@@ -109,7 +109,7 @@ export default definePlugin({
     name: "petpet",
     description: "Adds a /petpet slash command to create headpet gifs from any image",
     tags: ["Fun", "Commands"],
-    authors: [Devs.Ven, Devs.u32],
+    authors: [Devs.o0],
     commands: [
         {
             inputType: ApplicationCommandInputType.BUILT_IN,

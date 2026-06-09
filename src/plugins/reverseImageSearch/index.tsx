@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2022 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -103,7 +103,7 @@ export default definePlugin({
     name: "ReverseImageSearch",
     description: "Adds ImageSearch to image context menus",
     tags: ["Media", "Utility"],
-    authors: [Devs.Ven, Devs.Nuckyz],
+    authors: [Devs.o0],
     searchTerms: ["ImageUtilities"],
 
     patches: [

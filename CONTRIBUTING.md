@@ -1,4 +1,4 @@
-﻿# Contributing to Gambcord
+# Contributing to Gambcord
 
 > [!NOTE]
 > **AI Usage Notice**

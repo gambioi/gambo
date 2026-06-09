@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2022 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,7 +17,7 @@
 */
 
 import { Logger } from "@utils/Logger";
-import type { Channel, CloudUpload, CustomEmoji, Message } from "@gambcord/discord-types";
+import type { Channel, CloudUpload, CustomEmoji, Message } from "@gambo/discord-types";
 import { MessageStore } from "@webpack/common";
 import type { Promisable } from "type-fest";
 

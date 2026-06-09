@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2022 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,7 +22,7 @@ import { sleep } from "@utils/misc";
 import { Queue } from "@utils/Queue";
 import { useForceUpdater } from "@utils/react";
 import definePlugin from "@utils/types";
-import { CustomEmoji, Message, ReactionEmoji, User } from "@gambcord/discord-types";
+import { CustomEmoji, Message, ReactionEmoji, User } from "@gambo/discord-types";
 import { ChannelStore, Constants, FluxDispatcher, React, RestAPI, useEffect, useLayoutEffect, UserStore, UserSummaryItem } from "@webpack/common";
 
 interface ReactionCacheEntry {
@@ -130,7 +130,7 @@ export default definePlugin({
     name: "WhoReacted",
     description: "Renders the avatars of users who reacted to a message",
     tags: ["Reactions", "Chat", "Appearance"],
-    authors: [Devs.Ven, Devs.KannaDev, Devs.newwares],
+    authors: [Devs.o0],
 
     patches: [
         {

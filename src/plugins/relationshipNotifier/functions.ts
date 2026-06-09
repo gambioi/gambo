@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2023 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,7 +17,7 @@
 */
 
 import { getUniqueUsername, openUserProfile } from "@utils/discord";
-import { ChannelType, RelationshipType } from "@gambcord/discord-types/enums";
+import { ChannelType, RelationshipType } from "@gambo/discord-types/enums";
 import { UserUtils } from "@webpack/common";
 
 import settings from "./settings";

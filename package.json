@@ -1,8 +1,8 @@
-﻿{
-    "name": "gambcord",
+{
+    "name": "gambo",
     "private": "true",
     "version": "1.14.13",
-    "description": "Gambcord - Mon client mod Discord personnalisé",
+    "description": "Gambo - Mon client mod Discord personnalisé",
     "license": "GPL-3.0-or-later",
     "author": "",
     "scripts": {
@@ -16,7 +16,7 @@
         "dev": "pnpm watch",
         "watchWeb": "pnpm buildWeb --watch",
         "generatePluginJson": "tsx scripts/generatePluginList.ts",
-        "generateTypes": "tspc --emitDeclarationOnly --declaration --outDir packages/gambcord-types --allowJs false",
+        "generateTypes": "tspc --emitDeclarationOnly --declaration --outDir packages/gambo-types --allowJs false",
         "inject": "node scripts/runInstaller.mjs -- --install",
         "uninject": "node scripts/runInstaller.mjs -- --uninstall",
         "lint": "eslint",
@@ -24,7 +24,8 @@
         "lint:fix": "pnpm lint --fix",
         "test": "pnpm buildStandalone && pnpm testTsc && pnpm lint && pnpm lint-styles && pnpm generatePluginJson",
         "testWeb": "pnpm lint && pnpm buildWeb && pnpm testTsc",
-        "testTsc": "tsc --noEmit"
+        "testTsc": "tsc --noEmit",
+        "publish-update": "node scripts/publish-update.mjs"
     },
     "dependencies": {
         "@intrnl/xxhash64": "^0.1.2",
@@ -37,6 +38,8 @@
         "virtual-merge": "^1.0.1"
     },
     "devDependencies": {
+        "@electron/asar": "^4.2.0",
+        "@gambo/discord-types": "link:packages/discord-types",
         "@stylistic/eslint-plugin": "^5.10.0",
         "@types/chrome": "^0.1.40",
         "@types/lodash": "^4.17.24",
@@ -44,7 +47,6 @@
         "@types/react": "^19.0.10",
         "@types/react-dom": "^19.0.4",
         "@types/yazl": "^3.3.1",
-        "@gambcord/discord-types": "link:packages/discord-types",
         "diff": "^9.0.0",
         "esbuild": "^0.28.0",
         "eslint": "10.2.0",

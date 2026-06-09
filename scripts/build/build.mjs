@@ -1,6 +1,6 @@
-﻿#!/usr/bin/node
+#!/usr/bin/node
 /*
- * Gambcord, a modification for Discord's desktop app
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2022 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -56,7 +56,7 @@ const nodeCommonOpts = {
     external: ["electron", "original-fs", "~pluginNatives", ...commonOpts.external]
 };
 
-const sourceMapFooter = s => watch ? "" : `//# sourceMappingURL=gambcord://${s}.js.map`;
+const sourceMapFooter = s => watch ? "" : `//# sourceMappingURL=gambo://${s}.js.map`;
 const sourcemap = watch ? "inline" : "external";
 
 /**
@@ -122,7 +122,7 @@ const buildConfigs = ([
         ...nodeCommonOpts,
         entryPoints: ["src/main/index.ts"],
         outfile: "dist/patcher.js",
-        footer: { js: "//# sourceURL=file:///GambcordPatcher\n" + sourceMapFooter("patcher") },
+        footer: { js: "//# sourceURL=file:///GamboPatcher\n" + sourceMapFooter("patcher") },
         sourcemap,
         plugins: [
             // @ts-ignore this is never undefined
@@ -137,12 +137,12 @@ const buildConfigs = ([
     },
     {
         ...commonOpts,
-        entryPoints: ["src/Gambcord.ts"],
+        entryPoints: ["src/Gambo.ts"],
         outfile: "dist/renderer.js",
         format: "iife",
         target: ["esnext"],
-        footer: { js: "//# sourceURL=file:///GambcordRenderer\n" + sourceMapFooter("renderer") },
-        globalName: "Gambcord",
+        footer: { js: "//# sourceURL=file:///GamboRenderer\n" + sourceMapFooter("renderer") },
+        globalName: "Gambo",
         sourcemap,
         plugins: [
             globPlugins("discordDesktop"),
@@ -158,7 +158,7 @@ const buildConfigs = ([
         ...nodeCommonOpts,
         entryPoints: ["src/preload.ts"],
         outfile: "dist/preload.js",
-        footer: { js: "//# sourceURL=file:///GambcordPreload\n" + sourceMapFooter("preload") },
+        footer: { js: "//# sourceURL=file:///GamboPreload\n" + sourceMapFooter("preload") },
         sourcemap,
         define: {
             ...defines,
@@ -167,12 +167,12 @@ const buildConfigs = ([
         }
     },
 
-    // Gambcord Desktop main & renderer & preload
+    // Gambo Desktop main & renderer & preload
     {
         ...nodeCommonOpts,
         entryPoints: ["src/main/index.ts"],
-        outfile: "dist/gambcordDesktopMain.js",
-        footer: { js: "//# sourceURL=file:///GambcordDesktopMain\n" + sourceMapFooter("gambcordDesktopMain") },
+        outfile: "dist/gamboDesktopMain.js",
+        footer: { js: "//# sourceURL=file:///GamboDesktopMain\n" + sourceMapFooter("gamboDesktopMain") },
         sourcemap,
         plugins: [
             ...nodeCommonOpts.plugins,
@@ -186,12 +186,12 @@ const buildConfigs = ([
     },
     {
         ...commonOpts,
-        entryPoints: ["src/Gambcord.ts"],
-        outfile: "dist/gambcordDesktopRenderer.js",
+        entryPoints: ["src/Gambo.ts"],
+        outfile: "dist/gamboDesktopRenderer.js",
         format: "iife",
         target: ["esnext"],
-        footer: { js: "//# sourceURL=file:///GambcordDesktopRenderer\n" + sourceMapFooter("gambcordDesktopRenderer") },
-        globalName: "Gambcord",
+        footer: { js: "//# sourceURL=file:///GamboDesktopRenderer\n" + sourceMapFooter("gamboDesktopRenderer") },
+        globalName: "Gambo",
         sourcemap,
         plugins: [
             globPlugins("vesktop"),
@@ -206,8 +206,8 @@ const buildConfigs = ([
     {
         ...nodeCommonOpts,
         entryPoints: ["src/preload.ts"],
-        outfile: "dist/gambcordDesktopPreload.js",
-        footer: { js: "//# sourceURL=file:///GambcordPreload\n" + sourceMapFooter("gambcordDesktopPreload") },
+        outfile: "dist/gamboDesktopPreload.js",
+        footer: { js: "//# sourceURL=file:///GamboPreload\n" + sourceMapFooter("gamboDesktopPreload") },
         sourcemap,
         define: {
             ...defines,

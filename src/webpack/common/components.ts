@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2023 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -25,16 +25,16 @@ import { Paragraph } from "@components/Paragraph";
 import { TooltipContainer as TooltipContainerComponent } from "@components/TooltipContainer";
 import { TooltipFallback } from "@components/TooltipFallback";
 import { LazyComponent } from "@utils/lazyReact";
-import * as t from "@gambcord/discord-types";
+import * as t from "@gambo/discord-types";
 import { filters, find, findCssClassesLazy, mapMangledCssClasses, mapMangledModuleLazy, proxyLazyWebpack, waitFor } from "@webpack";
 
 import { waitForComponent } from "./internal";
 
 export const Forms = {
     // TODO: Stop using this and use Heading/Paragraph directly
-    /** @deprecated use Heading from Gambcord */
+    /** @deprecated use Heading from Gambo */
     FormTitle: Heading,
-    /** @deprecated use Paragraph from Gambcord */
+    /** @deprecated use Paragraph from Gambo */
     FormText: Paragraph,
     /** @deprecated don't use this */
     FormSection: "section" as never, // Backwards compat since Vesktop uses this
@@ -43,17 +43,17 @@ export const Forms = {
 };
 
 // TODO: Stop using this and use Paragraph/Span directly
-/** @deprecated use Paragraph, Span, or BaseText from Gambcord */
+/** @deprecated use Paragraph, Span, or BaseText from Gambo */
 export const Text = TextCompat;
-/** @deprecated use Button from Gambcord */
+/** @deprecated use Button from Gambo */
 export const Button = ButtonCompat;
-/** @deprecated Use FormSwitch from Gambcord */
+/** @deprecated Use FormSwitch from Gambo */
 export const Switch = FormSwitchCompat as never;
 
 export const Checkbox = waitForComponent<t.Checkbox>("Checkbox", filters.componentByCode('"data-toggleable-component":"checkbox'));
 
 export const Tooltip = waitForComponent<t.Tooltip>("Tooltip", m => m.prototype?.shouldShowTooltip && m.prototype.render, TooltipFallback);
-/** @deprecated import from @gambcord/components */
+/** @deprecated import from @gambo/components */
 export const TooltipContainer = TooltipContainerComponent as never;
 
 // FIXME: t.TextInput was for the old void components, and is not 100% correct for the mana component

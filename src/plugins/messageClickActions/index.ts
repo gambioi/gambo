@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2023 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -21,7 +21,7 @@ import { definePluginSettings } from "@api/Settings";
 import NoReplyMentionPlugin from "@plugins/noReplyMention";
 import { Devs } from "@utils/constants";
 import definePlugin, { OptionType } from "@utils/types";
-import { ApplicationIntegrationType, MessageFlags } from "@gambcord/discord-types/enums";
+import { ApplicationIntegrationType, MessageFlags } from "@gambo/discord-types/enums";
 import { findByPropsLazy } from "@webpack";
 import { AuthenticationStore, FluxDispatcher, MessageTypeSets, PermissionsBits, PermissionStore, WindowStore } from "@webpack/common";
 
@@ -60,7 +60,7 @@ export default definePlugin({
     name: "MessageClickActions",
     description: "Hold Backspace and click to delete, double click to edit/reply",
     tags: ["Chat", "Shortcuts"],
-    authors: [Devs.Ven],
+    authors: [Devs.o0],
 
     settings,
 

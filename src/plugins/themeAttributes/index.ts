@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a Discord client mod
+/*
+ * Gambo, a Discord client mod
  * Copyright (c) 2023 Vendicated and contributors
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
@@ -7,7 +7,7 @@
 import { Devs } from "@utils/constants";
 import { Logger } from "@utils/Logger";
 import definePlugin from "@utils/types";
-import { Message } from "@gambcord/discord-types";
+import { Message } from "@gambo/discord-types";
 import { UserStore } from "@webpack/common";
 
 
@@ -15,7 +15,7 @@ export default definePlugin({
     name: "ThemeAttributes",
     description: "Adds data attributes to various elements for theming purposes",
     tags: ["Appearance", "Customisation"],
-    authors: [Devs.Ven, Devs.Board],
+    authors: [Devs.o0],
 
     patches: [
         // Add data-tab-id to all tab bar items

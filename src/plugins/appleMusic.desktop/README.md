@@ -1,4 +1,4 @@
-﻿# AppleMusicRichPresence
+# AppleMusicRichPresence
 
 This plugin enables Discord rich presence for your Apple Music! (This only works on macOS with the Music app.)
 

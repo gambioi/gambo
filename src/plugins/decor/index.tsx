@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a Discord client mod
+/*
+ * Gambo, a Discord client mod
  * Copyright (c) 2023 Vendicated, FieryFlames and contributors
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
@@ -28,7 +28,7 @@ export default definePlugin({
     name: "Decor",
     description: "Create and use your own custom avatar decorations, or pick your favorite from the presets.",
     tags: ["Appearance", "Customisation"],
-    authors: [Devs.FieryFlames],
+    authors: [Devs.o0],
     patches: [
         // Patch MediaResolver to return correct URL for Decor avatar decorations
         {

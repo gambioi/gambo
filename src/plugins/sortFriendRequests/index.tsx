@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2022 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -24,7 +24,7 @@ import { TooltipContainer } from "@components/TooltipContainer";
 import { Devs } from "@utils/constants";
 import { classNameFactory } from "@utils/css";
 import definePlugin, { OptionType } from "@utils/types";
-import { User } from "@gambcord/discord-types";
+import { User } from "@gambo/discord-types";
 import { DateUtils, RelationshipStore, Text } from "@webpack/common";
 import { PropsWithChildren } from "react";
 
@@ -51,7 +51,7 @@ const settings = definePluginSettings({
 
 export default definePlugin({
     name: "SortFriendRequests",
-    authors: [Devs.Megu],
+    authors: [Devs.o0],
     description: "Sorts friend requests by date of receipt",
     tags: ["Friends", "Organisation"],
     settings,

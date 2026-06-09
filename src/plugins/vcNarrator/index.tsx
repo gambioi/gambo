@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2023 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -156,7 +156,7 @@ export default definePlugin({
     name: "VcNarrator",
     description: "Announces when users join, leave, or move voice channels via narrator",
     tags: ["Voice", "Accessibility"],
-    authors: [Devs.Ven],
+    authors: [Devs.o0],
     reporterTestable: ReporterTestable.None,
 
     settings,

@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2023 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,7 +16,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import { Message } from "@gambcord/discord-types";
+import { Message } from "@gambo/discord-types";
 import { Parser, useEffect, useState } from "@webpack/common";
 
 import { TranslateIcon } from "./TranslateIcon";
@@ -44,7 +44,7 @@ export function TranslationAccessory({ message }: { message: Message; }) {
 
     useEffect(() => {
         // Ignore MessageLinkEmbeds messages
-        if ((message as any).gambcordEmbeddedBy) return;
+        if ((message as any).gamboEmbeddedBy) return;
 
         TranslationSetters.set(message.id, setTranslation);
 

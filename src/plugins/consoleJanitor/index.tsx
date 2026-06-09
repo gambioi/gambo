@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a Discord client mod
+/*
+ * Gambo, a Discord client mod
  * Copyright (c) 2024 Vendicated and contributors
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
@@ -107,7 +107,7 @@ const settings = definePluginSettings({
 export default definePlugin({
     name: "ConsoleJanitor",
     description: "Disables annoying console messages/errors",
-    authors: [Devs.Nuckyz, Devs.sadan],
+    authors: [Devs.o0],
     tags: ["Developers", "Console", "Utility"],
     settings,
 

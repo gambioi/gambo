@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2022 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -21,7 +21,7 @@ import { Devs } from "@utils/constants";
 import { runtimeHashMessageKey } from "@utils/intlHash";
 import { Logger } from "@utils/Logger";
 import definePlugin, { OptionType } from "@utils/types";
-import { Message } from "@gambcord/discord-types";
+import { Message } from "@gambo/discord-types";
 import { i18n, RelationshipStore } from "@webpack/common";
 
 interface MessageDeleteProps {
@@ -49,7 +49,7 @@ const settings = definePluginSettings({
 export default definePlugin({
     name: "NoBlockedMessages",
     description: "Hides all blocked/ignored messages from chat completely",
-    authors: [Devs.rushii, Devs.Samu, Devs.jamesbt365],
+    authors: [Devs.o0],
     tags: ["Accessibility", "Chat"],
     settings,
 

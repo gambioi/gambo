@@ -1,11 +1,11 @@
-﻿// ==UserScript==
-// @name            Gambcord
+// ==UserScript==
+// @name            Gambo
 // @description     A Discord client mod - Web version
 // @version         %version%
 // @author          Vendicated (https://github.com/Vendicated)
-// @namespace       https://github.com/Vendicated/Gambcord
-// @supportURL      https://github.com/Vendicated/Gambcord
-// @icon            https://raw.githubusercontent.com/Vendicated/Gambcord/refs/heads/main/browser/icon.png
+// @namespace       https://github.com/Vendicated/Gambo
+// @supportURL      https://github.com/Vendicated/Gambo
+// @icon            https://raw.githubusercontent.com/Vendicated/Gambo/refs/heads/main/browser/icon.png
 // @license         GPL-3.0
 // @match           *://*.discord.com/*
 // @grant           GM_xmlhttpRequest
@@ -23,4 +23,4 @@
 // to overwrite stuff on the window on sites that use CSP. Use Tampermonkey or use a chromium based browser
 // https://github.com/violentmonkey/violentmonkey/issues/997
 
-// this is a compiled and minified version of Gambcord. For the source code, visit the GitHub repo
+// this is a compiled and minified version of Gambo. For the source code, visit the GitHub repo

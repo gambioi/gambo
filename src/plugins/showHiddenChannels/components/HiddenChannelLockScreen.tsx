@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2022 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -23,7 +23,7 @@ import openRolesAndUsersPermissionsModal from "@plugins/permissionsViewer/compon
 import { sortPermissionOverwrites } from "@plugins/permissionsViewer/utils";
 import { classes } from "@utils/misc";
 import { formatDuration } from "@utils/text";
-import type { Channel, RoleOrUserPermission } from "@gambcord/discord-types";
+import type { Channel, RoleOrUserPermission } from "@gambo/discord-types";
 import { findByPropsLazy, findComponentByCodeLazy, findCssClassesLazy } from "@webpack";
 import { EmojiStore, FluxDispatcher, GuildMemberStore, GuildStore, Parser, PermissionsBits, PermissionStore, SnowflakeUtils, Text, Timestamp, Tooltip, useEffect, useState } from "@webpack/common";
 import { ComponentType } from "react";

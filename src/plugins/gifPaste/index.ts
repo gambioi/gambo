@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2023 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -25,7 +25,7 @@ export default definePlugin({
     name: "GifPaste",
     description: "Makes picking a gif in the gif picker insert a link into the chatbox instead of instantly sending it",
     tags: ["Media", "Chat"],
-    authors: [Devs.Ven],
+    authors: [Devs.o0],
 
     patches: [{
         find: "handleSelectGIF=",

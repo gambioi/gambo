@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2023 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,7 +20,7 @@ import { isPluginEnabled } from "@api/PluginManager";
 import { definePluginSettings } from "@api/Settings";
 import { getUserSettingLazy } from "@api/UserSettings";
 import ErrorBoundary from "@components/ErrorBoundary";
-import GambcordToolboxPlugin from "@plugins/gambcordToolbox";
+import GamboToolboxPlugin from "@plugins/gamboToolbox";
 import { Devs } from "@utils/constants";
 import definePlugin, { OptionType } from "@utils/types";
 import { findComponentByCodeLazy } from "@webpack";
@@ -43,10 +43,10 @@ const settings = definePluginSettings({
         description: "Where to show the game activity toggle button",
         options: [
             { label: "Next to Mute/Deafen", value: "PANEL", default: true },
-            { label: "Gambcord Toolbox", value: "TOOLBOX" }
+            { label: "Gambo Toolbox", value: "TOOLBOX" }
         ],
         get hidden() {
-            return !isPluginEnabled(GambcordToolboxPlugin.name);
+            return !isPluginEnabled(GamboToolboxPlugin.name);
         }
     }
 });
@@ -86,7 +86,7 @@ function GameActivityToggleButton(props: { nameplate?: any; }) {
     const { location } = settings.use(["location"]);
     const showCurrentGame = ShowCurrentGame.useSetting();
 
-    if (location !== "PANEL" && isPluginEnabled(GambcordToolboxPlugin.name)) return null;
+    if (location !== "PANEL" && isPluginEnabled(GamboToolboxPlugin.name)) return null;
 
     return (
         <Button
@@ -105,7 +105,7 @@ export default definePlugin({
     name: "GameActivityToggle",
     description: "Adds a button next to the mic and deafen button to toggle game activity.",
     tags: ["Activity", "Shortcuts"],
-    authors: [Devs.Nuckyz, Devs.RuukuLada],
+    authors: [Devs.o0],
     dependencies: ["UserSettingsAPI"],
     settings,
 

@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2022 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,8 +22,8 @@ import { LazyComponent } from "@utils/lazyReact";
 import { Logger } from "@utils/Logger";
 import { canonicalizeMatch } from "@utils/patches";
 import { escapeRegExp } from "@utils/text";
-import type { FluxStore } from "@gambcord/discord-types";
-import type { ModuleExports, ModuleFactory, WebpackRequire } from "@gambcord/discord-types/webpack";
+import type { FluxStore } from "@gambo/discord-types";
+import type { ModuleExports, ModuleFactory, WebpackRequire } from "@gambo/discord-types/webpack";
 
 import type { AnyModuleFactory, AnyWebpackRequire } from "./types";
 
@@ -71,7 +71,7 @@ export const filters = {
             return stringMatches(Function.prototype.toString.call(m), parsedCode);
         };
 
-        filter.$$gambcordProps = [...code];
+        filter.$$gamboProps = [...code];
         return filter;
     },
     byStoreName: (name: StoreNameFilter): FilterFn => m =>
@@ -93,7 +93,7 @@ export const filters = {
             return false;
         };
 
-        filter.$$gambcordProps = [...code];
+        filter.$$gamboProps = [...code];
         return filter;
     },
 

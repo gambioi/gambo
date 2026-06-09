@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2023 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,7 +20,7 @@ import { ChatBarButton, ChatBarButtonFactory } from "@api/ChatButtons";
 import { generateId, sendBotMessage } from "@api/Commands";
 import { Devs } from "@utils/constants";
 import definePlugin, { IconComponent, StartAt } from "@utils/types";
-import { CloudUpload, MessageAttachment } from "@gambcord/discord-types";
+import { CloudUpload, MessageAttachment } from "@gambo/discord-types";
 import { DraftStore, DraftType, UploadAttachmentStore, UserStore, useStateFromStores } from "@webpack/common";
 
 const getDraft = (channelId: string) => DraftStore.getDraft(channelId, DraftType.ChannelMessage);
@@ -124,7 +124,7 @@ export default definePlugin({
     name: "PreviewMessage",
     description: "Lets you preview your message before sending it.",
     tags: ["Chat", "Utility"],
-    authors: [Devs.Aria],
+    authors: [Devs.o0],
     // start early to ensure we're the first plugin to add our button
     // This makes the popping in less awkward
     startAt: StartAt.Init,

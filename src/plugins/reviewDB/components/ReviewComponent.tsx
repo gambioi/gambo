@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2022 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -24,7 +24,7 @@ import { canBlockReviewAuthor, canDeleteReview, canReportReview, cl, showToast }
 import { openUserProfile } from "@utils/discord";
 import { classes } from "@utils/misc";
 import { findCssClassesLazy } from "@webpack";
-import { ConfirmModal,IconUtils, openModal as openGambcordModal, Parser, Timestamp, useState } from "@webpack/common";
+import { ConfirmModal,IconUtils, openModal as openGamboModal, Parser, Timestamp, useState } from "@webpack/common";
 
 import { openBlockModal } from "./BlockedUserModal";
 import { BlockButton, DeleteButton, ReportButton } from "./MessageButton";
@@ -46,7 +46,7 @@ export default function ReviewComponent({ review, refetch, profileId }: { review
     }
 
     function delReview() {
-        openGambcordModal(props => (
+        openGamboModal(props => (
             <ConfirmModal
                 {...props}
                 title="Are you sure?"
@@ -69,7 +69,7 @@ export default function ReviewComponent({ review, refetch, profileId }: { review
     }
 
     function reportRev() {
-        openGambcordModal(props => (
+        openGamboModal(props => (
             <ConfirmModal
                 {...props}
                 title="Are you sure?"
@@ -93,7 +93,7 @@ export default function ReviewComponent({ review, refetch, profileId }: { review
         if (isAuthorBlocked)
             return unblockUser(review.sender.discordID);
 
-        openGambcordModal(props => (
+        openGamboModal(props => (
             <ConfirmModal
                 {...props}
                 title="Are you sure?"

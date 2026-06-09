@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a Discord client mod
+/*
+ * Gambo, a Discord client mod
  * Copyright (c) 2024 Vendicated and contributors
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
@@ -9,7 +9,7 @@ import { TooltipContainer } from "@components/TooltipContainer";
 import { classNameFactory } from "@utils/css";
 import { Margins } from "@utils/margins";
 import { classes } from "@utils/misc";
-import { RenderModalProps } from "@gambcord/discord-types";
+import { RenderModalProps } from "@gambo/discord-types";
 import { findCssClassesLazy } from "@webpack";
 import { Modal,openModal, TabBar, Timestamp, useState } from "@webpack/common";
 

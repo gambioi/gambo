@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2022 Sofia Lima
  *
  * This program is free software: you can redistribute it and/or modify
@@ -25,8 +25,8 @@ import { Paragraph } from "@components/Paragraph";
 import { Devs } from "@utils/constants";
 import { Logger } from "@utils/Logger";
 import definePlugin, { OptionType } from "@utils/types";
-import { Activity, ActivityAssets, ActivityButton } from "@gambcord/discord-types";
-import { ActivityFlags, ActivityStatusDisplayType, ActivityType } from "@gambcord/discord-types/enums";
+import { Activity, ActivityAssets, ActivityButton } from "@gambo/discord-types";
+import { ActivityFlags, ActivityStatusDisplayType, ActivityType } from "@gambo/discord-types/enums";
 import { ApplicationAssetUtils, AuthenticationStore, FluxDispatcher, PresenceStore } from "@webpack/common";
 
 interface TrackData {
@@ -185,7 +185,7 @@ export default definePlugin({
     name: "LastFMRichPresence",
     description: "Little plugin for Last.fm rich presence",
     tags: ["Activity", "Media"],
-    authors: [Devs.dzshn, Devs.RuiNtD, Devs.blahajZip, Devs.archeruwu],
+    authors: [Devs.o0],
 
     settings,
 

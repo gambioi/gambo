@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2023 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,7 +22,7 @@ import { join } from "path";
 readdirSync(join(__dirname, "src"))
     .forEach(child => moveSync(join(__dirname, "src", child), join(__dirname, child), { overwrite: true }));
 
-const GambcordSrc = join(__dirname, "..", "..", "src");
+const GamboSrc = join(__dirname, "..", "..", "src");
 
 for (const file of ["preload.d.ts", "userplugins", "main", "debug", "src", "browser", "scripts"]) {
     rmSync(join(__dirname, file), { recursive: true, force: true });
@@ -31,7 +31,7 @@ for (const file of ["preload.d.ts", "userplugins", "main", "debug", "src", "brow
 function copyDtsFiles(from: string, to: string) {
     for (const file of readdirSync(from, { withFileTypes: true })) {
         // bad
-        if (from === GambcordSrc && file.name === "globals.d.ts") continue;
+        if (from === GamboSrc && file.name === "globals.d.ts") continue;
 
         const fullFrom = join(from, file.name);
         const fullTo = join(to, file.name);
@@ -44,4 +44,4 @@ function copyDtsFiles(from: string, to: string) {
     }
 }
 
-copyDtsFiles(GambcordSrc, __dirname);
+copyDtsFiles(GamboSrc, __dirname);

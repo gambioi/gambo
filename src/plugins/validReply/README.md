@@ -1,4 +1,4 @@
-﻿# ValidReply
+# ValidReply
 
 Fixes referenced (replied to) messages showing as "Message could not be loaded".
 

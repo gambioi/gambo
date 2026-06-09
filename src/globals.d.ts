@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2022 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -45,9 +45,9 @@ declare global {
     export var VERSION: string;
     export var BUILD_TIMESTAMP: number;
 
-    export var GambcordNative: typeof import("./GambcordNative").default;
-    export var Gambcord: typeof import("./Gambcord");
-    export var GambcordStyles: Map<string, Style>;
+    export var GamboNative: typeof import("./GamboNative").default;
+    export var Gambo: typeof import("./Gambo");
+    export var GamboStyles: Map<string, Style>;
     export var appSettings: {
         set(setting: string, v: any): void;
     };

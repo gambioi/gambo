@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2023 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -27,7 +27,7 @@ import OpenInAppPlugin from "@plugins/openInApp";
 import { Devs } from "@utils/constants";
 import { copyWithToast } from "@utils/discord";
 import definePlugin, { OptionType } from "@utils/types";
-import { ConnectedAccount, User } from "@gambcord/discord-types";
+import { ConnectedAccount, User } from "@gambo/discord-types";
 import { findByCodeLazy, findByPropsLazy } from "@webpack";
 import { Tooltip, UserProfileStore } from "@webpack/common";
 
@@ -156,7 +156,7 @@ export default definePlugin({
     name: "ShowConnections",
     description: "Show connected accounts in user popouts",
     tags: ["Friends", "Appearance"],
-    authors: [Devs.TheKodeToad],
+    authors: [Devs.o0],
     settings,
 
     patches: [

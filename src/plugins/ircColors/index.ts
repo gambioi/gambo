@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2023 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -60,7 +60,7 @@ export default definePlugin({
     name: "IrcColors",
     description: "Makes username colors in chat unique, like in IRC clients",
     tags: ["Appearance", "Customisation"],
-    authors: [Devs.Grzesiek11, Devs.jamesbt365],
+    authors: [Devs.o0],
     settings,
 
     patches: [

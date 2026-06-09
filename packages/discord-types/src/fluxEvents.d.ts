@@ -1,16 +1,16 @@
-﻿/*
+/*
 function makeFluxEventList() {
     // prefill MESSAGE_CREATE so that typescript infers this is a String Set
     // without explicitly typing so that this function is also valid javascript
     const events = new Set(["MESSAGE_CREATE"]);
 
-    const { nodes } = Gambcord.Webpack.Common.FluxDispatcher._actionHandlers._dependencyGraph;
+    const { nodes } = Gambo.Webpack.Common.FluxDispatcher._actionHandlers._dependencyGraph;
     for (const nodeId in nodes) {
         for (const event in nodes[nodeId].actionHandler) {
             events.add(event);
         }
     }
-    for (const event in Gambcord.Webpack.Common.FluxDispatcher._subscriptions) {
+    for (const event in Gambo.Webpack.Common.FluxDispatcher._subscriptions) {
         events.add(event);
     }
 

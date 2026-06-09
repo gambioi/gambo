@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2023 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -63,7 +63,7 @@ export const settings = definePluginSettings({
                 <Button
                     variant="positive"
                     onClick={() => {
-                        GambcordNative.native.openExternal("https://github.com/sponsors/mantikafasi");
+                        GamboNative.native.openExternal("https://github.com/sponsors/mantikafasi");
                     }}
                 >
                     Support ReviewDB development
@@ -75,7 +75,7 @@ export const settings = definePluginSettings({
                     if (token)
                         url += "/api/redirect?token=" + encodeURIComponent(token);
 
-                    GambcordNative.native.openExternal(url);
+                    GamboNative.native.openExternal(url);
                 }}>
                     ReviewDB website
                 </Button>

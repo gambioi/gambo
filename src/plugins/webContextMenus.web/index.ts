@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2022 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -79,7 +79,7 @@ export default definePlugin({
     name: "WebContextMenus",
     description: "Re-adds context menus missing in the web version of Discord: Links & Images (Copy/Open Link/Image), Text Area (Copy, Cut, Paste, SpellCheck)",
     tags: ["Utility"],
-    authors: [Devs.Ven],
+    authors: [Devs.o0],
     enabledByDefault: true,
     required: IS_VESKTOP,
 
@@ -116,7 +116,7 @@ export default definePlugin({
                 // Fix silly Discord calling the non web support copy
                 {
                     match: /\i\.\i\.copy/,
-                    replace: "Gambcord.Util.copyToClipboard"
+                    replace: "Gambo.Util.copyToClipboard"
                 }
             ]
         },
@@ -234,7 +234,7 @@ export default definePlugin({
                 },
                 {
                     match: /\i\.\i\.copy(?=\(\i)/,
-                    replace: "Gambcord.Util.copyToClipboard"
+                    replace: "Gambo.Util.copyToClipboard"
                 }
             ],
             all: true,

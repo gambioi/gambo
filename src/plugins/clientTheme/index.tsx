@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a Discord client mod
+/*
+ * Gambo, a Discord client mod
  * Copyright (c) 2023 Vendicated and contributors
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
@@ -27,7 +27,7 @@ export const settings = definePluginSettings({
 
 export default definePlugin({
     name: "ClientTheme",
-    authors: [Devs.Nuckyz],
+    authors: [Devs.o0],
     description: "Recreation of the old client theme experiment. Add a color to your Discord client theme",
     tags: ["Appearance", "Customisation"],
     settings,

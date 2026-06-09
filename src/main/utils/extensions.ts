@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2022 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -71,7 +71,7 @@ export async function installExt(id: string) {
 
         const buf = await fetchBuffer(url, {
             headers: {
-                "User-Agent": `Electron ${process.versions.electron} ~ Gambcord (https://github.com/Vendicated/Gambcord)`
+                "User-Agent": `Electron ${process.versions.electron} ~ Gambo (https://github.com/Vendicated/Gambo)`
             }
         });
 

@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a Discord client mod
+/*
+ * Gambo, a Discord client mod
  * Copyright (c) 2025 Vendicated and contributors
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
@@ -43,19 +43,19 @@ export const CspPolicies: PolicyMap = {
     "*.tenor.com": ImageSrc, // Tenor, used by some themes
     "files.catbox.moe": ImageAndCssSrc, // Catbox, used by some themes
 
-    "cdn.discordapp.com": ImageAndCssSrc, // Discord CDN, used by Gambcord and some themes to load media
+    "cdn.discordapp.com": ImageAndCssSrc, // Discord CDN, used by Gambo and some themes to load media
     "media.discordapp.net": ImageSrc, // Discord media CDN, possible alternative to Discord CDN
 
-    // CDNs used for some things by Gambcord.
+    // CDNs used for some things by Gambo.
     // FIXME: we really should not be using CDNs anymore
     "cdnjs.cloudflare.com": ImageScriptsAndCssSrc,
     "cdn.jsdelivr.net": ImageScriptsAndCssSrc,
 
     // Function Specific
-    "api.github.com": ConnectSrc, // used for updating Gambcord itself
+    "api.github.com": ConnectSrc, // used for updating Gambo itself
     "ws.audioscrobbler.com": ConnectSrc, // Last.fm API
     "translate-pa.googleapis.com": ConnectSrc, // Google Translate API
-    "*.gambcord.dev": ImageSrc, // VenCloud (api.gambcord.dev) and Badges (badges.gambcord.dev)
+    "*.gambo.dev": ImageSrc, // VenCloud (api.gambo.dev) and Badges (badges.gambo.dev)
     "manti.vendicated.dev": ImageSrc, // ReviewDB API
     "decor.fieryflames.dev": ConnectSrc, // Decor API
     "ugc.decor.fieryflames.dev": ImageSrc, // Decor CDN
@@ -104,13 +104,13 @@ const patchCsp = (headers: PolicyMap) => {
         };
 
         pushDirective("style-src", "'unsafe-inline'");
-        // we could make unsafe-inline safe by using strict-dynamic with a random nonce on our Gambcord loader script https://content-security-policy.com/strict-dynamic/
+        // we could make unsafe-inline safe by using strict-dynamic with a random nonce on our Gambo loader script https://content-security-policy.com/strict-dynamic/
         // HOWEVER, at the time of writing (24 Jan 2025), Discord is INSANE and also uses unsafe-inline
         // Once they stop using it, we also should
         pushDirective("script-src", "'unsafe-inline'", "'unsafe-eval'");
 
         for (const directive of ["style-src", "connect-src", "img-src", "font-src", "media-src", "worker-src"]) {
-            pushDirective(directive, "blob:", "data:", "gambcord:", "vesktop:");
+            pushDirective(directive, "blob:", "data:", "gambo:", "vesktop:");
         }
 
         for (const [host, directives] of Object.entries(NativeSettings.store.customCspRules)) {

@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2023 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -26,7 +26,7 @@ const MessagesClasses = findCssClassesLazy("messagesWrapper", "navigationDescrip
 export default definePlugin({
     name: "RevealAllSpoilers",
     description: "Reveal all spoilers in a message by Ctrl-clicking a spoiler, or in the chat with Ctrl+Shift-click",
-    authors: [Devs.whqwert],
+    authors: [Devs.o0],
     tags: ["Accessibility", "Chat", "Shortcuts", "Utility"],
     patches: [
         {

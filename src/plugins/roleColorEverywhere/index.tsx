@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2022 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -73,7 +73,7 @@ const settings = definePluginSettings({
 
 export default definePlugin({
     name: "RoleColorEverywhere",
-    authors: [Devs.KingFish, Devs.lewisakura, Devs.AutumnVN, Devs.Kyuuhachi, Devs.jamesbt365],
+    authors: [Devs.o0],
     description: "Adds the top role color anywhere possible",
     tags: ["Roles", "Appearance"],
     settings,

@@ -1,12 +1,12 @@
-﻿/*
- * Gambcord, a Discord client mod
+/*
+ * Gambo, a Discord client mod
  * Copyright (c) 2024 Vendicated and contributors
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
 import { definePluginSettings } from "@api/Settings";
 import { disableStyle, enableStyle } from "@api/Styles";
-import { buildPluginMenuEntries, buildThemeMenuEntries } from "@plugins/gambcordToolbox/menu";
+import { buildPluginMenuEntries, buildThemeMenuEntries } from "@plugins/gamboToolbox/menu";
 import { Devs } from "@utils/constants";
 import { classNameFactory } from "@utils/css";
 import { Logger } from "@utils/Logger";
@@ -77,7 +77,7 @@ function Layer({ mode, baseLayer = false, ...props }: LayerProps) {
 export default definePlugin({
     name: "BetterSettings",
     description: "Enhances your settings-menu-opening experience",
-    authors: [Devs.Kyuuhachi],
+    authors: [Devs.o0],
     tags: ["Appearance", "Customisation", "Organisation"],
     settings,
 
@@ -96,7 +96,7 @@ export default definePlugin({
             replacement: [
                 {
                     match: /class (\i)(?= extends \i\.PureComponent.+?static contextType=.+?jsx\)\(\1,\{mode:)/,
-                    replace: "var $1=$self.Layer;class GambcordPatchedOldFadeLayer",
+                    replace: "var $1=$self.Layer;class GamboPatchedOldFadeLayer",
                     predicate: () => settings.store.disableFade
                 },
                 { // Lazy-load contents
@@ -146,7 +146,7 @@ export default definePlugin({
             find: "handleOpenSettingsContextMenu=",
             replacement: {
                 match: /(?=handleOpenSettingsContextMenu=.{0,100}?null!=\i&&.{0,100}?(await [^};]*?\)\)))/,
-                replace: "_gambcordBetterSettingsEagerLoad=(async ()=>$1)();"
+                replace: "_gamboBetterSettingsEagerLoad=(async ()=>$1)();"
             },
             predicate: () => settings.store.eagerLoad
         },
@@ -168,7 +168,7 @@ export default definePlugin({
     // Thus, we sanity check webpack modules
     Layer(props: LayerProps) {
         try {
-            [FocusLock.$$gambcordGetWrappedComponent(), ComponentDispatch, Classes.layer].forEach(e => e.test);
+            [FocusLock.$$gamboGetWrappedComponent(), ComponentDispatch, Classes.layer].forEach(e => e.test);
         } catch {
             new Logger("BetterSettings").error("Failed to find some components");
             return props.children;
@@ -184,8 +184,8 @@ export default definePlugin({
             const { key, props } = item;
             if (!props) continue;
 
-            if (key === "gambcord_plugins" || key === "gambcord_themes") {
-                const children = key === "gambcord_plugins"
+            if (key === "gambo_plugins" || key === "gambo_themes") {
+                const children = key === "gambo_plugins"
                     ? buildPluginMenuEntries()
                     : buildThemeMenuEntries();
 

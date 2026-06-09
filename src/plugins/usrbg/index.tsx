@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2023 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -51,7 +51,7 @@ export default definePlugin({
     name: "USRBG",
     description: "Displays user banners from USRBG, allowing anyone to get a banner without Nitro",
     tags: ["Appearance", "Customisation"],
-    authors: [Devs.AutumnVN, Devs.katlyn, Devs.pylix, Devs.TheKodeToad],
+    authors: [Devs.o0],
     settings,
     patches: [
         {

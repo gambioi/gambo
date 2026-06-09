@@ -1,4 +1,4 @@
-﻿# Gambcord Types
+# Gambcord Types
 
 Typings for Gambcord's api, published to npm
 

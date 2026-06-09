@@ -1,4 +1,4 @@
-﻿# ShowTimeoutDuration
+# ShowTimeoutDuration
 
 Displays how much longer a user's timeout will last.
 Either in the timeout icon tooltip, or next to it, configurable via settings!

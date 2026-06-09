@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2023 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,7 +22,7 @@ import { Devs } from "@utils/constants";
 import { getIntlMessage } from "@utils/discord";
 import { NoopComponent } from "@utils/react";
 import definePlugin from "@utils/types";
-import { Message } from "@gambcord/discord-types";
+import { Message } from "@gambo/discord-types";
 import { filters, findByCodeLazy, waitFor } from "@webpack";
 import { ChannelStore, ContextMenuApi, UserStore } from "@webpack/common";
 
@@ -82,7 +82,7 @@ export default definePlugin({
     name: "FullSearchContext",
     description: "Makes the message context menu in message search results have all options you'd expect",
     tags: ["Utility"],
-    authors: [Devs.Ven, Devs.Aria],
+    authors: [Devs.o0],
 
     patches: [{
         find: "Listbox navigator was given an unhandled action",

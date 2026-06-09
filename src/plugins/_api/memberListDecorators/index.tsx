@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2022 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -24,7 +24,7 @@ import managedStyle from "./style.css?managed";
 export default definePlugin({
     name: "MemberListDecoratorsAPI",
     description: "API to add decorators to member list (both in servers and DMs)",
-    authors: [Devs.TheSun, Devs.Ven],
+    authors: [Devs.o0],
 
     managedStyle,
 
@@ -34,7 +34,7 @@ export default definePlugin({
             replacement: [
                 {
                     match: /children:\[(?=.{0,300},lostPermissionTooltipText:)/,
-                    replace: "children:[Gambcord.Api.MemberListDecorators.__getDecorators(arguments[0],'guild'),"
+                    replace: "children:[Gambo.Api.MemberListDecorators.__getDecorators(arguments[0],'guild'),"
                 }
             ]
         },
@@ -42,7 +42,7 @@ export default definePlugin({
             find: "PrivateChannel.renderAvatar",
             replacement: {
                 match: /decorators:(\i\.isSystemDM\(\)\?.+?:null)/,
-                replace: "decorators:[Gambcord.Api.MemberListDecorators.__getDecorators(arguments[0],'dm'),$1]"
+                replace: "decorators:[Gambo.Api.MemberListDecorators.__getDecorators(arguments[0],'dm'),$1]"
             }
         }
     ]

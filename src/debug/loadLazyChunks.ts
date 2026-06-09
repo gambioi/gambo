@@ -1,12 +1,12 @@
-﻿/*
- * Gambcord, a Discord client mod
+/*
+ * Gambo, a Discord client mod
  * Copyright (c) 2024 Vendicated and contributors
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
 import { Logger } from "@utils/Logger";
 import { canonicalizeMatch } from "@utils/patches";
-import { ModuleFactory } from "@gambcord/discord-types/webpack";
+import { ModuleFactory } from "@gambo/discord-types/webpack";
 import * as Webpack from "@webpack";
 import { wreq } from "@webpack";
 import { AnyModuleFactory } from "@webpack/types";

@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2023 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -31,7 +31,7 @@ for (const [plugin, methods] of Object.entries(PluginNatives)) {
     const mappings = PluginIpcMappings[plugin] = {};
 
     for (const [methodName, method] of entries) {
-        const key = `GambcordPluginNative_${plugin}_${methodName}`;
+        const key = `GamboPluginNative_${plugin}_${methodName}`;
         ipcMain.handle(key, method);
         mappings[methodName] = key;
     }

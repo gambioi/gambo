@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2023 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -82,7 +82,7 @@ export const settings = definePluginSettings({
 
 export default definePlugin({
     name: "FavoriteGifSearch",
-    authors: [Devs.Aria],
+    authors: [Devs.o0],
     description: "Adds a search bar to favorite gifs.",
     tags: ["Media", "Customisation"],
 

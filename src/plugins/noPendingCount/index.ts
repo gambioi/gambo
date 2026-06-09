@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2023 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -48,7 +48,7 @@ export default definePlugin({
     name: "NoPendingCount",
     description: "Removes the ping count of incoming friend requests, message requests, and nitro offers.",
     tags: ["Notifications", "Appearance"],
-    authors: [Devs.amia],
+    authors: [Devs.o0],
 
     settings: settings,
 

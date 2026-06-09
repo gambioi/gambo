@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a Discord client mod
+/*
+ * Gambo, a Discord client mod
  * Copyright (c) 2023 Vendicated and contributors
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
@@ -10,9 +10,9 @@ import { classNameFactory } from "@utils/css";
 import { getGuildAcronym, openImageModal, openUserProfile } from "@utils/discord";
 import { classes } from "@utils/misc";
 import { useAwaiter } from "@utils/react";
-import { Guild, RenderModalProps, User } from "@gambcord/discord-types";
+import { Guild, RenderModalProps, User } from "@gambo/discord-types";
 import { findComponentByCodeLazy, findCssClassesLazy } from "@webpack";
-import { FluxDispatcher, Forms, GuildChannelStore, GuildMemberStore, GuildRoleStore, IconUtils, Modal,openModal, Parser, PresenceStore, RelationshipStore, ScrollerThin, SnowflakeUtils, TabBar, Timestamp, useEffect, UserStore, UserUtils, useState, useStateFromStores } from "@webpack/common";
+import { FluxDispatcher, Forms, GuildChannelStore, GuildMemberStore, GuildRoleStore, IconUtils, Modal,openModal, Parser, PresenceStore, RelationshipStore, RestAPI, ScrollerThin, SnowflakeUtils, TabBar, Timestamp, useEffect, UserStore, UserUtils, useState, useStateFromStores } from "@webpack/common";
 
 const IconClasses = findCssClassesLazy("icon", "acronym", "childWrapper");
 const FriendRow = findComponentByCodeLazy("discriminatorClass:", ".isMobileOnline", "avatarSrc:");
@@ -190,10 +190,19 @@ function ServerInfoTab({ guild }: GuildProps) {
         fallbackValue: null
     });
 
+    const [guildCounts] = useAwaiter(() =>
+        RestAPI.get({ url: `/guilds/${guild.id}`, query: { with_counts: true } }).then(r => r.body),
+        { deps: [guild.id], fallbackValue: null }
+    );
+
+    const totalMembers = guildCounts?.approximate_member_count ?? guild.memberCount ?? "...";
+    const onlineMembers = guildCounts?.approximate_presence_count ?? "...";
+
     const Fields = {
         "Server Owner": owner ? Owner(guild.id, owner) : "Loading...",
         "Created At": renderTimestamp(SnowflakeUtils.extractTimestamp(guild.id)),
         "Joined At": guild.joinedAt ? renderTimestamp(guild.joinedAt.getTime()) : "-", // Not available in lurked guild
+        "Members": `${totalMembers} total · ${onlineMembers} online`,
         "Vanity Link": guild.vanityURLCode ? (<a>{`discord.gg/${guild.vanityURLCode}`}</a>) : "-", // Making the anchor href valid would cause Discord to reload
         "Preferred Locale": guild.preferredLocale || "-",
         "Verification Level": ["None", "Low", "Medium", "High", "Highest"][guild.verificationLevel] || "?",

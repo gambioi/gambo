@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2022 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -60,7 +60,7 @@ let shouldAttemptRecover = true;
 export default definePlugin({
     name: "CrashHandler",
     description: "Utility plugin for handling and possibly recovering from crashes without a restart",
-    authors: [Devs.Nuckyz],
+    authors: [Devs.o0],
     tags: ["Utility", "Developers"],
     enabledByDefault: true,
     settings,
@@ -116,7 +116,7 @@ export default definePlugin({
             try {
                 if (!hasCrashedOnce) {
                     hasCrashedOnce = true;
-                    maybePromptToUpdate("Uh oh, Discord has just crashed... but good news, there is a Gambcord update available that might fix this issue! Would you like to update now?", true);
+                    maybePromptToUpdate("Uh oh, Discord has just crashed... but good news, there is a Gambo update available that might fix this issue! Would you like to update now?", true);
                 }
             } catch { }
 

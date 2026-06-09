@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2022 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,7 +22,7 @@ import { ImageIcon } from "@components/Icons";
 import { Devs } from "@utils/constants";
 import { openImageModal } from "@utils/discord";
 import definePlugin, { OptionType } from "@utils/types";
-import type { Channel, Guild, User } from "@gambcord/discord-types";
+import type { Channel, Guild, User } from "@gambo/discord-types";
 import { GuildMemberStore, IconUtils, Menu } from "@webpack/common";
 
 
@@ -178,7 +178,7 @@ const GroupDMContext: NavContextMenuPatchCallback = (children, { channel }: Grou
 
 export default definePlugin({
     name: "ViewIcons",
-    authors: [Devs.Ven, Devs.TheKodeToad, Devs.Nuckyz, Devs.nyx],
+    authors: [Devs.o0],
     description: "Makes avatars and banners in user profiles clickable, adds View Icon/Banner entries in the user, server and group channel context menu.",
     tags: ["Media", "Servers", "Appearance"],
     searchTerms: ["ImageUtilities"],

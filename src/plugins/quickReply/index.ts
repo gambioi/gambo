@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2022 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,8 +22,8 @@ import NoBlockedMessagesPlugin from "@plugins/noBlockedMessages";
 import NoReplyMentionPlugin from "@plugins/noReplyMention";
 import { Devs, IS_MAC } from "@utils/constants";
 import definePlugin, { OptionType } from "@utils/types";
-import { Message } from "@gambcord/discord-types";
-import { MessageFlags } from "@gambcord/discord-types/enums";
+import { Message } from "@gambo/discord-types";
+import { MessageFlags } from "@gambo/discord-types/enums";
 import { ChannelStore, ComponentDispatch, FluxDispatcher as Dispatcher, MessageActions, MessageStore, MessageTypeSets, PermissionsBits, PermissionStore, RelationshipStore, SelectedChannelStore, UserStore } from "@webpack/common";
 
 let currentlyReplyingId: string | null = null;
@@ -58,7 +58,7 @@ const settings = definePluginSettings({
 
 export default definePlugin({
     name: "QuickReply",
-    authors: [Devs.fawn, Devs.Ven, Devs.pylix],
+    authors: [Devs.o0],
     description: "Reply to (ctrl + up/down) and edit (ctrl + shift + up/down) messages via keybinds",
     tags: ["Chat", "Shortcuts"],
     settings,

@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2023 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -137,7 +137,7 @@ const GRID_STYLE_NAME = "vc-betterFolders-sidebar-grid";
 export default definePlugin({
     name: "BetterFolders",
     description: "Shows server folders on dedicated sidebar and adds folder related improvements",
-    authors: [Devs.juby, Devs.AutumnVN, Devs.Nuckyz],
+    authors: [Devs.o0],
     tags: ["Organisation", "Servers", "Appearance"],
     settings,
 

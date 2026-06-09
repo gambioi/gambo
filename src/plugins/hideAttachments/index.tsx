@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2022 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -25,7 +25,7 @@ import { ImageInvisible, ImageVisible } from "@components/Icons";
 import { Devs } from "@utils/constants";
 import { classes } from "@utils/misc";
 import definePlugin from "@utils/types";
-import { Message } from "@gambcord/discord-types";
+import { Message } from "@gambo/discord-types";
 import { ChannelStore } from "@webpack/common";
 
 const KEY = "HideAttachments_HiddenIds";
@@ -56,7 +56,7 @@ export default definePlugin({
     name: "HideMedia",
     description: "Hide attachments and embeds for individual messages via hover button",
     tags: ["Chat", "Appearance"],
-    authors: [Devs.Ven],
+    authors: [Devs.o0],
     dependencies: ["MessageUpdaterAPI"],
 
     patches: [{

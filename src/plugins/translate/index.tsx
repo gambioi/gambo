@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2023 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -21,7 +21,7 @@ import "./styles.css";
 import { findGroupChildrenByChildId, NavContextMenuPatchCallback } from "@api/ContextMenu";
 import { Devs } from "@utils/constants";
 import definePlugin from "@utils/types";
-import { Message } from "@gambcord/discord-types";
+import { Message } from "@gambo/discord-types";
 import { ChannelStore, Menu } from "@webpack/common";
 
 import { settings } from "./settings";
@@ -65,7 +65,7 @@ export default definePlugin({
     name: "Translate",
     description: "Translate messages with Google Translate, DeepL or Kagi.",
     tags: ["Chat", "Utility"],
-    authors: [Devs.Ven, Devs.AshtonMemer, Devs.koish1],
+    authors: [Devs.o0],
     settings,
     contextMenus: {
         "message": messageCtxPatch

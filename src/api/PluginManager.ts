@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2022 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -32,7 +32,7 @@ import { Logger } from "@utils/Logger";
 import { onlyOnce } from "@utils/onlyOnce";
 import { canonicalizeFind, canonicalizeReplacement } from "@utils/patches";
 import { DefinedSettings, Patch, Plugin, PluginDef, PluginSettingDef, ReporterTestable, StartAt } from "@utils/types";
-import { FluxEvents } from "@gambcord/discord-types";
+import { FluxEvents } from "@gambo/discord-types";
 import { FluxDispatcher } from "@webpack/common";
 import { patches } from "@webpack/patcher";
 
@@ -74,7 +74,7 @@ export function hasAnyVisibleSettings({ settings }: Plugin) {
     return !!settings && Object.values(settings.def).some(s => !isSettingHidden(settings, s));
 }
 
-export function addPatch(newPatch: Omit<Patch, "plugin">, pluginName: string, pluginPath = `Gambcord.Plugins.plugins[${JSON.stringify(pluginName)}]`) {
+export function addPatch(newPatch: Omit<Patch, "plugin">, pluginName: string, pluginPath = `Gambo.Plugins.plugins[${JSON.stringify(pluginName)}]`) {
     // TODO: this causes crashes
     if (pluginName === "Vesktop" && newPatch.find === ".STREAMING_AUTO_STREAMER_MODE,") return;
 

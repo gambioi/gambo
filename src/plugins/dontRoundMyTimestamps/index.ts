@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2023 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,7 +22,7 @@ import { moment } from "@webpack/common";
 
 export default definePlugin({
     name: "DontRoundMyTimestamps",
-    authors: [Devs.Lexi],
+    authors: [Devs.o0],
     description: "Always rounds relative timestamps down, so 7.6y becomes 7y instead of 8y",
     tags: ["Appearance", "Utility"],
 

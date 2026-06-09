@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a Discord client mod
+/*
+ * Gambo, a Discord client mod
  * Copyright (c) 2023 Vendicated and contributors
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
@@ -22,7 +22,7 @@ export default definePlugin({
     name: "NotificationVolume",
     description: "Save your ears and set a separate volume for notifications and in-app sounds",
     tags: ["Notifications", "Voice"],
-    authors: [Devs.philipbry],
+    authors: [Devs.o0],
     settings,
     patches: [
         {

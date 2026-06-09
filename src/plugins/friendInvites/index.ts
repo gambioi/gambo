@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2023 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -27,7 +27,7 @@ export default definePlugin({
     name: "FriendInvites",
     description: "Create and manage friend invite links via slash commands (/create friend invite, /view friend invites, /revoke friend invites).",
     tags: ["Friends", "Commands"],
-    authors: [Devs.afn, Devs.Dziurwa],
+    authors: [Devs.o0],
     commands: [
         {
             name: "create friend invite",

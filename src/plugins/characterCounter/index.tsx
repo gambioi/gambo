@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a Discord client mod
+/*
+ * Gambo, a Discord client mod
  * Copyright (c) 2024 Vendicated and contributors
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
@@ -34,7 +34,7 @@ function getCounterColor(percentage: number) {
 export default definePlugin({
     name: "CharacterCounter",
     description: "Adds a character counter to the chat input",
-    authors: [Devs.thororen],
+    authors: [Devs.o0],
     tags: ["Utility"],
     settings,
     patches: [

@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2022 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -39,7 +39,7 @@ function Icon({ height = 24, width = 24, className = "icon" }: { height?: number
 
 export default definePlugin({
     name: "QuickMention",
-    authors: [Devs.kemo],
+    authors: [Devs.o0],
     description: "Adds a quick mention button to the message actions bar",
     tags: ["Chat", "Shortcuts"],
 

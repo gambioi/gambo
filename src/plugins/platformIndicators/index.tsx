@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2022 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -24,7 +24,7 @@ import { addMessageDecoration, removeMessageDecoration } from "@api/MessageDecor
 import { definePluginSettings } from "@api/Settings";
 import { Devs } from "@utils/constants";
 import definePlugin, { OptionType } from "@utils/types";
-import { DiscordPlatform, OnlineStatus, User } from "@gambcord/discord-types";
+import { DiscordPlatform, OnlineStatus, User } from "@gambo/discord-types";
 import { filters, findStoreLazy, mapMangledModuleLazy } from "@webpack";
 import { AuthenticationStore, PresenceStore, Tooltip, UserStore, useStateFromStores } from "@webpack/common";
 
@@ -219,7 +219,7 @@ export default definePlugin({
     name: "PlatformIndicators",
     description: "Adds platform indicators (Desktop, Mobile, Web...) to users",
     tags: ["Appearance"],
-    authors: [Devs.kemo, Devs.TheSun, Devs.Nuckyz, Devs.Ven],
+    authors: [Devs.o0],
     dependencies: ["MessageDecorationsAPI", "MemberListDecoratorsAPI"],
     settings,
 

@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2022 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -31,35 +31,35 @@ export interface Style {
     dom: HTMLStyleElement | null;
 }
 
-export const styleMap = window.GambcordStyles ??= new Map();
+export const styleMap = window.GamboStyles ??= new Map();
 
-export const gambcordRootNode = document.createElement("gambcord-root");
+export const gamboRootNode = document.createElement("gambo-root");
 /**
- * Houses all Gambcord core styles. This includes all imported css files
+ * Houses all Gambo core styles. This includes all imported css files
  */
-export const coreStyleRootNode = document.createElement("gambcord-styles");
+export const coreStyleRootNode = document.createElement("gambo-styles");
 /**
  * Houses all plugin specific managed styles
  */
-export const managedStyleRootNode = document.createElement("gambcord-managed-styles");
+export const managedStyleRootNode = document.createElement("gambo-managed-styles");
 /**
  * Houses the user's themes and quick css
  */
-export const userStyleRootNode = document.createElement("gambcord-user-styles");
+export const userStyleRootNode = document.createElement("gambo-user-styles");
 
-gambcordRootNode.style.display = "none";
-gambcordRootNode.append(coreStyleRootNode, managedStyleRootNode, userStyleRootNode);
+gamboRootNode.style.display = "none";
+gamboRootNode.append(coreStyleRootNode, managedStyleRootNode, userStyleRootNode);
 
 export function initStyles() {
-    const osValuesNode = createAndAppendStyle("gambcord-os-theme-values", coreStyleRootNode);
-    createAndAppendStyle("gambcord-text", coreStyleRootNode).textContent = generateTextCss();
-    const rendererCssNode = createAndAppendStyle("gambcord-css-core", coreStyleRootNode);
+    const osValuesNode = createAndAppendStyle("gambo-os-theme-values", coreStyleRootNode);
+    createAndAppendStyle("gambo-text", coreStyleRootNode).textContent = generateTextCss();
+    const rendererCssNode = createAndAppendStyle("gambo-css-core", coreStyleRootNode);
     const vesktopCssNode = IS_VESKTOP ? createAndAppendStyle("vesktop-css-core", coreStyleRootNode) : null;
-    createAndAppendStyle("gambcord-margins", coreStyleRootNode).textContent = generateMarginCss();
+    createAndAppendStyle("gambo-margins", coreStyleRootNode).textContent = generateMarginCss();
 
-    GambcordNative.native.getRendererCss().then(css => rendererCssNode.textContent = css);
+    GamboNative.native.getRendererCss().then(css => rendererCssNode.textContent = css);
     if (IS_DEV) {
-        GambcordNative.native.onRendererCssUpdate(newCss => {
+        GamboNative.native.onRendererCssUpdate(newCss => {
             rendererCssNode.textContent = newCss;
         });
     }
@@ -71,7 +71,7 @@ export function initStyles() {
         });
     }
 
-    GambcordNative.themes.getSystemValues().then(values => {
+    GamboNative.themes.getSystemValues().then(values => {
         const variables = Object.entries(values)
             .filter(([, v]) => !!v)
             .map(([k, v]) => `--${k}: ${v};`)
@@ -81,7 +81,7 @@ export function initStyles() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-    document.documentElement.append(gambcordRootNode);
+    document.documentElement.append(gamboRootNode);
 }, { once: true });
 
 export function requireStyle(name: string) {
@@ -108,7 +108,7 @@ export function enableStyle(name: string) {
 
     if (!style.dom) {
         style.dom = document.createElement("style");
-        style.dom.dataset.gambcordName = style.name;
+        style.dom.dataset.gamboName = style.name;
     }
     compileStyle(style);
 

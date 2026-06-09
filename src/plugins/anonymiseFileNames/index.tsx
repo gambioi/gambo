@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2022 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,7 +20,7 @@ import { definePluginSettings } from "@api/Settings";
 import ErrorBoundary from "@components/ErrorBoundary";
 import { Devs } from "@utils/constants";
 import definePlugin, { OptionType } from "@utils/types";
-import { CloudUpload } from "@gambcord/discord-types";
+import { CloudUpload } from "@gambo/discord-types";
 import { findByCodeLazy } from "@webpack";
 import { useState } from "@webpack/common";
 
@@ -71,7 +71,7 @@ const settings = definePluginSettings({
 
 export default definePlugin({
     name: "AnonymiseFileNames",
-    authors: [Devs.fawn],
+    authors: [Devs.o0],
     description: "Anonymise uploaded file names",
     tags: ["Privacy", "Utility"],
     settings,

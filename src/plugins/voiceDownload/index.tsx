@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a Discord client mod
+/*
+ * Gambo, a Discord client mod
  * Copyright (c) 2024 Vendicated and contributors
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
@@ -13,7 +13,7 @@ export default definePlugin({
     name: "VoiceDownload",
     description: "Adds a download to voice messages. (Opens a new browser tab)",
     tags: ["Voice", "Media"],
-    authors: [Devs.puv],
+    authors: [Devs.o0],
     patches: [
         {
             find: "#{intl::VOICE_MESSAGES_PLAYBACK_RATE_LABEL}",

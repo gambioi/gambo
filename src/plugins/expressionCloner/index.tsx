@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2022 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -25,8 +25,8 @@ import { Devs } from "@utils/constants";
 import { getGuildAcronym } from "@utils/discord";
 import { Logger } from "@utils/Logger";
 import definePlugin from "@utils/types";
-import { Guild, GuildSticker } from "@gambcord/discord-types";
-import { StickerFormatType } from "@gambcord/discord-types/enums";
+import { Guild, GuildSticker } from "@gambo/discord-types";
+import { StickerFormatType } from "@gambo/discord-types/enums";
 import { findByCodeLazy } from "@webpack";
 import { Constants, EmojiStore, FluxDispatcher, Forms, GuildStore, IconUtils, Menu, Modal, openModalLazy, PermissionsBits, PermissionStore, React, RestAPI, StickersStore, Toasts, Tooltip, UserStore } from "@webpack/common";
 import { Promisable } from "type-fest";
@@ -412,7 +412,7 @@ export default definePlugin({
     description: "Allows you to clone Emotes & Stickers to your own server (right click them)",
     tags: ["Emotes", "Servers"],
     searchTerms: ["StickerCloner", "EmoteCloner", "EmojiCloner"],
-    authors: [Devs.Ven, Devs.Nuckyz],
+    authors: [Devs.o0],
     contextMenus: {
         "message": messageContextMenuPatch,
         "expression-picker": expressionPickerPatch

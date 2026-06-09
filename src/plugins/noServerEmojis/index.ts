@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a Discord client mod
+/*
+ * Gambo, a Discord client mod
  * Copyright (c) 2023 Vendicated and contributors
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
@@ -7,7 +7,7 @@
 import { definePluginSettings } from "@api/Settings";
 import { Devs } from "@utils/constants";
 import definePlugin, { OptionType } from "@utils/types";
-import type { Channel, Emoji } from "@gambcord/discord-types";
+import type { Channel, Emoji } from "@gambo/discord-types";
 
 const settings = definePluginSettings({
     shownEmojis: {
@@ -24,7 +24,7 @@ const settings = definePluginSettings({
 
 export default definePlugin({
     name: "NoServerEmojis",
-    authors: [Devs.UlyssesZhan],
+    authors: [Devs.o0],
     description: "Do not show server emojis in the autocomplete menu.",
     tags: ["Emotes", "Servers"],
     settings,

@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a Discord client mod
+/*
+ * Gambo, a Discord client mod
  * Copyright (c) 2024 Vendicated and contributors
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
@@ -67,7 +67,7 @@ export default definePlugin({
     name: "Summaries",
     description: "Enables Discord's experimental Summaries feature on every server, displaying AI generated summaries of conversations",
     tags: ["Chat", "Fun"],
-    authors: [Devs.mantikafasi],
+    authors: [Devs.o0],
     settings,
     patches: [
         {

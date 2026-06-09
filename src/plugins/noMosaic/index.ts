@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a Discord client mod
+/*
+ * Gambo, a Discord client mod
  * Copyright (c) 2023 Vendicated and contributors
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
@@ -19,7 +19,7 @@ const settings = definePluginSettings({
 
 export default definePlugin({
     name: "NoMosaic",
-    authors: [Devs.AutumnVN],
+    authors: [Devs.o0],
     description: "Removes Discord image mosaic",
     tags: ["Media", "Appearance", "Chat"],
     searchTerms: ["image", "mosaic", "media"],

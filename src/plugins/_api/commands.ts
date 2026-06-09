@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2022 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -21,7 +21,7 @@ import definePlugin from "@utils/types";
 
 export default definePlugin({
     name: "CommandsAPI",
-    authors: [Devs.Arjix],
+    authors: [Devs.o0],
     description: "Api required by anything that uses commands",
     patches: [
         // obtain BUILT_IN_COMMANDS instance
@@ -35,7 +35,7 @@ export default definePlugin({
 
                     // textCommands = builtInCommands.filter(...)
                     match: /(?<=\w=)(\w)(\.filter\(.{0,60}tenor)/,
-                    replace: "Gambcord.Api.Commands._init($1)$2",
+                    replace: "Gambo.Api.Commands._init($1)$2",
                 }
             ],
         },
@@ -45,7 +45,7 @@ export default definePlugin({
             replacement: {
                 // return [2, cmd.execute(args, ctx)]
                 match: /,(\i)\.execute\((\i),(\i)\)/,
-                replace: (_, cmd, args, ctx) => `,Gambcord.Api.Commands._handleCommand(${cmd}, ${args}, ${ctx})`
+                replace: (_, cmd, args, ctx) => `,Gambo.Api.Commands._handleCommand(${cmd}, ${args}, ${ctx})`
             }
         },
         // Show plugin name instead of "Built-In"

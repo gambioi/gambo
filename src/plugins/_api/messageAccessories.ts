@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2022 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,13 +22,13 @@ import definePlugin from "@utils/types";
 export default definePlugin({
     name: "MessageAccessoriesAPI",
     description: "API to add message accessories.",
-    authors: [Devs.Cyn],
+    authors: [Devs.o0],
     patches: [
         {
             find: "#{intl::REMOVE_ATTACHMENT_BODY}",
             replacement: {
                 match: /children:(\[[^\]]{0,100}?this.renderSuppressConfirmModal[^\]]{0,100}?\])/,
-                replace: "children:Gambcord.Api.MessageAccessories._modifyAccessories($1,this?.props)",
+                replace: "children:Gambo.Api.MessageAccessories._modifyAccessories($1,this?.props)",
             },
         },
     ],

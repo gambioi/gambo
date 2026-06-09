@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2022 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,7 +22,7 @@ import definePlugin from "@utils/types";
 export default definePlugin({
     name: "NoDevtoolsWarning",
     description: "Disables the 'HOLD UP' banner in the console. As a side effect, also prevents Discord from hiding your token, which prevents random logouts.",
-    authors: [Devs.Ven],
+    authors: [Devs.o0],
     tags: ["Developers", "Console"],
     patches: [{
         find: "setDevtoolsCallbacks",

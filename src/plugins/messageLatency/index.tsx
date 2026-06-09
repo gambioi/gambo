@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a Discord client mod
+/*
+ * Gambo, a Discord client mod
  * Copyright (c) 2024 Vendicated and contributors
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
@@ -9,7 +9,7 @@ import ErrorBoundary from "@components/ErrorBoundary";
 import { Devs } from "@utils/constants";
 import { isNonNullish } from "@utils/guards";
 import definePlugin, { OptionType } from "@utils/types";
-import { Message } from "@gambcord/discord-types";
+import { Message } from "@gambo/discord-types";
 import { AuthenticationStore, SnowflakeUtils, Tooltip } from "@webpack/common";
 
 type FillValue = ("status-danger" | "status-warning" | "status-positive" | "text-muted");
@@ -30,7 +30,7 @@ export default definePlugin({
     name: "MessageLatency",
     description: "Displays an indicator for messages that took ≥n seconds to send",
     tags: ["Chat", "Utility"],
-    authors: [Devs.arHSM],
+    authors: [Devs.o0],
 
     settings: definePluginSettings({
         latency: {

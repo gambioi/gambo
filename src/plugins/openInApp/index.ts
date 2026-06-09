@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2023 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -75,13 +75,13 @@ const pluginSettings = definePluginSettings(
 );
 
 
-const Native = GambcordNative.pluginHelpers.OpenInApp as PluginNative<typeof import("./native")>;
+const Native = GamboNative.pluginHelpers.OpenInApp as PluginNative<typeof import("./native")>;
 
 export default definePlugin({
     name: "OpenInApp",
     description: "Open links in their respective apps instead of your browser",
     tags: ["Utility"],
-    authors: [Devs.Ven, Devs.surgedevs],
+    authors: [Devs.o0],
     settings: pluginSettings,
 
     patches: [
@@ -135,7 +135,7 @@ export default definePlugin({
                 showToast("Opened link in native app", Toasts.Type.SUCCESS);
 
                 const newUrl = url.replace(rule.match, rule.replace);
-                GambcordNative.native.openExternal(newUrl);
+                GamboNative.native.openExternal(newUrl);
 
                 event?.preventDefault();
                 return true;
@@ -154,7 +154,7 @@ export default definePlugin({
     handleAccountView(e: MouseEvent, platformType: string, userId: string) {
         const rule = UrlReplacementRules[platformType];
         if (rule?.accountViewReplace && pluginSettings.store[platformType]) {
-            GambcordNative.native.openExternal(rule.accountViewReplace(userId));
+            GamboNative.native.openExternal(rule.accountViewReplace(userId));
             e.preventDefault();
             return true;
         }

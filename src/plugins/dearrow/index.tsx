@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a Discord client mod
+/*
+ * Gambo, a Discord client mod
  * Copyright (c) 2023 Vendicated and contributors
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
@@ -172,7 +172,7 @@ export default definePlugin({
     name: "Dearrow",
     description: "Makes YouTube embed titles and thumbnails less sensationalist, powered by Dearrow",
     tags: ["Media", "Utility"],
-    authors: [Devs.Ven],
+    authors: [Devs.o0],
     settings,
 
     embedDidMount,

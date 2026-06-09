@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2022 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,13 +18,13 @@
 
 import { Devs } from "@utils/constants";
 import definePlugin from "@utils/types";
-import { Channel, User } from "@gambcord/discord-types";
+import { Channel, User } from "@gambo/discord-types";
 import { GuildStore } from "@webpack/common";
 
 export default definePlugin({
     name: "ForceOwnerCrown",
     description: "Force the owner crown next to usernames even if the server is large.",
-    authors: [Devs.D3SOX, Devs.Nickyux],
+    authors: [Devs.o0],
     tags: ["Roles", "Appearance", "Servers"],
     patches: [
         {

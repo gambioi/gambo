@@ -1,4 +1,4 @@
-﻿if (typeof browser === "undefined") {
+if (typeof browser === "undefined") {
     var browser = chrome;
 }
 
@@ -6,11 +6,11 @@ document.addEventListener(
     "DOMContentLoaded",
     () => {
         window.postMessage({
-            type: "gambcord:meta",
+            type: "gambo:meta",
             meta: {
                 EXTENSION_VERSION: browser.runtime.getManifest().version,
                 EXTENSION_BASE_URL: browser.runtime.getURL(""),
-                RENDERER_CSS_URL: browser.runtime.getURL("dist/Gambcord.css"),
+                RENDERER_CSS_URL: browser.runtime.getURL("dist/Gambo.css"),
             }
         });
     },

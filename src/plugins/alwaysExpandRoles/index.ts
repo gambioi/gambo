@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2023 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -25,7 +25,7 @@ export default definePlugin({
     name: "AlwaysExpandRoles",
     description: "Always expands the role list in profile popouts",
     tags: ["Appearance", "Roles"],
-    authors: [Devs.surgedevs],
+    authors: [Devs.o0],
     patches: [
         {
             find: "hasDeveloperContextMenu:",

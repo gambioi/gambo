@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2023 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -29,7 +29,7 @@ import { Margins } from "@utils/margins";
 import { classes } from "@utils/misc";
 import { useAwaiter } from "@utils/react";
 import definePlugin, { OptionType } from "@utils/types";
-import { User, UserProfile } from "@gambcord/discord-types";
+import { User, UserProfile } from "@gambo/discord-types";
 import { findComponentByCodeLazy } from "@webpack";
 import { Button, ColorPicker, Forms, React, Text, UserProfileStore, UserStore, useState } from "@webpack/common";
 import virtualMerge from "virtual-merge";
@@ -197,7 +197,7 @@ export default definePlugin({
     name: "FakeProfileThemes",
     description: "Allows profile theming by hiding the colors in your bio thanks to invisible 3y3 encoding",
     tags: ["Appearance", "Customisation"],
-    authors: [Devs.Alyxia, Devs.Remty],
+    authors: [Devs.o0],
     patches: [
         {
             find: "UserProfileStore",

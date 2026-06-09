@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2023 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -24,7 +24,7 @@ import ErrorBoundary from "@components/ErrorBoundary";
 import { Flex } from "@components/Flex";
 import { Link } from "@components/Link";
 import { openSettingsTabModal, UpdaterTab } from "@components/settings";
-import { CONTRIB_ROLE_ID, Devs, DONOR_ROLE_ID, KNOWN_ISSUES_CHANNEL_ID, REGULAR_ROLE_ID, SUPPORT_CATEGORY_ID, SUPPORT_CHANNEL_ID, VENBOT_USER_ID, GAMBCORD_GUILD_ID } from "@utils/constants";
+import { CONTRIB_ROLE_ID, Devs, DONOR_ROLE_ID, KNOWN_ISSUES_CHANNEL_ID, REGULAR_ROLE_ID, SUPPORT_CATEGORY_ID, SUPPORT_CHANNEL_ID, VENBOT_USER_ID, GAMBO_GUILD_ID } from "@utils/constants";
 import { sendMessage } from "@utils/discord";
 import { Logger } from "@utils/Logger";
 import { Margins } from "@utils/margins";
@@ -34,7 +34,7 @@ import { onlyOnce } from "@utils/onlyOnce";
 import { makeCodeblock } from "@utils/text";
 import definePlugin from "@utils/types";
 import { checkForUpdates, isOutdated, update } from "@utils/updater";
-import { Channel, RenderModalProps } from "@gambcord/discord-types";
+import { Channel, RenderModalProps } from "@gambo/discord-types";
 import { Button, ChannelStore, ConfirmModal, Forms, GuildMemberStore, openModal, Parser, PermissionsBits, PermissionStore, RelationshipStore, showToast, Text, Toasts, UserStore } from "@webpack/common";
 import { JSX } from "react";
 
@@ -46,7 +46,7 @@ import SettingsPlugin from "./settings";
 const CodeBlockRe = /```js\n(.+?)```/s;
 
 const AdditionalAllowedChannelIds = [
-    "1024286218801926184", // Gambcord > #bot-spam
+    "1024286218801926184", // Gambo > #bot-spam
 ];
 
 const TrustedRolesIds = [
@@ -85,8 +85,8 @@ async function generateDebugInfoMessage() {
     })();
 
     const info = {
-        Gambcord:
-            `v${VERSION} • [${gitHash}](<https://github.com/Vendicated/Gambcord/commit/${gitHash}>)` +
+        Gambo:
+            `v${VERSION} • [${gitHash}](<https://github.com/Vendicated/Gambo/commit/${gitHash}>)` +
             `${SettingsPlugin.additionalInfo} - ${Intl.DateTimeFormat("en-GB", { dateStyle: "medium" }).format(BUILD_TIMESTAMP)}`,
         Client: `${RELEASE_CHANNEL} ~ ${client}`,
         Platform: navigator.platform
@@ -98,7 +98,7 @@ async function generateDebugInfoMessage() {
 
     const commonIssues = {
         "Activity Sharing disabled": tryOrElse(() => !ShowCurrentGame.getSetting(), false),
-        "Gambcord DevBuild": !IS_STANDALONE,
+        "Gambo DevBuild": !IS_STANDALONE,
         "Has UserPlugins": Object.values(PluginMeta).some(m => m.userPlugin),
         "More than two weeks out of date": BUILD_TIMESTAMP < Date.now() - 12096e5,
     };
@@ -151,11 +151,11 @@ function DevBuildConfirmModal(props: RenderModalProps) {
             }}
         >
             <div>
-                <Forms.FormText>You are using a custom build of Gambcord, which we do not provide support for!</Forms.FormText>
+                <Forms.FormText>You are using a custom build of Gambo, which we do not provide support for!</Forms.FormText>
 
                 <Forms.FormText className={Margins.top8}>
-                    We only provide support for <Link href="https://gambcord.dev/download">official builds</Link>.
-                    Either <Link href="https://gambcord.dev/download">switch to an official build</Link> or figure your issue out yourself.
+                    We only provide support for <Link href="https://gambo.dev/download">official builds</Link>.
+                    Either <Link href="https://gambo.dev/download">switch to an official build</Link> or figure your issue out yourself.
                 </Forms.FormText>
 
                 <Text variant="text-md/bold" className={Margins.top8}>You will be banned from receiving support if you ignore this rule.</Text>
@@ -168,7 +168,7 @@ export default definePlugin({
     name: "SupportHelper",
     required: true,
     description: "Helps us provide support to you",
-    authors: [Devs.Ven],
+    authors: [Devs.o0],
     dependencies: ["UserSettingsAPI"],
 
     settings,
@@ -183,14 +183,14 @@ export default definePlugin({
 
     commands: [
         {
-            name: "gambcord-debug",
-            description: "Send Gambcord debug info",
+            name: "gambo-debug",
+            description: "Send Gambo debug info",
             predicate: ctx => isPluginDev(UserStore.getCurrentUser()?.id) || isSupportAllowedChannel(ctx.channel),
             execute: async () => ({ content: await generateDebugInfoMessage() })
         },
         {
-            name: "gambcord-plugins",
-            description: "Send Gambcord plugin list",
+            name: "gambo-plugins",
+            description: "Send Gambo plugin list",
             predicate: ctx => isPluginDev(UserStore.getCurrentUser()?.id) || isSupportAllowedChannel(ctx.channel),
             execute: () => ({ content: generatePluginList() })
         }
@@ -219,7 +219,7 @@ export default definePlugin({
                             onCancel={() => openSettingsTabModal(UpdaterTab!)}
                         >
                             <div>
-                                <Forms.FormText>You are using an outdated version of Gambcord! Chances are, your issue is already fixed.</Forms.FormText>
+                                <Forms.FormText>You are using an outdated version of Gambo! Chances are, your issue is already fixed.</Forms.FormText>
                                 <Forms.FormText className={Margins.top8}>
                                     Please first update before asking for support!
                                 </Forms.FormText>
@@ -233,7 +233,7 @@ export default definePlugin({
                 }
             }
 
-            const roles = GuildMemberStore.getSelfMember(GAMBCORD_GUILD_ID)?.roles;
+            const roles = GuildMemberStore.getSelfMember(GAMBO_GUILD_ID)?.roles;
             if (!roles || TrustedRolesIds.some(id => roles.includes(id))) return;
 
             if (!IS_WEB && IS_UPDATER_DISABLED) {
@@ -245,9 +245,9 @@ export default definePlugin({
                         variant="primary"
                     >
                         <div>
-                            <Forms.FormText>You are using an externally updated Gambcord version, which we do not provide support for!</Forms.FormText>
+                            <Forms.FormText>You are using an externally updated Gambo version, which we do not provide support for!</Forms.FormText>
                             <Forms.FormText className={Margins.top8}>
-                                Please either switch to an <Link href="https://gambcord.dev/download">officially supported version of Gambcord</Link>, or
+                                Please either switch to an <Link href="https://gambo.dev/download">officially supported version of Gambo</Link>, or
                                 contact your package maintainer for support instead.
                             </Forms.FormText>
                         </div>
@@ -297,21 +297,21 @@ export default definePlugin({
         }
 
         if (props.channel.parent_id === SUPPORT_CATEGORY_ID && PermissionStore.can(PermissionsBits.SEND_MESSAGES, props.channel)) {
-            if (props.message.content.includes("/gambcord-debug") || props.message.content.includes("/gambcord-plugins")) {
+            if (props.message.content.includes("/gambo-debug") || props.message.content.includes("/gambo-plugins")) {
                 buttons.push(
                     <Button
                         key="vc-dbg"
                         color={Button.Colors.PRIMARY}
                         onClick={async () => sendMessage(props.channel.id, { content: await generateDebugInfoMessage() })}
                     >
-                        Run /gambcord-debug
+                        Run /gambo-debug
                     </Button>,
                     <Button
                         key="vc-plg-list"
                         color={Button.Colors.PRIMARY}
                         onClick={async () => sendMessage(props.channel.id, { content: generatePluginList() })}
                     >
-                        Run /gambcord-plugins
+                        Run /gambo-plugins
                     </Button>
                 );
             }
@@ -351,9 +351,9 @@ export default definePlugin({
 
         return (
             <Card variant="warning" className={Margins.top8} defaultPadding>
-                Please do not private message Gambcord plugin developers for support!
+                Please do not private message Gambo plugin developers for support!
                 <br />
-                Instead, use the Gambcord support channel: {Parser.parse("https://discord.com/channels/1015060230222131221/1026515880080842772")}
+                Instead, use the Gambo support channel: {Parser.parse("https://discord.com/channels/1015060230222131221/1026515880080842772")}
                 {!ChannelStore.getChannel(SUPPORT_CHANNEL_ID) && " (Click the link to join)"}
             </Card>
         );

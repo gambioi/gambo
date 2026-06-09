@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2025 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,7 +22,7 @@ import ExpressionClonerPlugin from "@plugins/expressionCloner";
 import { Devs } from "@utils/constants";
 import { copyWithToast } from "@utils/discord";
 import definePlugin from "@utils/types";
-import { Message, Sticker } from "@gambcord/discord-types";
+import { Message, Sticker } from "@gambo/discord-types";
 import { Menu, React, StickersStore } from "@webpack/common";
 
 const StickerExt = [, "png", "png", "json", "gif"] as const;
@@ -51,7 +51,7 @@ function buildMenuItem(sticker: PartialSticker, addBottomSeparator: boolean) {
                     id="vc-open-sticker-link"
                     key="vc-open-sticker-link"
                     label="Open Link"
-                    action={() => GambcordNative.native.openExternal(getUrl(sticker))}
+                    action={() => GamboNative.native.openExternal(getUrl(sticker))}
                 />
             </Menu.MenuGroup>
             {addBottomSeparator && <Menu.MenuSeparator />}
@@ -88,7 +88,7 @@ export default definePlugin({
     name: "CopyStickerLinks",
     description: "Adds the ability to copy & open Sticker links",
     tags: ["Emotes", "Utility"],
-    authors: [Devs.Ven, Devs.Byeoon],
+    authors: [Devs.o0],
     contextMenus: {
         "message": messageContextMenuPatch,
         "expression-picker": expressionPickerPatch

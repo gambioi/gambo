@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a Discord client mod
+/*
+ * Gambo, a Discord client mod
  * Copyright (c) 2023 Vendicated and contributors
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
@@ -13,7 +13,7 @@ import unusedImports from "eslint-plugin-unused-imports";
 import tseslint from "typescript-eslint";
 
 export default tseslint.config(
-    { ignores: ["dist", "browser", "packages/gambcord-types"] },
+    { ignores: ["dist", "browser", "packages/gambo-types"] },
     {
         files: ["src/**/*.{tsx,ts,mts,mjs,js,jsx}", "eslint.config.mjs"],
         settings: {
@@ -60,7 +60,7 @@ export default tseslint.config(
         },
         rules: {
             /*
-             * Since it's only been a month and Gambcord has already been stolen
+             * Since it's only been a month and Gambo has already been stolen
              * by random skids who rebranded it to "AlphaCord" and erased all license
              * information
              */

@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2022 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -110,7 +110,7 @@ const ChatBarContextCheckbox: NavContextMenuPatchCallback = children => {
 
 export default definePlugin({
     name: "SilentTyping",
-    authors: [Devs.Ven, Devs.Rini, Devs.ImBanana],
+    authors: [Devs.o0],
     description: "Hide that you are typing",
     tags: ["Chat", "Privacy"],
     settings,

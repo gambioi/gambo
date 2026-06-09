@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2023 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -24,7 +24,7 @@ import { openUserProfile } from "@utils/discord";
 import { isNonNullish } from "@utils/guards";
 import { Logger } from "@utils/Logger";
 import definePlugin, { OptionType } from "@utils/types";
-import { Channel, User } from "@gambcord/discord-types";
+import { Channel, User } from "@gambo/discord-types";
 import { AuthenticationStore, Avatar, GuildMemberStore, React, RelationshipStore, TypingStore, UserStore, useStateFromStores } from "@webpack/common";
 import { PropsWithChildren } from "react";
 
@@ -99,7 +99,7 @@ export default definePlugin({
     name: "TypingTweaks",
     description: "Show avatars and role colours in the typing indicator",
     tags: ["Appearance", "Customisation"],
-    authors: [Devs.zt, Devs.sadan],
+    authors: [Devs.o0],
     settings,
 
     managedStyle,

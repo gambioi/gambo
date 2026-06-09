@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2023 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -21,7 +21,7 @@ import { ReviewType } from "@plugins/reviewDB/entities";
 import { REVIEWS_PER_PAGE, UserReviewsData } from "@plugins/reviewDB/reviewDbApi";
 import { cl } from "@plugins/reviewDB/utils";
 import { useForceUpdater } from "@utils/react";
-import * as t from "@gambcord/discord-types";
+import * as t from "@gambo/discord-types";
 import { DefaultExtractAndLoadChunksRegex, extractAndLoadChunksLazy, findComponentByCodeLazy } from "@webpack";
 import { Modal,openModalLazy, Text, useRef, useState } from "@webpack/common";
 import { ComponentProps } from "react";

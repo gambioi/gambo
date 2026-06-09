@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a Discord client mod
+/*
+ * Gambo, a Discord client mod
  * Copyright (c) 2023 Vendicated and contributors
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
@@ -22,7 +22,7 @@ const settings = definePluginSettings({
 export default definePlugin({
     name: "FixSpotifyEmbeds",
     description: "Fixes spotify embeds being incredibly loud by letting you customise the volume",
-    authors: [Devs.Ven],
+    authors: [Devs.o0],
     tags: ["Media", "Customisation"],
     settings,
 });

@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a Discord client mod
+/*
+ * Gambo, a Discord client mod
  * Copyright (c) 2026 Vendicated and contributors
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
@@ -10,7 +10,7 @@ import { Flex } from "@components/Flex";
 import { HeadingSecondary } from "@components/Heading";
 import { InfoIcon } from "@components/Icons";
 import { Paragraph } from "@components/Paragraph";
-import { RenderModalProps } from "@gambcord/discord-types";
+import { RenderModalProps } from "@gambo/discord-types";
 import { Modal,openModal, TextArea, TextInput, useState } from "@webpack/common";
 
 import { parseTagArguments } from ".";

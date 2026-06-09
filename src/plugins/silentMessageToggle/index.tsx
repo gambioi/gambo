@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2023 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -102,7 +102,7 @@ const SilentMessageToggle: ChatBarButtonFactory = ({ isMainChat }) => {
 
 export default definePlugin({
     name: "SilentMessageToggle",
-    authors: [Devs.Nuckyz, Devs.CatNoir],
+    authors: [Devs.o0],
     description: "Adds a button to the chat bar to toggle sending a silent message.",
     tags: ["Chat", "Utility"],
     settings,

@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2023 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -21,7 +21,7 @@ import { LinkIcon } from "@components/Icons";
 import { copyToClipboard } from "@utils/clipboard";
 import { Devs } from "@utils/constants";
 import definePlugin from "@utils/types";
-import type { Channel, User } from "@gambcord/discord-types";
+import type { Channel, User } from "@gambo/discord-types";
 import { Menu } from "@webpack/common";
 
 interface UserContextProps {
@@ -45,7 +45,7 @@ const UserContextMenuPatch: NavContextMenuPatchCallback = (children, { user }: U
 
 export default definePlugin({
     name: "CopyUserURLs",
-    authors: [Devs.castdrian],
+    authors: [Devs.o0],
     description: "Adds a 'Copy User URL' option to the user context menu.",
     tags: ["Utility", "Friends"],
     contextMenus: {

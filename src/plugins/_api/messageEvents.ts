@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2022 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,7 +22,7 @@ import definePlugin from "@utils/types";
 export default definePlugin({
     name: "MessageEventsAPI",
     description: "Api required by anything using message events.",
-    authors: [Devs.Arjix, Devs.hunt, Devs.Ven],
+    authors: [Devs.o0],
     patches: [
         {
             find: "#{intl::EDIT_TEXTAREA_HELP}",
@@ -30,7 +30,7 @@ export default definePlugin({
                 match: /(?<=,channel:\i\}\)\.then\().+?(?=\i\.content!==this\.props\.message\.content&&\i\((.+?)\)\})/,
                 replace: (match, args) => "" +
                     `async ${match}` +
-                    `if(await Gambcord.Api.MessageEvents._handlePreEdit(${args}))` +
+                    `if(await Gambo.Api.MessageEvents._handlePreEdit(${args}))` +
                     "return Promise.resolve({shouldClear:false,shouldRefocus:true});"
             }
         },
@@ -40,7 +40,7 @@ export default definePlugin({
                 // https://regex101.com/r/7iswuk/1
                 match: /let (\i)=\i\.\i\.parse\((\i),.+?\.getSendMessageOptions\(\{.+?\}\)?;(?=.+?(\i)\.flags=)(?<=\)\(({.+?})\)\.then.+?)/,
                 replace: (m, parsedMessage, channel, replyOptions, extra) => m +
-                    `if(await Gambcord.Api.MessageEvents._handlePreSend(${channel}.id,${parsedMessage},${extra},${replyOptions}))` +
+                    `if(await Gambo.Api.MessageEvents._handlePreSend(${channel}.id,${parsedMessage},${extra},${replyOptions}))` +
                     "return{shouldClear:false,shouldRefocus:true};"
             }
         },
@@ -49,7 +49,7 @@ export default definePlugin({
             replacement: {
                 match: /let\{id:\i}=(\i),{id:\i}=(\i);return \i\.useCallback\((\i)=>\{/,
                 replace: (m, message, channel, event) =>
-                    `const vcMsg=${message},vcChan=${channel};${m}Gambcord.Api.MessageEvents._handleClick(vcMsg,vcChan,${event});`
+                    `const vcMsg=${message},vcChan=${channel};${m}Gambo.Api.MessageEvents._handleClick(vcMsg,vcChan,${event});`
             }
         }
     ]

@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2023 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,7 +19,7 @@
 import { TextButton } from "@components/Button";
 import { SessionInfo } from "@plugins/betterSessions/types";
 import { getDefaultName, savedSessionsCache, saveSessionsToDataStore } from "@plugins/betterSessions/utils";
-import { RenderModalProps } from "@gambcord/discord-types";
+import { RenderModalProps } from "@gambo/discord-types";
 import { Forms, Modal,React, TextInput } from "@webpack/common";
 import { KeyboardEvent } from "react";
 

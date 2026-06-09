@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2022 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -49,7 +49,7 @@ interface StreamData {
 
 export default definePlugin({
     name: "VolumeBooster",
-    authors: [Devs.Nuckyz, Devs.sadan],
+    authors: [Devs.o0],
     description: "Allows you to set the user and stream volume above the default maximum",
     tags: ["Voice", "Utility"],
     settings,

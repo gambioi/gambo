@@ -1,4 +1,4 @@
-﻿# MessageLatency
+# MessageLatency
 
 Displays an indicator for messages that took ≥n seconds to send.
 

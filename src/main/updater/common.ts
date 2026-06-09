@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2022 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,11 +16,11 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-export const GAMBCORD_FILES = [
-    IS_DISCORD_DESKTOP ? "patcher.js" : "gambcordDesktopMain.js",
-    IS_DISCORD_DESKTOP ? "preload.js" : "gambcordDesktopPreload.js",
-    IS_DISCORD_DESKTOP ? "renderer.js" : "gambcordDesktopRenderer.js",
-    IS_DISCORD_DESKTOP ? "renderer.css" : "gambcordDesktopRenderer.css",
+export const GAMBO_FILES = [
+    IS_DISCORD_DESKTOP ? "patcher.js" : "gamboDesktopMain.js",
+    IS_DISCORD_DESKTOP ? "preload.js" : "gamboDesktopPreload.js",
+    IS_DISCORD_DESKTOP ? "renderer.js" : "gamboDesktopRenderer.js",
+    IS_DISCORD_DESKTOP ? "renderer.css" : "gamboDesktopRenderer.css",
 ];
 
 export function serializeErrors(func: (...args: any[]) => any) {

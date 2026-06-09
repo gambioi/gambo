@@ -1,4 +1,4 @@
-﻿# Discord Types
+# Discord Types
 
 This package provides TypeScript types for the Webpack modules of Discord's web app.
 

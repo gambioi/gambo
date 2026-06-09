@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a Discord client mod
+/*
+ * Gambo, a Discord client mod
  * Copyright (c) 2023 rini
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
@@ -10,7 +10,7 @@ import { definePluginSettings } from "@api/Settings";
 import ErrorBoundary from "@components/ErrorBoundary";
 import { Devs } from "@utils/constants";
 import definePlugin, { OptionType } from "@utils/types";
-import { Channel, Message, User } from "@gambcord/discord-types";
+import { Channel, Message, User } from "@gambo/discord-types";
 import { RelationshipStore, StreamerModeStore } from "@webpack/common";
 
 interface UsernameProps {
@@ -57,7 +57,7 @@ export default definePlugin({
     name: "ShowMeYourName",
     description: "Display usernames next to nicks, or no nicks at all",
     tags: ["Appearance", "Customisation"],
-    authors: [Devs.Rini, Devs.TheKodeToad, Devs.rae],
+    authors: [Devs.o0],
     patches: [
         {
             find: '="SYSTEM_TAG"',

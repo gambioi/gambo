@@ -1,4 +1,4 @@
-﻿# IrcColors
+# IrcColors
 
 Makes username colors in chat unique, like in IRC clients
 

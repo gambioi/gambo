@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a Discord client mod
+/*
+ * Gambo, a Discord client mod
  * Copyright (c) 2024 Vendicated and contributors
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
@@ -131,7 +131,7 @@ export default definePlugin({
     name: "ReplaceGoogleSearch",
     description: "Replaces the Google search with different Engine(s)",
     tags: ["Utility", "Customisation"],
-    authors: [Devs.Moxxie, Devs.Ethan],
+    authors: [Devs.o0],
 
     settings,
 

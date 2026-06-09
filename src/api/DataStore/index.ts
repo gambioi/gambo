@@ -1,4 +1,4 @@
-﻿/* eslint-disable simple-header/header */
+/* eslint-disable simple-header/header */
 
 /*!
  * idb-keyval v6.2.0
@@ -49,7 +49,7 @@ let defaultGetStoreFunc: UseStore | undefined;
 
 function defaultGetStore() {
     if (!defaultGetStoreFunc) {
-        defaultGetStoreFunc = createStore(!IS_REPORTER ? "GambcordData" : "GambcordDataReporter", "GambcordStore");
+        defaultGetStoreFunc = createStore(!IS_REPORTER ? "GamboData" : "GamboDataReporter", "GamboStore");
     }
     return defaultGetStoreFunc;
 }

@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2022 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -21,21 +21,21 @@ import definePlugin from "@utils/types";
 
 export default definePlugin({
     name: "ServerListAPI",
-    authors: [Devs.kemo],
+    authors: [Devs.o0],
     description: "Api required for plugins that modify the server list",
     patches: [
         {
             find: "#{intl::DISCODO_DISABLED}",
             replacement: {
                 match: /(?<=#{intl::DISCODO_DISABLED}.+?return)(\(.{0,150}?tutorialId:"friends-list".+?}\))(?=}function)/,
-                replace: "[$1].concat(Gambcord.Api.ServerList.renderAll(Gambcord.Api.ServerList.ServerListRenderPosition.Above))"
+                replace: "[$1].concat(Gambo.Api.ServerList.renderAll(Gambo.Api.ServerList.ServerListRenderPosition.Above))"
             }
         },
         {
             find: ".setGuildsTree(",
             replacement: {
                 match: /(?<=#{intl::SERVERS}\),gap:"xs",children:)\i\.map\(.{0,50}\.length\)/,
-                replace: "Gambcord.Api.ServerList.renderAll(Gambcord.Api.ServerList.ServerListRenderPosition.In).concat($&)"
+                replace: "Gambo.Api.ServerList.renderAll(Gambo.Api.ServerList.ServerListRenderPosition.In).concat($&)"
             }
         }
     ]

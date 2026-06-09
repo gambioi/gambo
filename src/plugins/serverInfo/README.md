@@ -1,4 +1,4 @@
-﻿# ServerInfo
+# ServerInfo
 
 Allows you to view info about servers and see friends and blocked users
 

@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2023 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -23,7 +23,7 @@ export default definePlugin({
     name: "F8Break",
     description: "Pause the client when you press F8 with DevTools (+ breakpoints) open.",
     tags: ["Developers", "Shortcuts"],
-    authors: [Devs.lewisakura],
+    authors: [Devs.o0],
 
     start() {
         window.addEventListener("keydown", this.event);

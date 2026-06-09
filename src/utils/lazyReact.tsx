@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a Discord client mod
+/*
+ * Gambo, a Discord client mod
  * Copyright (c) 2023 Vendicated and contributors
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
@@ -10,7 +10,7 @@ import { makeLazy } from "./lazy";
 
 const NoopComponent = () => null;
 
-export type LazyComponentWrapper<ComponentType> = ComponentType & { $$gambcordGetWrappedComponent(): ComponentType; };
+export type LazyComponentWrapper<ComponentType> = ComponentType & { $$gamboGetWrappedComponent(): ComponentType; };
 
 /**
  * A lazy component. The factory method is called on first render.
@@ -25,7 +25,7 @@ export function LazyComponent<T extends object = any>(factory: () => ComponentTy
         return <Component {...props} />;
     };
 
-    LazyComponent.$$gambcordGetWrappedComponent = get;
+    LazyComponent.$$gamboGetWrappedComponent = get;
 
     return LazyComponent;
 }

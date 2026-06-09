@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2023 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,42 +17,42 @@
 */
 
 export const enum IpcEvents {
-    INIT_FILE_WATCHERS = "GambcordInitFileWatchers",
+    INIT_FILE_WATCHERS = "GamboInitFileWatchers",
 
-    OPEN_QUICKCSS = "GambcordOpenQuickCss",
-    GET_QUICK_CSS = "GambcordGetQuickCss",
-    SET_QUICK_CSS = "GambcordSetQuickCss",
-    QUICK_CSS_UPDATE = "GambcordQuickCssUpdate",
+    OPEN_QUICKCSS = "GamboOpenQuickCss",
+    GET_QUICK_CSS = "GamboGetQuickCss",
+    SET_QUICK_CSS = "GamboSetQuickCss",
+    QUICK_CSS_UPDATE = "GamboQuickCssUpdate",
 
-    GET_SETTINGS = "GambcordGetSettings",
-    SET_SETTINGS = "GambcordSetSettings",
+    GET_SETTINGS = "GamboGetSettings",
+    SET_SETTINGS = "GamboSetSettings",
 
-    GET_THEMES_LIST = "GambcordGetThemesList",
-    GET_THEME_DATA = "GambcordGetThemeData",
-    GET_THEME_SYSTEM_VALUES = "GambcordGetThemeSystemValues",
-    THEME_UPDATE = "GambcordThemeUpdate",
+    GET_THEMES_LIST = "GamboGetThemesList",
+    GET_THEME_DATA = "GamboGetThemeData",
+    GET_THEME_SYSTEM_VALUES = "GamboGetThemeSystemValues",
+    THEME_UPDATE = "GamboThemeUpdate",
 
-    OPEN_EXTERNAL = "GambcordOpenExternal",
-    OPEN_THEMES_FOLDER = "GambcordOpenThemesFolder",
-    OPEN_SETTINGS_FOLDER = "GambcordOpenSettingsFolder",
+    OPEN_EXTERNAL = "GamboOpenExternal",
+    OPEN_THEMES_FOLDER = "GamboOpenThemesFolder",
+    OPEN_SETTINGS_FOLDER = "GamboOpenSettingsFolder",
 
-    GET_UPDATES = "GambcordGetUpdates",
-    GET_REPO = "GambcordGetRepo",
-    UPDATE = "GambcordUpdate",
-    BUILD = "GambcordBuild",
+    GET_UPDATES = "GamboGetUpdates",
+    GET_REPO = "GamboGetRepo",
+    UPDATE = "GamboUpdate",
+    BUILD = "GamboBuild",
 
-    OPEN_MONACO_EDITOR = "GambcordOpenMonacoEditor",
-    GET_MONACO_THEME = "GambcordGetMonacoTheme",
+    OPEN_MONACO_EDITOR = "GamboOpenMonacoEditor",
+    GET_MONACO_THEME = "GamboGetMonacoTheme",
 
-    GET_PLUGIN_IPC_METHOD_MAP = "GambcordGetPluginIpcMethodMap",
+    GET_PLUGIN_IPC_METHOD_MAP = "GamboGetPluginIpcMethodMap",
 
-    CSP_IS_DOMAIN_ALLOWED = "GambcordCspIsDomainAllowed",
-    CSP_REMOVE_OVERRIDE = "GambcordCspRemoveOverride",
-    CSP_REQUEST_ADD_OVERRIDE = "GambcordCspRequestAddOverride",
+    CSP_IS_DOMAIN_ALLOWED = "GamboCspIsDomainAllowed",
+    CSP_REMOVE_OVERRIDE = "GamboCspRemoveOverride",
+    CSP_REQUEST_ADD_OVERRIDE = "GamboCspRequestAddOverride",
 
-    GET_RENDERER_CSS = "GambcordGetRendererCss",
-    RENDERER_CSS_UPDATE = "GambcordRendererCssUpdate",
-    PRELOAD_GET_RENDERER_JS = "GambcordPreloadGetRendererJs",
+    GET_RENDERER_CSS = "GamboGetRendererCss",
+    RENDERER_CSS_UPDATE = "GamboRendererCssUpdate",
+    PRELOAD_GET_RENDERER_JS = "GamboPreloadGetRendererJs",
 
-    SUPPORTS_WINDOWS_MATERIAL = "GambcordSupportsWindowsMaterial",
+    SUPPORTS_WINDOWS_MATERIAL = "GamboSupportsWindowsMaterial",
 }

@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2022 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,7 +17,7 @@
 */
 
 import ErrorBoundary from "@components/ErrorBoundary";
-import { Channel, Message } from "@gambcord/discord-types";
+import { Channel, Message } from "@gambo/discord-types";
 import { JSX } from "react";
 
 export interface MessageDecorationProps {

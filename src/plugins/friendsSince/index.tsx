@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a Discord client mod
+/*
+ * Gambo, a Discord client mod
  * Copyright (c) 2024 Vendicated and contributors
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
@@ -23,7 +23,7 @@ export default definePlugin({
     name: "FriendsSince",
     description: "Shows when you became friends with someone in the user popout",
     tags: ["Friends"],
-    authors: [Devs.Elvyra, Devs.Antti],
+    authors: [Devs.o0],
     patches: [
         // DM User Sidebar
         {

@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2022 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -24,7 +24,7 @@ import { MessageAccessoryFactory } from "@api/MessageAccessories";
 import { MessageDecorationFactory } from "@api/MessageDecorations";
 import { MessageClickListener, MessageEditListener, MessageSendListener } from "@api/MessageEvents";
 import { MessagePopoverButtonData } from "@api/MessagePopover";
-import { Command, FluxEvents } from "@gambcord/discord-types";
+import { Command, FluxEvents } from "@gambo/discord-types";
 import { ReactNode } from "react";
 import { LiteralUnion } from "type-fest";
 
@@ -188,7 +188,7 @@ export interface PluginDef {
      */
     contextMenus?: Record<string, NavContextMenuPatchCallback>;
     /**
-     * Allows you to add custom actions to the Gambcord Toolbox.
+     * Allows you to add custom actions to the Gambo Toolbox.
      *
      * Can either be an object mapping labels to action functions or a Function returning Menu components.
      * Please note that you can only use Menu components.
@@ -221,7 +221,7 @@ export interface PluginDef {
 }
 
 export const enum StartAt {
-    /** Right away, as soon as Gambcord initialised */
+    /** Right away, as soon as Gambo initialised */
     Init = "Init",
     /** On the DOMContentLoaded event, so once the document is ready */
     DOMContentLoaded = "DOMContentLoaded",

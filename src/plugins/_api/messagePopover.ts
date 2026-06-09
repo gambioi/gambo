@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2022 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,14 +22,14 @@ import definePlugin from "@utils/types";
 export default definePlugin({
     name: "MessagePopoverAPI",
     description: "API to add buttons to message popovers.",
-    authors: [Devs.KingFish, Devs.Ven, Devs.Nuckyz],
+    authors: [Devs.o0],
     patches: [
         {
             find: "#{intl::MESSAGE_UTILITIES_A11Y_LABEL}",
             replacement: {
                 match: /(?<=\]\}\)),(.{0,40}togglePopout:.+?\}\))\]\}\):null,(?<=\((\i\.\i),\{label:.+?:null,(\i)\?\(0,\i\.jsxs?\)\(\i\.Fragment.+?message:(\i).+?)/,
                 replace: (_, ReactButton, ButtonComponent, showReactButton, message) => "" +
-                    `]}):null,Gambcord.Api.MessagePopover._buildPopoverElements(${ButtonComponent},${message}),${showReactButton}?${ReactButton}:null,`
+                    `]}):null,Gambo.Api.MessagePopover._buildPopoverElements(${ButtonComponent},${message}),${showReactButton}?${ReactButton}:null,`
             }
         }
     ]

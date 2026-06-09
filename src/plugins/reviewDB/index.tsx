@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2022 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -27,7 +27,7 @@ import { Devs } from "@utils/constants";
 import { classes } from "@utils/misc";
 import { useAwaiter } from "@utils/react";
 import definePlugin from "@utils/types";
-import { Guild, User } from "@gambcord/discord-types";
+import { Guild, User } from "@gambo/discord-types";
 import { findCssClassesLazy } from "@webpack";
 import { Clickable, ConfirmModal,IconUtils, Menu, openModal, Parser } from "@webpack/common";
 
@@ -71,7 +71,7 @@ export default definePlugin({
     name: "ReviewDB",
     description: "Review other users (Adds a new settings to profiles)",
     tags: ["Friends", "Servers"],
-    authors: [Devs.mantikafasi, Devs.Ven],
+    authors: [Devs.o0],
 
     settings,
     contextMenus: {
@@ -132,7 +132,7 @@ export default definePlugin({
                     cancelText: "Appeal",
                     confirmText: "Ok",
                     onCancel: async () =>
-                        GambcordNative.native.openExternal(
+                        GamboNative.native.openExternal(
                             "https://reviewdb.mantikafasi.dev/api/redirect?"
                             + new URLSearchParams({
                                 token: Auth.token!,

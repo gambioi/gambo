@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2023 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -27,7 +27,7 @@ export default definePlugin({
     name: "RelationshipNotifier",
     description: "Notifies you when a friend, group chat, or server removes you.",
     tags: ["Friends", "Notifications"],
-    authors: [Devs.nick],
+    authors: [Devs.o0],
     settings,
 
     patches: [

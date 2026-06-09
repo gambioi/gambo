@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2022 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -67,7 +67,7 @@ export default definePlugin({
     name: "ReadAllNotificationsButton",
     description: "Read all server notifications with a single button click!",
     tags: ["Notifications", "Shortcuts"],
-    authors: [Devs.kemo],
+    authors: [Devs.o0],
     dependencies: ["ServerListAPI"],
 
     renderReadAllButton: ErrorBoundary.wrap(ReadAllButton, { noop: true }),

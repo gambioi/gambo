@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2024 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify

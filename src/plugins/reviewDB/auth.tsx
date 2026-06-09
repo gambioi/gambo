@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a Discord client mod
+/*
+ * Gambo, a Discord client mod
  * Copyright (c) 2023 Vendicated and contributors
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
@@ -53,7 +53,7 @@ export function authorize(callback?: any) {
             callback={async (response: any) => {
                 try {
                     const url = new URL(response.location);
-                    url.searchParams.append("clientMod", "gambcord");
+                    url.searchParams.append("clientMod", "gambo");
                     const res = await fetch(url, {
                         headers: { Accept: "application/json" }
                     });

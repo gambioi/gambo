@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2022 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -26,7 +26,7 @@ import { settings } from "./settings";
 migratePluginSettings("UserMessagesPronouns", "PronounDB");
 export default definePlugin({
     name: "UserMessagesPronouns",
-    authors: [Devs.Tyman, Devs.TheKodeToad, Devs.Ven, Devs.Elvyra],
+    authors: [Devs.o0],
     description: "Adds pronouns to chat user messages",
     tags: ["Chat", "Appearance"],
     settings,

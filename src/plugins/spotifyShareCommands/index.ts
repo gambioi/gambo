@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2022 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,7 +20,7 @@ import { ApplicationCommandInputType, findOption, OptionalMessageOption, sendBot
 import { Devs } from "@utils/constants";
 import { sendMessage } from "@utils/discord";
 import definePlugin from "@utils/types";
-import { Command } from "@gambcord/discord-types";
+import { Command } from "@gambo/discord-types";
 import { findByPropsLazy } from "@webpack";
 import { FluxDispatcher, MessageActions, PendingReplyStore } from "@webpack/common";
 
@@ -99,7 +99,7 @@ export default definePlugin({
     name: "SpotifyShareCommands",
     description: "Share your current Spotify track, album or artist via slash command (/track, /album, /artist)",
     tags: ["Media", "Commands"],
-    authors: [Devs.katlyn],
+    authors: [Devs.o0],
     commands: [
         makeCommand("track", track => `https://open.spotify.com/track/${track.id}`),
         makeCommand("album", track => `https://open.spotify.com/album/${track.album.id}`),

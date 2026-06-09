@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2023 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -268,9 +268,9 @@ const TEXT_REPLACE_RULES_CHANNEL_ID = "1102784112584040479";
 
 export default definePlugin({
     name: "TextReplace",
-    description: "Replace text in your messages. You can find pre-made rules in the #textreplace-rules channel in Gambcord's Server",
+    description: "Replace text in your messages. You can find pre-made rules in the #textreplace-rules channel in Gambo's Server",
     tags: ["Chat", "Customisation", "Utility"],
-    authors: [Devs.AutumnVN, Devs.TheKodeToad],
+    authors: [Devs.o0],
 
     settings,
 

@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2022 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,7 +22,7 @@ import definePlugin from "@utils/types";
 export default definePlugin({
     name: "NoticesAPI",
     description: "Fixes notices being automatically dismissed",
-    authors: [Devs.Ven],
+    authors: [Devs.o0],
     required: true,
     patches: [
         {
@@ -30,11 +30,11 @@ export default definePlugin({
             replacement: [
                 {
                     match: /(?<=!1;)\i=null;(?=.{0,80}getPremiumSubscription\(\))/g,
-                    replace: "if(Gambcord.Api.Notices.currentNotice)return false;$&"
+                    replace: "if(Gambo.Api.Notices.currentNotice)return false;$&"
                 },
                 {
                     match: /(?<=,NOTICE_DISMISS:function\(\i\){)return null!=(\i)/,
-                    replace: (m, notice) => `if(${notice}?.id=="GambcordNotice")return(${notice}=null,Gambcord.Api.Notices.nextNotice(),true);${m}`
+                    replace: (m, notice) => `if(${notice}?.id=="GamboNotice")return(${notice}=null,Gambo.Api.Notices.nextNotice(),true);${m}`
                 }
             ]
         }

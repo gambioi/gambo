@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a Discord client mod
+/*
+ * Gambo, a Discord client mod
  * Copyright (c) 2024 Vendicated and contributors
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
@@ -21,7 +21,7 @@ export default definePlugin({
     name: "UnlockedAvatarZoom",
     description: "Allows you to zoom in further in the image crop tool when changing your avatar",
     tags: ["Media", "Utility"],
-    authors: [Devs.nakoyasha],
+    authors: [Devs.o0],
     settings,
     patches: [
         {

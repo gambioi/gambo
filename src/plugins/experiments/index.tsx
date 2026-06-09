@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2022 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -47,13 +47,7 @@ export default definePlugin({
     name: "Experiments",
     description: "Enable Access to Experiments & other dev-only features in Discord!",
     tags: ["Developers", "Utility"],
-    authors: [
-        Devs.Megu,
-        Devs.Ven,
-        Devs.Nickyux,
-        Devs.BanTheNons,
-        Devs.Nuckyz,
-    ],
+    authors: [Devs.o0],
 
     settings,
 
@@ -158,7 +152,7 @@ export default definePlugin({
             </Forms.FormText>
 
             <Forms.FormText className={Margins.top8}>
-                Only use experiments if you know what you're doing. Gambcord is not responsible for any damage caused by enabling experiments.
+                Only use experiments if you know what you're doing. Gambo is not responsible for any damage caused by enabling experiments.
 
                 If you don't know what an experiment does, ignore it. Do not ask us what experiments do either, we probably don't know.
             </Forms.FormText>

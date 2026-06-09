@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2023 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,7 +16,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import * as t from "@gambcord/discord-types";
+import * as t from "@gambo/discord-types";
 import { findByCodeLazy, findByPropsLazy } from "@webpack";
 
 import { waitForStore } from "./internal";
@@ -148,5 +148,5 @@ waitForStore("ThemeStore", m => {
     ThemeStore = m;
     // Importing this directly causes all webpack commons to be imported, which can easily cause circular dependencies.
     // For this reason, use a non import access here.
-    Gambcord.Api.Themes.initQuickCssThemeStore(m);
+    Gambo.Api.Themes.initQuickCssThemeStore(m);
 });

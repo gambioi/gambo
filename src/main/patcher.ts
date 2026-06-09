@@ -1,5 +1,5 @@
-﻿/*
- * Gambcord, a modification for Discord's desktop app
+/*
+ * Gambo, a modification for Discord's desktop app
  * Copyright (c) 2022 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,6 +16,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+import { existsSync } from "fs";
+
 import { onceDefined } from "@shared/onceDefined";
 import electron, { app, BrowserWindowConstructorOptions, Menu } from "electron";
 import { dirname, join } from "path";
@@ -23,7 +25,7 @@ import { dirname, join } from "path";
 import { RendererSettings } from "./settings";
 import { IS_VANILLA } from "./utils/constants";
 
-console.log("[Gambcord] Starting up...");
+console.log("[Gambo] Starting up...");
 
 // Our injector file at app/index.js
 const injectorPath = require.main!.filename;
@@ -34,11 +36,17 @@ const asarName = require.main!.path.endsWith("app.asar") ? "_app.asar" : "app.as
 // The original app.asar
 const asarPath = join(dirname(injectorPath), "..", asarName);
 
-const discordPkg = require(join(asarPath, "package.json"));
-require.main!.filename = join(asarPath, discordPkg.main);
+// discord_desktop_core injection: Discord is already loading via its bootstrapper,
+// we don't need to find/load _app.asar ourselves.
+const isDiscordCoreInjection = !existsSync(asarPath);
 
-// @ts-expect-error Untyped method? Dies from cringe
-app.setAppPath(asarPath);
+if (!isDiscordCoreInjection) {
+    const discordPkg = require(join(asarPath, "package.json"));
+    require.main!.filename = join(asarPath, discordPkg.main);
+
+    // @ts-expect-error Untyped method? Dies from cringe
+    app.setAppPath(asarPath);
+}
 
 if (!IS_VANILLA) {
     const settings = RendererSettings.store;
@@ -68,7 +76,7 @@ if (!IS_VANILLA) {
 
     class BrowserWindow extends electron.BrowserWindow {
         constructor(options: BrowserWindowConstructorOptions) {
-            if (!options?.webPreferences?.preload || !options.title) {
+            if (!options?.webPreferences?.preload) {
                 super(options);
                 return;
             }
@@ -134,7 +142,7 @@ if (!IS_VANILLA) {
         s.set("DANGEROUS_ENABLE_DEVTOOLS_ONLY_ENABLE_IF_YOU_KNOW_WHAT_YOURE_DOING", true);
     });
 
-    process.env.DATA_DIR = join(app.getPath("userData"), "..", "Gambcord");
+    process.env.DATA_DIR = join(app.getPath("userData"), "..", "Gambo");
 
     // Monkey patch commandLine to:
     // - disable WidgetLayering: Fix DevTools context menus https://github.com/electron/electron/issues/38790
@@ -158,9 +166,28 @@ if (!IS_VANILLA) {
     app.commandLine.appendSwitch("disable-renderer-backgrounding");
     app.commandLine.appendSwitch("disable-background-timer-throttling");
     app.commandLine.appendSwitch("disable-backgrounding-occluded-windows");
+
+    // TurboMode: expose le garbage collector V8 pour permettre au plugin
+    // de libérer la RAM périodiquement (window.gc()).
+    app.commandLine.appendSwitch("js-flags", "--expose-gc");
+
+    // ─── TurboMode: flags de performance (démarrage + rendu plus rapides) ────
+    if (RendererSettings.store.plugins?.TurboMode?.enabled) {
+        // Accélération GPU du rendu → peintures plus rapides, UI plus fluide
+        app.commandLine.appendSwitch("enable-gpu-rasterization");
+        app.commandLine.appendSwitch("enable-zero-copy");
+        // Permet la rastérisation GPU même si le GPU est sur la blocklist Chromium
+        app.commandLine.appendSwitch("ignore-gpu-blocklist");
+        // Rastérisation canvas hors-processus → moins de charge sur le thread principal
+        app.commandLine.appendSwitch("enable-features", "CanvasOopRasterization");
+        // Décodage vidéo accéléré (GIFs, vidéos) → moins de CPU
+        app.commandLine.appendSwitch("enable-accelerated-video-decode");
+    }
 } else {
-    console.log("[Gambcord] Running in vanilla mode. Not loading Gambcord");
+    console.log("[Gambo] Running in vanilla mode. Not loading Gambo");
 }
 
-console.log("[Gambcord] Loading original Discord app.asar");
-require(require.main!.filename);
+if (!isDiscordCoreInjection) {
+    console.log("[Gambo] Loading original Discord app.asar");
+    require(require.main!.filename);
+}
