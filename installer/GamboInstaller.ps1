@@ -25,24 +25,43 @@ if ($PSScriptRoot) {
     # Cas .exe compile : le chemin du process est l'exe lui-meme
     $SCRIPT_DIR = Split-Path -Parent ([System.Diagnostics.Process]::GetCurrentProcess().MainModule.FileName)
 }
-# Recherche robuste du dossier dist (gere les structures d'extraction variees)
+# Recherche TRES robuste du dossier dist (gere extractions variees, dossiers deplaces)
+function Test-DistAt($dir) {
+    return ($dir -and (Test-Path (Join-Path $dir "patcher.js")))
+}
 function Resolve-DistDir($scriptDir) {
-    $cands = @(
-        (Join-Path (Split-Path -Parent $scriptDir) "dist"),                              # ../dist (standard)
-        (Join-Path $scriptDir "dist"),                                                   # ./dist
-        (Join-Path (Split-Path -Parent (Split-Path -Parent $scriptDir)) "dist")          # ../../dist
-    )
-    foreach ($c in $cands) {
-        if ($c -and (Test-Path (Join-Path $c "patcher.js"))) { return $c }
-    }
-    # Dernier recours : chercher patcher.js dans un dossier "dist" autour du script
-    $searchRoot = Split-Path -Parent $scriptDir
-    if ($searchRoot -and (Test-Path $searchRoot)) {
-        $hit = Get-ChildItem $searchRoot -Recurse -Filter "patcher.js" -File -ErrorAction SilentlyContinue |
+    # 1) Emplacements relatifs directs
+    $p1 = Split-Path -Parent $scriptDir
+    $p2 = if ($p1) { Split-Path -Parent $p1 } else { $null }
+    foreach ($c in @(
+        (Join-Path $p1 "dist"),            # ../dist (standard)
+        (Join-Path $scriptDir "dist"),     # ./dist
+        (Join-Path $p2 "dist")             # ../../dist
+    )) { if (Test-DistAt $c) { return $c } }
+
+    # 2) Recherche recursive en remontant jusqu'a 3 niveaux
+    $p3 = if ($p2) { Split-Path -Parent $p2 } else { $null }
+    $roots = @($p1, $p2, $p3) |
+             Where-Object { $_ -and (Test-Path $_) } | Select-Object -Unique
+    foreach ($r in $roots) {
+        $hit = Get-ChildItem $r -Recurse -Filter "patcher.js" -File -ErrorAction SilentlyContinue |
                Where-Object { $_.Directory.Name -eq "dist" } | Select-Object -First 1
         if ($hit) { return $hit.Directory.FullName }
     }
-    return (Join-Path (Split-Path -Parent $scriptDir) "dist")  # fallback (pour le message d'erreur)
+
+    # 3) Dernier recours : chercher un Gambo-Setup\dist\patcher.js dans les dossiers usuels
+    $usual = @(
+        (Join-Path $env:USERPROFILE "Downloads"),
+        (Join-Path $env:USERPROFILE "Desktop"),
+        (Join-Path $env:USERPROFILE "Documents")
+    ) | Where-Object { Test-Path $_ }
+    foreach ($u in $usual) {
+        $hit = Get-ChildItem $u -Recurse -Filter "patcher.js" -File -ErrorAction SilentlyContinue -Depth 5 |
+               Where-Object { $_.Directory.Name -eq "dist" } | Select-Object -First 1
+        if ($hit) { return $hit.Directory.FullName }
+    }
+
+    return (Join-Path $p1 "dist")  # fallback (message d'erreur)
 }
 
 $DIST_DIR        = Resolve-DistDir $SCRIPT_DIR
@@ -666,10 +685,19 @@ $BtnUninstall.Add_Click({
 # ── Init ────────────────────────────────────────────────────────────────────────
 Write-Log "Gambo Installer ready." "#5865F2"
 if (-not (Test-Path $PATCHER_PATH)) {
-    Write-Log "[!] Fichiers Gambo introuvables." "#F2555A"
-    Write-Log "    -> EXTRAIS le ZIP en entier (clic droit -> Extraire tout)," "#F2555A"
-    Write-Log "       puis lance l'installer depuis le dossier extrait." "#F2555A"
-    Write-Log "       Ne lance PAS le .bat depuis l'interieur du zip." "#F2555A"
+    Write-Log "[!] Fichiers Gambo (dist\patcher.js) introuvables." "#F2555A"
+    Write-Log "    Installer lance depuis : $SCRIPT_DIR" "#949BA4"
+    Write-Log "    Cherche dist a : $DIST_DIR" "#949BA4"
+    $par = Split-Path -Parent $SCRIPT_DIR
+    Write-Log "    Contenu du dossier parent ($par) :" "#949BA4"
+    try {
+        Get-ChildItem $par -ErrorAction SilentlyContinue | ForEach-Object {
+            Write-Log "      - $($_.Name)$(if($_.PSIsContainer){'\'})" "#949BA4"
+        }
+    } catch {}
+    Write-Log "    -> Il faut un dossier 'dist' a cote de 'installer'." "#F2555A"
+    Write-Log "    -> Clic droit sur le ZIP -> 'Extraire tout', puis lance" "#F2555A"
+    Write-Log "       installer\GamboInstaller.bat depuis le dossier extrait." "#F2555A"
 }
 
 [void]$window.ShowDialog()
