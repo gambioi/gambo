@@ -64,7 +64,33 @@ function Resolve-DistDir($scriptDir) {
     return (Join-Path $p1 "dist")  # fallback (message d'erreur)
 }
 
-$DIST_DIR        = Resolve-DistDir $SCRIPT_DIR
+# Repo GitHub d'ou telecharger les fichiers si dist est introuvable localement
+$GAMBO_REPO = "gambioi/gambo"
+
+# Si dist/patcher.js est introuvable (extraction ratee), telecharge les fichiers
+# depuis la derniere Release GitHub -> l'installer marche quoi qu'il arrive.
+function Ensure-Dist($distDir) {
+    if (Test-DistAt $distDir) { return $distDir }
+    $target = Join-Path $SCRIPT_DIR "dist"
+    Write-Host "Fichiers Gambo absents -> telechargement depuis GitHub ($GAMBO_REPO)..." -ForegroundColor Yellow
+    try {
+        New-Item -ItemType Directory -Force -Path $target | Out-Null
+        [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+        foreach ($f in @("patcher.js", "preload.js", "renderer.js", "renderer.css")) {
+            $url = "https://github.com/$GAMBO_REPO/releases/latest/download/$f"
+            Invoke-WebRequest -Uri $url -OutFile (Join-Path $target $f) -UseBasicParsing -ErrorAction Stop
+        }
+        if (Test-DistAt $target) {
+            Write-Host "Telechargement reussi." -ForegroundColor Green
+            return $target
+        }
+    } catch {
+        Write-Host "Echec du telechargement : $($_.Exception.Message)" -ForegroundColor Red
+    }
+    return $distDir
+}
+
+$DIST_DIR        = Ensure-Dist (Resolve-DistDir $SCRIPT_DIR)
 $PATCHER_PATH    = Join-Path $DIST_DIR "patcher.js"
 $PATCHER_UNIX    = $PATCHER_PATH -replace "\\", "/"
 $OPENASAR_BUNDLE = Join-Path $SCRIPT_DIR "openasar.asar"
