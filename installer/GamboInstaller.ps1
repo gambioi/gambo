@@ -90,10 +90,23 @@ function Ensure-Dist($distDir) {
     return $distDir
 }
 
+# Telecharge openasar.asar depuis GitHub s'il n'est pas a cote (cas .bat standalone)
+function Ensure-OpenAsar {
+    $local = Join-Path $SCRIPT_DIR "openasar.asar"
+    if (Test-Path $local) { return $local }
+    try {
+        [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+        Invoke-WebRequest -Uri "https://github.com/$GAMBO_REPO/releases/latest/download/openasar.asar" `
+            -OutFile $local -UseBasicParsing -ErrorAction Stop
+        if (Test-Path $local) { return $local }
+    } catch { }
+    return $local
+}
+
 $DIST_DIR        = Ensure-Dist (Resolve-DistDir $SCRIPT_DIR)
 $PATCHER_PATH    = Join-Path $DIST_DIR "patcher.js"
 $PATCHER_UNIX    = $PATCHER_PATH -replace "\\", "/"
-$OPENASAR_BUNDLE = Join-Path $SCRIPT_DIR "openasar.asar"
+$OPENASAR_BUNDLE = Ensure-OpenAsar
 
 $DISCORD_VARIANTS = @(
     @{ Name = "Discord Stable"; Folder = "Discord";            Exe = "Discord.exe" },
