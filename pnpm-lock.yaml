@@ -41,7 +41,7 @@ importers:
       '@electron/asar':
         specifier: ^4.2.0
         version: 4.2.0
-      '@gambcord/discord-types':
+      '@gambo/discord-types':
         specifier: link:packages/discord-types
         version: link:packages/discord-types
       '@stylistic/eslint-plugin':
@@ -158,7 +158,7 @@ importers:
 
   packages/gambcord-types:
     dependencies:
-      '@gambcord/discord-types':
+      '@gambo/discord-types':
         specifier: workspace:^
         version: link:../discord-types
       '@types/lodash':

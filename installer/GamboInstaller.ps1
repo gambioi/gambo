@@ -1,4 +1,14 @@
 #Requires -Version 5.1
+
+# Capture TOUTE erreur et l'affiche (console + popup) au lieu d'echouer en silence.
+trap {
+    $msg = "Gambo Installer - erreur au demarrage :`n`n" + ($_ | Out-String)
+    Write-Host $msg -ForegroundColor Red
+    try { Add-Type -AssemblyName System.Windows.Forms -ErrorAction SilentlyContinue; [System.Windows.Forms.MessageBox]::Show($msg, "Gambo Installer") | Out-Null } catch {}
+    Read-Host "Appuie sur Entree pour fermer"
+    exit 1
+}
+
 Add-Type -AssemblyName PresentationFramework, PresentationCore, WindowsBase, System.Drawing, System.Windows.Forms
 
 # ═══════════════════════════════════════════════════════════════════════════
@@ -15,7 +25,27 @@ if ($PSScriptRoot) {
     # Cas .exe compile : le chemin du process est l'exe lui-meme
     $SCRIPT_DIR = Split-Path -Parent ([System.Diagnostics.Process]::GetCurrentProcess().MainModule.FileName)
 }
-$DIST_DIR        = Join-Path (Split-Path -Parent $SCRIPT_DIR) "dist"
+# Recherche robuste du dossier dist (gere les structures d'extraction variees)
+function Resolve-DistDir($scriptDir) {
+    $cands = @(
+        (Join-Path (Split-Path -Parent $scriptDir) "dist"),                              # ../dist (standard)
+        (Join-Path $scriptDir "dist"),                                                   # ./dist
+        (Join-Path (Split-Path -Parent (Split-Path -Parent $scriptDir)) "dist")          # ../../dist
+    )
+    foreach ($c in $cands) {
+        if ($c -and (Test-Path (Join-Path $c "patcher.js"))) { return $c }
+    }
+    # Dernier recours : chercher patcher.js dans un dossier "dist" autour du script
+    $searchRoot = Split-Path -Parent $scriptDir
+    if ($searchRoot -and (Test-Path $searchRoot)) {
+        $hit = Get-ChildItem $searchRoot -Recurse -Filter "patcher.js" -File -ErrorAction SilentlyContinue |
+               Where-Object { $_.Directory.Name -eq "dist" } | Select-Object -First 1
+        if ($hit) { return $hit.Directory.FullName }
+    }
+    return (Join-Path (Split-Path -Parent $scriptDir) "dist")  # fallback (pour le message d'erreur)
+}
+
+$DIST_DIR        = Resolve-DistDir $SCRIPT_DIR
 $PATCHER_PATH    = Join-Path $DIST_DIR "patcher.js"
 $PATCHER_UNIX    = $PATCHER_PATH -replace "\\", "/"
 $OPENASAR_BUNDLE = Join-Path $SCRIPT_DIR "openasar.asar"
@@ -31,35 +61,73 @@ $DISCORD_VARIANTS = @(
 function Get-CoreDir($appDir) {
     $mod = Join-Path $appDir "modules"
     if (-not (Test-Path $mod)) { return $null }
-    $p = Get-ChildItem $mod -Filter "discord_desktop_core-*" -Directory |
-         Sort-Object Name -Descending | Select-Object -First 1
-    if (-not $p) { return $null }
-    $inner = Join-Path $p.FullName "discord_desktop_core"
-    if (Test-Path $inner) { return $inner }
+    # Prendre la version de core la plus recente QUI a un index.js valide
+    $cores = Get-ChildItem $mod -Filter "discord_desktop_core-*" -Directory -ErrorAction SilentlyContinue |
+             Sort-Object Name -Descending
+    foreach ($p in $cores) {
+        $inner = Join-Path $p.FullName "discord_desktop_core"
+        if (Test-Path (Join-Path $inner "index.js")) { return $inner }
+    }
     return $null
+}
+
+function New-InstallObj($name, $exe, $appDir, $core) {
+    [PSCustomObject]@{
+        Name       = $name
+        Exe        = $exe
+        CoreDir    = $core
+        IdxPath    = Join-Path $core "index.js"
+        OrigIdx    = Join-Path $core "_index.js"
+        AsarPath   = Join-Path $appDir "resources\app.asar"
+        AsarBackup = Join-Path $appDir "resources\app.asar.backup"
+        ExePath    = Join-Path $appDir $exe
+        AppVer     = ((Split-Path $appDir -Leaf) -replace "app-","")
+    }
 }
 
 function Get-DiscordInstalls {
     $found = @()
-    $local = [Environment]::GetFolderPath("LocalApplicationData")
+    $seenCores = @{}
+
+    # Plusieurs emplacements possibles (LocalAppData standard + variantes)
+    $bases = @(
+        [Environment]::GetFolderPath("LocalApplicationData"),
+        $env:LOCALAPPDATA,
+        (Join-Path $env:USERPROFILE "AppData\Local")
+    ) | Where-Object { $_ -and (Test-Path $_) } | Select-Object -Unique
+
     foreach ($v in $DISCORD_VARIANTS) {
-        $base = Join-Path $local $v.Folder
-        if (-not (Test-Path $base)) { continue }
-        $appDir = Get-ChildItem $base -Filter "app-*" -Directory |
-                  Sort-Object Name -Descending | Select-Object -First 1
-        if (-not $appDir) { continue }
-        $core = Get-CoreDir $appDir.FullName
-        if (-not $core) { continue }
-        $found += [PSCustomObject]@{
-            Name       = $v.Name
-            Exe        = $v.Exe
-            CoreDir    = $core
-            IdxPath    = Join-Path $core "index.js"
-            OrigIdx    = Join-Path $core "_index.js"
-            AsarPath   = Join-Path $appDir.FullName "resources\app.asar"
-            AsarBackup = Join-Path $appDir.FullName "resources\app.asar.backup"
-            ExePath    = Join-Path $appDir.FullName $v.Exe
-            AppVer     = ($appDir.Name -replace "app-","")
+        foreach ($root in $bases) {
+            $base = Join-Path $root $v.Folder
+            if (-not (Test-Path $base)) { continue }
+
+            # 1) Parcourir TOUTES les app-* (pas juste la 1ere) et prendre la
+            #    plus recente qui a un core valide.
+            $appDirs = Get-ChildItem $base -Filter "app-*" -Directory -ErrorAction SilentlyContinue |
+                       Sort-Object Name -Descending
+            $picked = $null; $pickedCore = $null
+            foreach ($ad in $appDirs) {
+                $c = Get-CoreDir $ad.FullName
+                if ($c) { $picked = $ad.FullName; $pickedCore = $c; break }
+            }
+
+            # 2) Secours : recherche recursive de discord_desktop_core avec index.js
+            if (-not $pickedCore) {
+                $hit = Get-ChildItem $base -Recurse -Directory -Filter "discord_desktop_core" -ErrorAction SilentlyContinue |
+                       Where-Object { Test-Path (Join-Path $_.FullName "index.js") } |
+                       Sort-Object FullName -Descending | Select-Object -First 1
+                if ($hit) {
+                    $pickedCore = $hit.FullName
+                    # appDir = .../app-X/modules/discord_desktop_core-N/discord_desktop_core -> remonter de 3
+                    $picked = Split-Path (Split-Path (Split-Path $hit.FullName))
+                }
+            }
+
+            if (-not $pickedCore) { continue }
+            if ($seenCores.ContainsKey($pickedCore)) { continue }
+            $seenCores[$pickedCore] = $true
+            $found += New-InstallObj $v.Name $v.Exe $picked $pickedCore
+            break  # variante trouvee pour ce root, passer a la variante suivante
         }
     }
     return $found
@@ -114,7 +182,7 @@ function Test-OpenAsar($i)    { Test-Path $i.AsarBackup }
 
 function Install-Gambo($i) {
     if (-not (Test-Path $PATCHER_PATH)) {
-        return @{ Ok=$false; Msg="dist/patcher.js not found - run: pnpm buildStandalone" }
+        return @{ Ok=$false; Msg="Fichiers Gambo introuvables. EXTRAIS le ZIP en entier (clic droit -> Extraire tout) puis lance l'installer depuis le dossier extrait - ne le lance PAS depuis l'interieur du zip." }
     }
     try {
         $enc = New-Object System.Text.UTF8Encoding($false)
@@ -598,7 +666,10 @@ $BtnUninstall.Add_Click({
 # ── Init ────────────────────────────────────────────────────────────────────────
 Write-Log "Gambo Installer ready." "#5865F2"
 if (-not (Test-Path $PATCHER_PATH)) {
-    Write-Log "[!] dist/patcher.js missing - run: pnpm buildStandalone" "#F2555A"
+    Write-Log "[!] Fichiers Gambo introuvables." "#F2555A"
+    Write-Log "    -> EXTRAIS le ZIP en entier (clic droit -> Extraire tout)," "#F2555A"
+    Write-Log "       puis lance l'installer depuis le dossier extrait." "#F2555A"
+    Write-Log "       Ne lance PAS le .bat depuis l'interieur du zip." "#F2555A"
 }
 
 [void]$window.ShowDialog()

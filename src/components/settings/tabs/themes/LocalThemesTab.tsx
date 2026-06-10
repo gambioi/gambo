@@ -6,6 +6,7 @@
 
 import { isPluginEnabled } from "@api/PluginManager";
 import { Settings, useSettings } from "@api/Settings";
+import { Button } from "@components/Button";
 import { Card } from "@components/Card";
 import { Flex } from "@components/Flex";
 import { FolderIcon, PaintbrushIcon, PencilIcon, PlusIcon, RestartIcon } from "@components/Icons";
@@ -15,6 +16,7 @@ import { openPluginModal } from "@components/settings/tabs/plugins/PluginModal";
 import { UserThemeHeader } from "@main/themes";
 import ClientThemePlugin from "@plugins/clientTheme";
 import { classNameFactory } from "@utils/css";
+import { relaunch } from "@utils/native";
 import { findLazy } from "@webpack";
 import { Forms, useEffect, useRef, useState } from "@webpack/common";
 import type { ComponentType, Ref, SyntheticEvent } from "react";
@@ -22,6 +24,68 @@ import type { ComponentType, Ref, SyntheticEvent } from "react";
 import { ThemeCard } from "./ThemeCard";
 
 const cl = classNameFactory("vc-settings-theme-");
+
+// Bouton "Publier" — visible uniquement sur l'install de dev (source présente).
+// Build + commit + push + Release GitHub en un clic. Tes amis cliquent ensuite
+// "Check for Updates" pour recevoir tes plugins.
+function PublishGamboSection() {
+    const [canPublish, setCanPublish] = useState(false);
+    const [isPublishing, setIsPublishing] = useState(false);
+    const [log, setLog] = useState<string>("");
+    const [done, setDone] = useState(false);
+
+    useEffect(() => {
+        GamboNative.updater.canPublish().then(res => setCanPublish(res.ok ? res.value : false)).catch(() => { });
+    }, []);
+
+    if (!canPublish) return null;
+
+    return (
+        <section>
+            <Forms.FormTitle tag="h5">Mettre à jour Gambo (dev)</Forms.FormTitle>
+            <Card style={{ padding: "1em" }}>
+                <Forms.FormText style={{ marginBottom: "0.6em" }}>
+                    Tu as modifié Gambo (plugin, thème, etc.) ? Clique pour <b>build + push + publier</b>.
+                    Tes amis recevront la mise à jour via leur Updater.
+                </Forms.FormText>
+                <Flex style={{ gap: "0.5em" }}>
+                    <Button
+                        disabled={isPublishing}
+                        onClick={async () => {
+                            setIsPublishing(true); setDone(false);
+                            setLog("Publication en cours… (build + push + release, ~30-60s)");
+                            try {
+                                const res = await GamboNative.updater.publish();
+                                if (res.ok) {
+                                    setLog("✅ Publié !\n" + res.value);
+                                    setDone(true);
+                                } else {
+                                    setLog("❌ Échec :\n" + (res.error?.stderr || res.error?.message || JSON.stringify(res.error)));
+                                }
+                            } catch (e: any) {
+                                setLog("❌ Erreur : " + (e?.message ?? String(e)));
+                            } finally {
+                                setIsPublishing(false);
+                            }
+                        }}
+                    >
+                        {isPublishing ? "Publication…" : "Publier la mise à jour"}
+                    </Button>
+                    {done && (
+                        <Button color={Button.Colors.GREEN} onClick={relaunch}>
+                            Redémarrer pour appliquer
+                        </Button>
+                    )}
+                </Flex>
+                {log && (
+                    <Card style={{ padding: "0.5em", marginTop: "0.6em", maxHeight: 160, overflow: "auto" }}>
+                        <pre style={{ whiteSpace: "pre-wrap", margin: 0, fontSize: "0.72em" }}>{log}</pre>
+                    </Card>
+                )}
+            </Card>
+        </section>
+    );
+}
 
 type FileInput = ComponentType<{
     ref: Ref<HTMLInputElement>;
@@ -169,6 +233,8 @@ export function LocalThemesTab() {
                     ))}
                 </div>
             </section>
+
+            <PublishGamboSection />
         </Flex>
     );
 }
