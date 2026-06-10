@@ -53,18 +53,25 @@ tryRun(`git commit --allow-empty -m "publish update ${stamp}"`);
 run("git push");
 
 console.log("\n=== 2/4 : Build ===");
-run("pnpm buildStandalone");
+// node directement (pas pnpm) pour marcher aussi quand lance depuis Discord
+run("node scripts/build/build.mjs --standalone");
 
 const hash = out("git rev-parse --short HEAD");
 console.log(`\n=== 3/4 : Hash du build = ${hash} ===`);
 
-// Fichiers à attacher (Discord desktop + Vesktop)
-const candidates = [
+// Fichiers du build (Discord desktop + Vesktop)
+const distFiles = [
     "patcher.js", "preload.js", "renderer.js", "renderer.css",
     "gamboDesktopMain.js", "gamboDesktopPreload.js", "gamboDesktopRenderer.js", "gamboDesktopRenderer.css"
+].map(f => join(DIST, f));
+
+// IMPORTANT : inclure aussi l'installer + openasar pour le .bat "online" standalone
+const installerFiles = [
+    join(ROOT, "installer", "GamboInstaller.ps1"),
+    join(ROOT, "installer", "openasar.asar")
 ];
-const assets = candidates
-    .map(f => join(DIST, f))
+
+const assets = [...distFiles, ...installerFiles]
     .filter(p => existsSync(p))
     .map(p => `"${p}"`)
     .join(" ");
