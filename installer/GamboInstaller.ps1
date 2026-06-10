@@ -66,12 +66,14 @@ function Resolve-DistDir($scriptDir) {
 
 # Repo GitHub d'ou telecharger les fichiers si dist est introuvable localement
 $GAMBO_REPO = "gambioi/gambo"
+# Dossier PERMANENT pour les fichiers telecharges (PAS le %TEMP% qui se vide et fait crasher Discord !)
+$GAMBO_HOME = Join-Path $env:LOCALAPPDATA "Gambo"
 
-# Si dist/patcher.js est introuvable (extraction ratee), telecharge les fichiers
-# depuis la derniere Release GitHub -> l'installer marche quoi qu'il arrive.
+# Si dist/patcher.js est introuvable, telecharge les fichiers depuis la derniere
+# Release GitHub vers un dossier PERMANENT -> l'installer marche quoi qu'il arrive.
 function Ensure-Dist($distDir) {
     if (Test-DistAt $distDir) { return $distDir }
-    $target = Join-Path $SCRIPT_DIR "dist"
+    $target = Join-Path $GAMBO_HOME "dist"
     Write-Host "Fichiers Gambo absents -> telechargement depuis GitHub ($GAMBO_REPO)..." -ForegroundColor Yellow
     try {
         New-Item -ItemType Directory -Force -Path $target | Out-Null
@@ -81,7 +83,7 @@ function Ensure-Dist($distDir) {
             Invoke-WebRequest -Uri $url -OutFile (Join-Path $target $f) -UseBasicParsing -ErrorAction Stop
         }
         if (Test-DistAt $target) {
-            Write-Host "Telechargement reussi." -ForegroundColor Green
+            Write-Host "Telechargement reussi -> $target" -ForegroundColor Green
             return $target
         }
     } catch {
@@ -90,17 +92,19 @@ function Ensure-Dist($distDir) {
     return $distDir
 }
 
-# Telecharge openasar.asar depuis GitHub s'il n'est pas a cote (cas .bat standalone)
+# openasar.asar : a cote du script si present, sinon telecharge en dossier permanent
 function Ensure-OpenAsar {
     $local = Join-Path $SCRIPT_DIR "openasar.asar"
     if (Test-Path $local) { return $local }
+    $target = Join-Path $GAMBO_HOME "openasar.asar"
     try {
+        New-Item -ItemType Directory -Force -Path $GAMBO_HOME | Out-Null
         [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
         Invoke-WebRequest -Uri "https://github.com/$GAMBO_REPO/releases/latest/download/openasar.asar" `
-            -OutFile $local -UseBasicParsing -ErrorAction Stop
-        if (Test-Path $local) { return $local }
+            -OutFile $target -UseBasicParsing -ErrorAction Stop
+        if (Test-Path $target) { return $target }
     } catch { }
-    return $local
+    return $target
 }
 
 $DIST_DIR        = Ensure-Dist (Resolve-DistDir $SCRIPT_DIR)
