@@ -41,6 +41,12 @@ export const enum IpcEvents {
     UPDATE = "GamboUpdate",
     BUILD = "GamboBuild",
 
+    DISCORD_GET_INFO = "GamboDiscordGetInfo",
+    DISCORD_LIST_VERSIONS = "GamboDiscordListVersions",
+    DISCORD_DOWNLOAD = "GamboDiscordDownload",
+    DISCORD_RUN_INSTALLER = "GamboDiscordRunInstaller",
+    DISCORD_OPEN_DOWNLOADS = "GamboDiscordOpenDownloads",
+
     OPEN_MONACO_EDITOR = "GamboOpenMonacoEditor",
     GET_MONACO_THEME = "GamboGetMonacoTheme",
 
