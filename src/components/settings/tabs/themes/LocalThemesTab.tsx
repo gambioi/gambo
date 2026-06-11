@@ -35,7 +35,11 @@ function PublishGamboSection() {
     const [done, setDone] = useState(false);
 
     useEffect(() => {
-        GamboNative.updater.canPublish().then(res => setCanPublish(res.ok ? res.value : false)).catch(() => { });
+        // Natif potentiellement plus ancien (ami après update) : canPublish peut ne pas exister.
+        // On vérifie avant d'appeler, sinon l'onglet Themes entier crashe.
+        const fn = (GamboNative as any)?.updater?.canPublish;
+        if (typeof fn !== "function") return;
+        fn().then((res: any) => setCanPublish(res.ok ? res.value : false)).catch(() => { });
     }, []);
 
     if (!canPublish) return null;
