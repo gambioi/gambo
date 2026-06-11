@@ -33,6 +33,7 @@ export interface ScreenshareProfile {
     videoCodecEnabled?: boolean;
     keyframeIntervalEnabled?: boolean;
     hdrEnabled?: boolean;
+    stabilityMode?: boolean;
 }
 
 export interface ScreenshareStore {
@@ -51,6 +52,7 @@ export interface ScreenshareStore {
     setVideoCodecEnabled: (enabled?: boolean) => void;
     setVideoBitrateEnabled: (enabled?: boolean) => void;
     setHdrEnabled: (enabled?: boolean) => void;
+    setStabilityMode: (enabled?: boolean) => void;
     setAudioSource: (audioSource?: string) => void;
     setAudioSourceEnabled: (enabled?: boolean) => void;
     setSimpleMode: (enabled?: boolean) => void;
@@ -86,6 +88,7 @@ export const defaultScreenshareProfiles = {
         resolutionEnabled: true,
         framerateEnabled: true,
         videoBitrateEnabled: true,
+        stabilityMode: true,
     }
 } as const satisfies Record<string, ScreenshareProfile & ProfileableProfile>;
 
@@ -102,6 +105,7 @@ export const screenshareStoreDefault: ProfilableInitializer<ScreenshareStore, Sc
     setKeyframeInterval: keyframeInterval => get().currentProfile.keyframeInterval = keyframeInterval,
     setKeyframeIntervalEnabled: enabled => get().currentProfile.keyframeIntervalEnabled = enabled,
     setHdrEnabled: enabled => get().currentProfile.hdrEnabled = enabled,
+    setStabilityMode: enabled => get().currentProfile.stabilityMode = enabled,
     setAudioSource: audioSource => get().audioSource = audioSource,
     setAudioSourceEnabled: enabled => get().audioSourceEnabled = enabled,
     setSimpleMode: enabled => get().simpleMode = enabled,

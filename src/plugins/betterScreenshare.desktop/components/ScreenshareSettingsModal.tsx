@@ -126,6 +126,7 @@ export const ScreenshareSettingsModal = (props: ScreenshareSettingsModalProps) =
         getProfile,
         saveProfile,
         setHdrEnabled,
+        setStabilityMode,
         setSimpleMode,
         deleteProfile,
         duplicateProfile,
@@ -147,7 +148,8 @@ export const ScreenshareSettingsModal = (props: ScreenshareSettingsModalProps) =
         videoCodec,
         videoCodecEnabled,
         width,
-        hdrEnabled
+        hdrEnabled,
+        stabilityMode
     } = currentProfile;
 
     const [videoCodecs, setVideoCodecs] = useState<types.CodecCapabilities[]>([]);
@@ -409,6 +411,17 @@ export const ScreenshareSettingsModal = (props: ScreenshareSettingsModalProps) =
                 onChange: status => setHdrEnabled(status)
             }} />;
 
+    const settingsCardStability =
+        <SettingsModalCard
+            title="Anti-bug HQ"
+            flex={0.1}
+            switchEnabled
+            switchProps={{
+                checked: stabilityMode ?? false,
+                disabled: isSaving,
+                onChange: status => setStabilityMode(status)
+            }} />;
+
     const guideCard =
         <Card style={{ ...Styles.infoCard, flex: 0.4 }}>
             <Forms.FormTitle tag="h5">How to use?</Forms.FormTitle>
@@ -447,6 +460,7 @@ export const ScreenshareSettingsModal = (props: ScreenshareSettingsModalProps) =
                         {settingsCardResolutionSimple}
                         {settingsCardFramerateSimple}
                         {settingsCardVideoBitrateSimple}
+                        {settingsCardStability}
                         {screenshareAudioStore && settingsCardAudioSimple}
                     </SettingsModalCardRow>
                 </div>
@@ -464,6 +478,7 @@ export const ScreenshareSettingsModal = (props: ScreenshareSettingsModalProps) =
                     <SettingsModalCardRow>
                         {guideCard}
                         {settingsCardHdr}
+                        {settingsCardStability}
                         {settingsCardProfiles}
                     </SettingsModalCardRow>
                 </>
