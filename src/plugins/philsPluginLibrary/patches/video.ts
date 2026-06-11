@@ -229,14 +229,23 @@ export function patchConnectionVideoTransportOptions(
 
     connection.videoQualityManager.getQuality = function (src) {
         const { currentProfile } = get();
-        const { videoBitrateEnabled, videoBitrate, framerateEnabled, framerate, resolutionEnabled, width, height } = currentProfile;
+        const { videoBitrateEnabled, videoBitrate, framerateEnabled, framerate, resolutionEnabled, width, height, stabilityMode } = currentProfile;
 
         const quality = oldGetQuality.call(this, src);
 
         if (videoBitrateEnabled) {
-            quality.bitrateMax = Math.round(videoBitrate! * 1000);
-            quality.bitrateMin = Math.round(videoBitrate! * 1000);
-            quality.bitrateTarget = Math.round(videoBitrate! * 1000);
+            const target = Math.round(videoBitrate! * 1000);
+            if (stabilityMode) {
+                // Bitrate adaptatif : min bas -> l'encodeur/reseau descend quand il sature
+                // au lieu de freezer le stream a un bitrate fixe trop haut (anti-bug haute qualite).
+                quality.bitrateMax = target;
+                quality.bitrateMin = Math.round(target * 0.25);
+                quality.bitrateTarget = Math.round(target * 0.8);
+            } else {
+                quality.bitrateMax = target;
+                quality.bitrateMin = target;
+                quality.bitrateTarget = target;
+            }
         }
 
         quality.localWant = 100;
