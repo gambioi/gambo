@@ -81,6 +81,10 @@ const simpleResolutions: readonly (SelectOption & { value: types.Resolution; })[
 
 const simpleVideoBitrates: readonly SelectOption[] = [
     {
+        label: "Very Low (no lag)",
+        value: 1500
+    },
+    {
         label: "Low",
         value: 2500
     },
@@ -89,12 +93,8 @@ const simpleVideoBitrates: readonly SelectOption[] = [
         value: 5000
     },
     {
-        label: "Medium-High",
-        value: 7500
-    },
-    {
         label: "High",
-        value: 10000
+        value: 8000
     }
 ] as const;
 
@@ -333,8 +333,8 @@ export const ScreenshareSettingsModal = (props: ScreenshareSettingsModalProps) =
                         onValueChange={value => setVideoBitrate(value)}
                         initialValue={videoBitrate || 500}
                         minValue={500}
-                        maxValue={10000}
-                        markers={[500, 10000]}
+                        maxValue={8000}
+                        markers={[500, 2500, 5000, 8000]}
                         onValueRender={value => `${value.toFixed(0)}kb/s`} />
                 </div>
             </SettingsModalCardItem>

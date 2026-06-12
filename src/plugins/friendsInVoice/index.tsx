@@ -8,44 +8,72 @@ import { definePluginSettings } from "@api/Settings";
 import { Devs } from "@utils/constants";
 import { ModalContent, ModalHeader, ModalRoot, ModalSize, openModal } from "@utils/modal";
 import definePlugin, { OptionType } from "@utils/types";
-import { findByPropsLazy } from "@webpack";
-import { Button, FluxDispatcher, Forms, React } from "@webpack/common";
+import { findByPropsLazy, findStoreLazy } from "@webpack";
+import { Button, FluxDispatcher, Forms, React, RelationshipStore, UserStore } from "@webpack/common";
 
-// Stores en lazy (jamais undefined a l'import -> pas de risque de casser l'enregistrement)
-const RelationshipStore = findByPropsLazy("getFriendIDs", "getRelationships");
-const VoiceStateStore = findByPropsLazy("getVoiceStateForUser", "getVoiceStatesForChannel");
-const ChannelStore = findByPropsLazy("getChannel", "getDMFromUserId");
-const GuildStore = findByPropsLazy("getGuild", "getGuilds");
-const UserStore = findByPropsLazy("getUser", "getCurrentUser");
+const VoiceStateStore = findStoreLazy("VoiceStateStore");
+const ChannelStore = findStoreLazy("ChannelStore");
+const GuildStore = findStoreLazy("GuildStore");
+const VoiceActions = findByPropsLazy("selectVoiceChannel");
 
+// joinTimes: accurate time from VOICE_STATE_UPDATES event
+// firstSeen: fallback for friends already in voice when Gambo starts
 const joinTimes = new Map<string, number>();
+const firstSeen = new Map<string, number>();
+
 const fmt = (ms: number) => {
     const s = Math.floor(ms / 1000), h = Math.floor(s / 3600), m = Math.floor((s % 3600) / 60);
     return h > 0 ? `${h}h ${m}m` : m > 0 ? `${m}m` : `${s}s`;
 };
 
 function collect() {
-    const out: any[] = [];
     try {
-        const ids: string[] = RelationshipStore.getFriendIDs?.() ?? [];
+        const ids: string[] = RelationshipStore.getFriendIDs() ?? [];
+        if (ids.length === 0) return { list: [], error: null, friendCount: 0 };
+
+        const out: any[] = [];
         for (const id of ids) {
-            const vs = VoiceStateStore.getVoiceStateForUser?.(id);
-            if (!vs?.channelId) continue;
-            const ch = ChannelStore.getChannel?.(vs.channelId);
-            if (!ch) continue;
-            const guild = vs.guildId ? GuildStore.getGuild?.(vs.guildId) : null;
-            const states = VoiceStateStore.getVoiceStatesForChannel?.(vs.channelId) ?? {};
-            const others = Object.keys(states).filter(u => u !== id).map(u => UserStore.getUser?.(u)).filter(Boolean);
-            out.push({
-                id, user: UserStore.getUser?.(id),
-                guildName: guild?.name ?? "DM / Groupe",
-                channelName: ch.name ?? "Vocal",
-                since: joinTimes.get(id) ?? null,
-                others
-            });
+            try {
+                const vs = VoiceStateStore.getVoiceStateForUser(id);
+                if (!vs?.channelId) {
+                    firstSeen.delete(id);
+                    continue;
+                }
+                const ch = ChannelStore.getChannel(vs.channelId);
+                if (!ch) continue;
+                const guild = vs.guildId ? GuildStore.getGuild(vs.guildId) : null;
+                const states = VoiceStateStore.getVoiceStatesForChannel(vs.channelId) ?? {};
+                const others = Object.keys(states)
+                    .filter(u => u !== id)
+                    .map(u => UserStore.getUser(u))
+                    .filter(Boolean);
+
+                // use accurate join time if available, else firstSeen fallback
+                if (!firstSeen.has(id)) firstSeen.set(id, Date.now());
+                const since = joinTimes.get(id) ?? firstSeen.get(id) ?? null;
+
+                out.push({
+                    id,
+                    user: UserStore.getUser(id),
+                    guildName: guild?.name ?? "Group DM",
+                    channelName: ch.name ?? "Voice",
+                    channelId: vs.channelId,
+                    guildId: vs.guildId ?? null,
+                    since,
+                    sinceApprox: !joinTimes.has(id),
+                    others
+                });
+            } catch { }
         }
-    } catch { /* */ }
-    return out.sort((a, b) => (a.since ?? 0) - (b.since ?? 0));
+
+        return {
+            list: out.sort((a, b) => (a.since ?? 0) - (b.since ?? 0)),
+            error: null,
+            friendCount: ids.length
+        };
+    } catch (e) {
+        return { list: [], error: `${e}`, friendCount: 0 };
+    }
 }
 
 function Modal({ rootProps }: any) {
@@ -56,31 +84,65 @@ function Modal({ rootProps }: any) {
         const iv = setInterval(on, 1000);
         return () => { FluxDispatcher.unsubscribe("VOICE_STATE_UPDATES", on); clearInterval(iv); };
     }, []);
-    const list = collect();
+
+    const { list, error, friendCount } = collect();
+
     return (
         <ModalRoot {...rootProps} size={ModalSize.MEDIUM}>
             <ModalHeader>
-                <Forms.FormTitle tag="h2" style={{ margin: 0 }}>🔊 Amis en vocal ({list.length})</Forms.FormTitle>
+                <Forms.FormTitle tag="h2" style={{ margin: 0 }}>🔊 Friends in Voice ({list.length})</Forms.FormTitle>
             </ModalHeader>
             <ModalContent style={{ padding: "1em" }}>
+                {error && (
+                    <Forms.FormText style={{ color: "var(--text-danger)", marginBottom: "0.6em", fontSize: ".8em" }}>
+                        ⚠ Error: {error}
+                    </Forms.FormText>
+                )}
                 {list.length === 0
-                    ? <Forms.FormText style={{ opacity: .7 }}>Aucun ami en vocal dans tes serveurs partagés. (Appels DM privés et serveurs non partagés non visibles.)</Forms.FormText>
+                    ? <Forms.FormText style={{ opacity: .7 }}>
+                        {friendCount === 0
+                            ? "No friends found."
+                            : `None of your ${friendCount} friends are currently in a voice channel.`}
+                    </Forms.FormText>
                     : <div style={{ display: "flex", flexDirection: "column", gap: ".6em" }}>
                         {list.map(f => (
                             <div key={f.id} style={{ display: "flex", alignItems: "center", gap: ".7em", background: "var(--background-secondary)", borderRadius: 8, padding: ".6em .8em" }}>
-                                <img src={f.user?.getAvatarURL?.(undefined, 64) ?? ""} width={40} height={40} style={{ borderRadius: "50%" }} />
+                                <img
+                                    src={f.user?.getAvatarURL?.(undefined, 64) ?? ""}
+                                    width={40} height={40}
+                                    style={{ borderRadius: "50%", flexShrink: 0 }}
+                                />
                                 <div style={{ flex: 1, minWidth: 0 }}>
-                                    <div style={{ fontWeight: 600, color: "var(--text-default)" }}>{f.user?.globalName ?? f.user?.username ?? f.id}</div>
-                                    <div style={{ fontSize: ".8em", color: "var(--text-muted)" }}>
-                                        <b>{f.guildName}</b> · 🔊 {f.channelName}{f.since != null && <> · ⏱ {fmt(Date.now() - f.since)}</>}
+                                    <div style={{ fontWeight: 600, color: "var(--text-default)" }}>
+                                        {f.user?.globalName ?? f.user?.username ?? f.id}
                                     </div>
-                                    {f.others.length > 0 && <div style={{ fontSize: ".75em", color: "var(--text-muted)", marginTop: 2 }}>avec {f.others.map((u: any) => u.globalName ?? u.username).join(", ")}</div>}
+                                    <div style={{ fontSize: ".82em", color: "var(--text-muted)", marginTop: 1 }}>
+                                        <b>{f.guildName}</b> · 🔊 {f.channelName}
+                                        {f.since != null && (
+                                            <> · ⏱ {fmt(Date.now() - f.since)}{f.sinceApprox && <span title="Already in voice when Gambo started"> ~</span>}</>
+                                        )}
+                                    </div>
+                                    {f.others.length > 0 && (
+                                        <div style={{ fontSize: ".75em", color: "var(--text-muted)", marginTop: 2 }}>
+                                            with {f.others.map((u: any) => u.globalName ?? u.username).join(", ")}
+                                        </div>
+                                    )}
                                 </div>
+                                <Button
+                                    size={Button.Sizes.SMALL}
+                                    onClick={() => {
+                                        VoiceActions.selectVoiceChannel(f.channelId);
+                                        rootProps.onClose();
+                                    }}
+                                    style={{ flexShrink: 0 }}
+                                >
+                                    Join
+                                </Button>
                             </div>
                         ))}
                     </div>}
                 <Forms.FormText style={{ marginTop: "1em", fontSize: ".7em", opacity: .5 }}>
-                    ⏱ Durée comptée dès que Gambo voit l'ami rejoindre. Marche même s'il est en « invisible ».
+                    ⏱ ~ = already in voice when Gambo started, timer approximate. Offline/invisible friends shown if in a shared server voice channel.
                 </Forms.FormText>
             </ModalContent>
         </ModalRoot>
@@ -92,34 +154,30 @@ export const openFriendsInVoice = () => openModal(props => <Modal rootProps={pro
 const settings = definePluginSettings({
     open: {
         type: OptionType.COMPONENT,
-        description: "Voir mes amis en vocal",
+        description: "View your friends currently in voice channels",
         component: () => (
-            <Button onClick={openFriendsInVoice}>🔊 Voir mes amis en vocal</Button>
+            <Button onClick={openFriendsInVoice}>🔊 View friends in voice</Button>
         )
     }
 });
 
 const fluxListener = (action: any) => {
     for (const s of (action.voiceStates ?? [])) {
-        if (s.channelId && s.channelId !== s.oldChannelId) joinTimes.set(s.userId, Date.now());
-        else if (!s.channelId) joinTimes.delete(s.userId);
+        if (s.channelId && s.channelId !== s.oldChannelId) {
+            joinTimes.set(s.userId, Date.now());
+            firstSeen.set(s.userId, Date.now());
+        } else if (!s.channelId) {
+            joinTimes.delete(s.userId);
+            firstSeen.delete(s.userId);
+        }
     }
 };
 
 export default definePlugin({
     name: "FriendsInVoice",
-    description: "Voir tes amis en vocal (serveur, salon, avec qui, depuis quand) — même en invisible. Ouvre via les réglages du plugin ou la commande /amisvocal.",
+    description: "See which friends are in voice — server, channel, who they're with, how long, and join with one click. Works for invisible/offline friends too.",
     authors: [Devs.o0],
     settings,
-
-    commands: [{
-        name: "amisvocal",
-        description: "Affiche tes amis actuellement en vocal",
-        execute: () => {
-            openFriendsInVoice();
-            return { content: "" } as any;
-        }
-    }],
 
     start() {
         FluxDispatcher.subscribe("VOICE_STATE_UPDATES", fluxListener);
@@ -127,5 +185,6 @@ export default definePlugin({
     stop() {
         FluxDispatcher.unsubscribe("VOICE_STATE_UPDATES", fluxListener);
         joinTimes.clear();
+        firstSeen.clear();
     }
 });

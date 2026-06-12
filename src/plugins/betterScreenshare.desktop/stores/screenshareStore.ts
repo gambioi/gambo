@@ -59,15 +59,30 @@ export interface ScreenshareStore {
 }
 
 export const defaultScreenshareProfiles = {
+    performance: {
+        name: "Performance (No Lag)",
+        width: 1280,
+        height: 720,
+        framerate: 60,
+        videoBitrate: 3000,
+        keyframeInterval: 100,
+        resolutionEnabled: true,
+        framerateEnabled: true,
+        videoBitrateEnabled: true,
+        keyframeIntervalEnabled: true,
+        stabilityMode: true,
+    },
     low: {
         name: "Low Quality",
         width: 1280,
         height: 720,
         framerate: 60,
         videoBitrate: 2500,
+        keyframeInterval: 100,
         resolutionEnabled: true,
         framerateEnabled: true,
         videoBitrateEnabled: true,
+        keyframeIntervalEnabled: true,
     },
     medium: {
         name: "Medium Quality",
@@ -75,19 +90,23 @@ export const defaultScreenshareProfiles = {
         height: 1080,
         framerate: 60,
         videoBitrate: 5000,
+        keyframeInterval: 150,
         resolutionEnabled: true,
         framerateEnabled: true,
         videoBitrateEnabled: true,
+        keyframeIntervalEnabled: true,
     },
     high: {
         name: "High Quality (120 FPS)",
         width: 1920,
         height: 1080,
         framerate: 120,
-        videoBitrate: 10000,
+        videoBitrate: 8000,
+        keyframeInterval: 200,
         resolutionEnabled: true,
         framerateEnabled: true,
         videoBitrateEnabled: true,
+        keyframeIntervalEnabled: true,
         stabilityMode: true,
     }
 } as const satisfies Record<string, ScreenshareProfile & ProfileableProfile>;
