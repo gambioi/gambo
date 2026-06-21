@@ -1,0 +1,2067 @@
+/**
+ * @name Etna
+ * @author Etna
+ * @description Dark frosted-glass theme, fully recolorable. A dark classic glassmorphism look: semi-transparent dark glass panels with backdrop blur layered over a dark base. Every color and surface is tunable through --etna-* custom properties. Not desktop-transparent Ã¢â‚¬â€ the app stays on a solid dark base.
+ * @version 1.0.0
+ */
+
+/* ============================================================
+ *  ETNA Ã¢â‚¬â€ variable foundation
+ *  All user-facing color/depth knobs live here as --etna-*.
+ *  Surface agents read these; the companion plugin tunes them.
+ * ============================================================ */
+:root {
+  /* ---- ACCENT ---- */
+  --etna-accent: #8a8f98;              /* Discord blurple */
+  --etna-accent-hover: #71757d;        /* slightly darker accent for hover/active */
+
+  /* ---- BASE / SURFACE LAYERS (dark, opaque foundation) ---- */
+  --etna-bg: #0d0e12;                  /* darkest base Ã¢â‚¬â€ the app floor */
+  --etna-bg-alt: #15171d;              /* panels / sidebars (one step up) */
+  --etna-bg-elevated: #1d2027;         /* elevated surfaces, floating, modals */
+
+  /* ---- GLASS (semi-transparent dark frosted fills) ---- */
+  --etna-glass-opacity: 0.55;          /* 0..1 master opacity of the frosted fill */
+  --etna-glass: rgba(21, 23, 29, var(--etna-glass-opacity));        /* standard frosted panel */
+  --etna-glass-strong: rgba(13, 14, 18, 0.72);                      /* denser glass (popouts/modals) */
+  --etna-blur: 18px;                   /* backdrop-filter blur radius */
+  --etna-radius: 14px;                 /* glass panel corner radius */
+
+  /* ---- TEXT ---- */
+  --etna-text: #e6e8ee;                /* primary readable text */
+  --etna-text-muted: #9aa0ad;          /* secondary / muted text */
+  --etna-link: #aab0b8;               /* hyperlinks (lighter accent) */
+
+  /* ---- HIGHLIGHTS / STATUS ---- */
+  --etna-mention: rgba(138, 143, 152, 0.14);  /* mention + reply highlight wash */
+  --etna-online: #43b581;              /* online status green */
+
+  /* ---- BORDERS ---- */
+  --etna-border: rgba(255, 255, 255, 0.08);  /* hairline glass edge */
+
+  /* ============================================================
+   *  DISCORD DESIGN-TOKEN OVERRIDES (root scope)
+   *  Map stable Discord tokens onto --etna-* so the theme
+   *  survives client updates without relying on class names.
+   *  color-mix()/relative-color derive shades from the knobs.
+   * ============================================================ */
+  --background-primary: var(--etna-glass);
+  --background-secondary: color-mix(in srgb, var(--etna-bg-alt) 88%, transparent);
+  --background-secondary-alt: var(--etna-bg-elevated);
+  --background-tertiary: color-mix(in srgb, var(--etna-bg) 85%, transparent);
+  --background-floating: var(--etna-glass-strong);
+  --background-accent: var(--etna-accent);
+  --background-modifier-hover: rgba(255, 255, 255, 0.04);
+  --background-modifier-selected: rgba(255, 255, 255, 0.08);
+
+  --channeltextarea-background: color-mix(in srgb, var(--etna-bg-elevated) 70%, transparent);
+
+  --text-normal: var(--etna-text);
+  --text-muted: var(--etna-text-muted);
+  --header-primary: color-mix(in srgb, var(--etna-text) 100%, white 6%);
+  --header-secondary: var(--etna-text-muted);
+
+  --interactive-normal: var(--etna-text-muted);
+  --interactive-hover: var(--etna-text);
+  --interactive-active: color-mix(in srgb, var(--etna-text) 100%, white 8%);
+
+  --brand-experiment: var(--etna-accent);
+  --brand-500: var(--etna-accent);
+  --button-secondary-background: color-mix(in srgb, var(--etna-bg-elevated) 80%, transparent);
+
+  --modal-background: var(--etna-glass-strong);
+  --background-message-hover: rgba(255, 255, 255, 0.025);
+
+  --scrollbar-thin-thumb: rgba(255, 255, 255, 0.12);
+  --scrollbar-auto-thumb: rgba(255, 255, 255, 0.14);
+  --scrollbar-auto-track: transparent;
+
+  --text-link: var(--etna-link);
+}
+
+/* ============================================================
+ *  .theme-dark Ã¢â‚¬â€ re-assert token overrides at higher specificity.
+ *  Discord ships dark-theme tokens scoped to .theme-dark; we
+ *  shadow them here so Etna wins regardless of load order.
+ * ============================================================ */
+.theme-dark,
+.theme-darker,
+.theme-midnight {
+  --background-primary: var(--etna-glass);
+  --background-secondary: color-mix(in srgb, var(--etna-bg-alt) 88%, transparent);
+  --background-secondary-alt: var(--etna-bg-elevated);
+  --background-tertiary: color-mix(in srgb, var(--etna-bg) 85%, transparent);
+  --background-floating: var(--etna-glass-strong);
+  --background-accent: var(--etna-accent);
+  --background-modifier-hover: rgba(255, 255, 255, 0.04);
+  --background-modifier-selected: rgba(255, 255, 255, 0.08);
+
+  --channeltextarea-background: color-mix(in srgb, var(--etna-bg-elevated) 70%, transparent);
+
+  --text-normal: var(--etna-text);
+  --text-muted: var(--etna-text-muted);
+  --header-primary: color-mix(in srgb, var(--etna-text) 100%, white 6%);
+  --header-secondary: var(--etna-text-muted);
+
+  --interactive-normal: var(--etna-text-muted);
+  --interactive-hover: var(--etna-text);
+  --interactive-active: color-mix(in srgb, var(--etna-text) 100%, white 8%);
+
+  --brand-experiment: var(--etna-accent);
+  --brand-500: var(--etna-accent);
+  --button-secondary-background: color-mix(in srgb, var(--etna-bg-elevated) 80%, transparent);
+
+  --modal-background: var(--etna-glass-strong);
+  --background-message-hover: rgba(255, 255, 255, 0.025);
+
+  --scrollbar-thin-thumb: rgba(255, 255, 255, 0.12);
+  --scrollbar-auto-thumb: rgba(255, 255, 255, 0.14);
+  --scrollbar-auto-track: transparent;
+
+  --text-link: var(--etna-link);
+
+  /* Modern token aliases Discord also reads in newer builds */
+  --background-base-low: var(--etna-bg);
+  --background-base-lower: var(--etna-bg);
+  --background-base-lowest: var(--etna-bg);
+  --bg-overlay-app-frame: var(--etna-bg);
+}
+
+/* ============================================================
+ *  APP FLOOR Ã¢â‚¬â€ keep a solid dark base (NOT desktop-transparent).
+ *  Glass panels sit over THIS, so the blur has something dark
+ *  to frost. Surface agents must not turn this transparent.
+ * ============================================================ */
+.theme-dark,
+.theme-darker,
+.theme-midnight,
+body {
+  background-color: var(--etna-bg);
+}
+
+/* ============================================================
+ *  GLASS FOUNDATION Ã¢â‚¬â€ reusable pattern (the surface agents apply
+ *  this to sidebars, chat, members, popouts, modals, textarea, etc.)
+ *
+ *    .etna-glass {
+ *      backdrop-filter: blur(var(--etna-blur)) saturate(140%);
+ *      background: var(--etna-glass);
+ *      border: 1px solid var(--etna-border);
+ *      border-radius: var(--etna-radius);
+ *    }
+ *
+ *  Notes for surface agents:
+ *   - Use --etna-glass-strong for floating/popout/modal layers.
+ *   - Pair every blurred surface with a 1px var(--etna-border)
+ *     edge to read as a glass pane against the dark floor.
+ *   - The dark app floor (above) must stay opaque Ã¢â‚¬â€ the blur
+ *     frosts the dark base, it does NOT reveal the desktop.
+ * ============================================================ */
+.etna-glass {
+  backdrop-filter: blur(var(--etna-blur)) saturate(140%);
+  -webkit-backdrop-filter: blur(var(--etna-blur)) saturate(140%);
+  background: var(--etna-glass);
+  border: 1px solid var(--etna-border);
+  border-radius: var(--etna-radius);
+}
+
+.etna-glass-strong {
+  backdrop-filter: blur(calc(var(--etna-blur) + 6px)) saturate(150%) brightness(1.05);
+  -webkit-backdrop-filter: blur(calc(var(--etna-blur) + 6px)) saturate(150%) brightness(1.05);
+  background: var(--etna-glass-strong);
+  border: 1px solid var(--etna-border);
+  border-radius: var(--etna-radius);
+}
+
+/* Accent helpers derived from the single accent knob */
+::selection {
+  background: color-mix(in srgb, var(--etna-accent) 55%, transparent);
+  color: var(--etna-text);
+}
+
+/* ===================== sidebars ===================== */
+/* ============================================================
+ *  ETNA Ã¢â‚¬â€ SIDEBARS & MEMBER LIST
+ *  Surface group: guild/server rail, channel sidebar (categories,
+ *  channel items + states), bottom user/account panel, voice
+ *  connected panel, and the right-hand member list.
+ *
+ *  Strategy: lean on the Discord design tokens already mapped in
+ *  the foundation (--background-*, --interactive-*, etc.) and add
+ *  frosted glass only where panels need blur. Class selectors use
+ *  [class*="..."] substring matchers so they survive Discord's
+ *  hashed-classname churn across updates.
+ * ============================================================ */
+
+/* ------------------------------------------------------------
+ *  GUILD / SERVER RAIL (far-left vertical strip of server icons)
+ *  Keep it transparent so the dark app floor shows through; the
+ *  channel sidebar glass beside it provides the depth contrast.
+ * ------------------------------------------------------------ */
+[class*="guilds_"] {
+  background-color: transparent !important;
+}
+
+/* The scroller that holds the server-icon tree */
+[class*="guilds_"] [class*="scroller_"],
+[class*="guilds_"] [class*="itemsContainer_"],
+[class*="guilds_"] [class*="tree_"] {
+  background-color: transparent !important;
+}
+
+/* Kill the default opaque sliver/border Discord paints on the rail */
+[class*="guilds_"]::before,
+[class*="guilds_"] [class*="tutorialContainer_"] {
+  background: transparent !important;
+}
+
+/* Home / DM button + "add a server" / "explore" pills, when active,
+ * adopt the accent. These are the circle action buttons on the rail. */
+[class*="guilds_"] [class*="circleIconButton_"],
+[class*="guilds_"] [class*="childWrapper_"] {
+  transition: background-color 0.15s ease, color 0.15s ease, border-radius 0.15s ease;
+}
+
+/* Server folder background wash -> tinted accent glass */
+[class*="folderGroupBackground_"],
+[class*="folderPreviewWrapper_"] {
+  background-color: color-mix(in srgb, var(--etna-accent) 18%, transparent) !important;
+  border-radius: var(--etna-radius);
+}
+
+/* The selected/unread white pill indicator on the rail -> accent */
+[class*="guilds_"] [class*="pill_"] span,
+[class*="guilds_"] [class*="item_"][style*="height"] {
+  background-color: var(--etna-accent) !important;
+}
+
+/* ------------------------------------------------------------
+ *  CHANNEL SIDEBAR  (the per-guild panel: header, categories,
+ *  channel list). This is a primary GLASS surface.
+ * ------------------------------------------------------------ */
+
+/* Outer sidebar container -> frosted glass pane over the dark floor.
+ * --background-secondary already resolves to a translucent dark tint
+ * (foundation), so we add the blur + edge to make it read as glass. */
+[class*="sidebar_"]:not([class*="sidebarList"]):not([class*="userProfile"]) {
+  background: var(--etna-glass) !important;
+  backdrop-filter: blur(var(--etna-blur)) saturate(140%);
+  -webkit-backdrop-filter: blur(var(--etna-blur)) saturate(140%);
+  border-right: 1px solid var(--etna-border);
+}
+
+/* Discord sometimes paints a hard edge/after-element on the sidebar */
+[class*="sidebar_"]::after {
+  display: none !important;
+}
+
+/* The scrollable channel list itself stays transparent so the
+ * parent glass shows through (avoids double-frosting). */
+[class*="sidebarList_"],
+[class*="sidebar_"] [class*="content_"][class*="scroller"],
+[class*="sidebar_"] [class*="scrollerBase_"] {
+  background-color: transparent !important;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border: none;
+}
+
+/* Guild header (server name bar at the top of the channel sidebar) */
+[class*="header_"][class*="container"],
+[class*="sidebar_"] [class*="header_"] {
+  background-color: transparent !important;
+  border-bottom: 1px solid var(--etna-border);
+  box-shadow: none;
+}
+
+/* Header hover (clicking the server name) */
+[class*="sidebar_"] [class*="header_"]:hover {
+  background-color: var(--background-modifier-hover);
+}
+
+/* The community / boost info pill under the header */
+[class*="communityInfoPill_"] {
+  background-color: color-mix(in srgb, var(--etna-bg-elevated) 70%, transparent);
+  border-radius: var(--etna-radius);
+  border: 1px solid var(--etna-border);
+}
+
+/* ---- CATEGORY HEADERS (collapsible group titles) ---- */
+[class*="containerDefault_"] [class*="wrapper_"] [class*="name_"],
+[class*="sidebar_"] [class*="muted_"] [class*="name_"] {
+  color: var(--etna-text-muted);
+}
+
+/* ---- CHANNEL ITEMS (the clickable rows) ---- */
+[class*="sidebar_"] [class*="link_"],
+[class*="sidebar_"] [class*="channel_"] [class*="content_"] {
+  border-radius: var(--etna-radius);
+  transition: background-color 0.12s ease, color 0.12s ease;
+}
+
+/* Default channel label/icon color from tokens (already muted) */
+[class*="sidebar_"] [class*="link_"] [class*="name_"] {
+  color: var(--interactive-normal);
+}
+
+/* Hover state -> subtle glass wash + brighter text */
+[class*="sidebar_"] [class*="link_"]:hover,
+[class*="sidebar_"] [class*="channel_"]:hover [class*="link_"] {
+  background-color: var(--background-modifier-hover);
+}
+[class*="sidebar_"] [class*="link_"]:hover [class*="name_"] {
+  color: var(--interactive-hover);
+}
+
+/* Unread channel (white name + an unread dot) -> brighten name,
+ * tint the unread bar/dot with the accent. */
+[class*="sidebar_"] [class*="unread_"],
+[class*="sidebar_"] [class*="modeUnread_"] [class*="name_"] {
+  color: var(--etna-text);
+}
+[class*="sidebar_"] [class*="unread_"]::before,
+[class*="sidebar_"] [class*="link_"] [class*="unread_"] {
+  background-color: var(--etna-accent) !important;
+}
+
+/* Selected / currently-open channel -> stronger glass + accent text */
+[class*="sidebar_"] [class*="modeSelected_"],
+[class*="sidebar_"] [class*="modeSelected_"] [class*="link_"],
+[class*="sidebar_"] [class*="selected_"][class*="link_"] {
+  background-color: var(--background-modifier-selected) !important;
+  border-radius: var(--etna-radius);
+}
+[class*="sidebar_"] [class*="modeSelected_"] [class*="name_"] {
+  color: var(--interactive-active);
+}
+
+/* Active (mouse-down) press feedback */
+[class*="sidebar_"] [class*="link_"]:active {
+  background-color: var(--background-modifier-active, rgba(255, 255, 255, 0.06));
+}
+
+/* Channel action buttons (invite +, settings gear, etc.) on hover */
+[class*="sidebar_"] [class*="actionButton_"] {
+  background-color: transparent;
+  border-radius: calc(var(--etna-radius) - 6px);
+  border: none;
+  color: var(--interactive-normal);
+}
+[class*="sidebar_"] [class*="actionButton_"]:hover {
+  background-color: var(--background-modifier-hover);
+  color: var(--interactive-hover);
+}
+
+/* Voice-channel "join" button row hover inside the list */
+[class*="sidebar_"] [class*="voiceChannelsButton_"]:hover {
+  background-color: var(--background-modifier-hover);
+  border-radius: var(--etna-radius);
+}
+
+/* ------------------------------------------------------------
+ *  BOTTOM USER / ACCOUNT PANEL (avatar, name, mic/headphone/settings)
+ *  Floating glass tray pinned to the bottom of the channel sidebar.
+ * ------------------------------------------------------------ */
+[class*="panels_"] {
+  background: var(--etna-glass-strong) !important;
+  backdrop-filter: blur(calc(var(--etna-blur) + 4px)) saturate(150%);
+  -webkit-backdrop-filter: blur(calc(var(--etna-blur) + 4px)) saturate(150%);
+  border-top: 1px solid var(--etna-border);
+  border-radius: 0;
+}
+
+/* The account-info chunk + its inner content stay transparent so the
+ * panel glass above is the single frosted layer. */
+[class*="panels_"] [class*="container_"],
+[class*="panels_"] [class*="accountProfilePopoutWrapper_"],
+[class*="panels_"] [class*="avatarWrapper_"] {
+  background-color: transparent !important;
+}
+
+/* Hover on the clickable account/profile area -> glass wash + rounding */
+[class*="panels_"] [class*="accountProfilePopoutWrapper_"]:hover,
+[class*="panels_"] [class*="container_"][role="button"]:hover {
+  background-color: var(--background-modifier-hover);
+  border-radius: var(--etna-radius);
+}
+
+/* User name + status text colors from tokens */
+[class*="panels_"] [class*="nameTag_"] [class*="title_"] {
+  color: var(--etna-text);
+}
+[class*="panels_"] [class*="nameTag_"] [class*="subtext_"],
+[class*="panels_"] [class*="panelSubtextContainer_"] {
+  color: var(--etna-text-muted);
+}
+
+/* The little mic / deafen / settings buttons */
+[class*="panels_"] button[class*="button_"] {
+  color: var(--interactive-normal);
+  border-radius: calc(var(--etna-radius) - 4px);
+}
+[class*="panels_"] button[class*="button_"]:hover {
+  background-color: var(--background-modifier-hover);
+  color: var(--interactive-hover);
+}
+
+/* ------------------------------------------------------------
+ *  VOICE CONNECTED PANEL ("Voice Connected" green status + controls)
+ *  Sits just above the account panel when in a voice channel.
+ * ------------------------------------------------------------ */
+[class*="rtcConnectionStatus_"],
+[class*="connection_"][class*="container_"],
+[class*="wrapper_"] [class*="connection_"] {
+  background-color: transparent !important;
+}
+
+/* "Voice Connected" label -> use the online/green status knob */
+[class*="rtcConnectionStatus_"] [class*="connectionStatus_"],
+[class*="connection_"] [class*="connectionText_"] {
+  color: var(--etna-online);
+}
+
+/* Voice control button cluster (camera, screen, disconnect) on the
+ * bottom tray -> rounded glass chips. */
+[class*="panels_"] [class*="actionButtons_"],
+[class*="connection_"] [class*="actionButtons_"] {
+  background-color: transparent;
+}
+[class*="panels_"] [class*="actionButtons_"] button:hover,
+[class*="connection_"] [class*="actionButtons_"] button:hover {
+  background-color: var(--background-modifier-hover);
+  border-radius: calc(var(--etna-radius) - 4px);
+}
+
+/* ------------------------------------------------------------
+ *  RIGHT-HAND MEMBER LIST  (role groups + members)
+ *  Second primary GLASS surface, mirroring the channel sidebar.
+ * ------------------------------------------------------------ */
+
+/* Outer members wrapper -> frosted glass pane with a left edge */
+[class*="membersWrap_"] {
+  background: var(--etna-glass) !important;
+  backdrop-filter: blur(var(--etna-blur)) saturate(140%);
+  -webkit-backdrop-filter: blur(var(--etna-blur)) saturate(140%);
+  border-left: 1px solid var(--etna-border) !important;
+}
+
+/* Inner containers/scroller stay transparent (single frosted layer) */
+[class*="membersWrap_"] [class*="members_"],
+[class*="membersWrap_"] [class*="members_"] > div,
+[class*="membersWrap_"] [class*="container_"],
+[class*="membersWrap_"] [class*="content_"] {
+  background-color: transparent !important;
+}
+
+/* ---- ROLE GROUP HEADERS ("Online Ã¢â‚¬â€ 12", role names) ---- */
+[class*="membersGroup_"],
+[class*="membersWrap_"] [class*="membersGroup_"] {
+  color: var(--etna-text-muted);
+  background-color: transparent;
+}
+
+/* ---- MEMBER ROWS ---- */
+[class*="member_"] {
+  background-color: transparent;
+}
+[class*="member_"] [class*="layout_"] {
+  border-radius: var(--etna-radius);
+  transition: background-color 0.12s ease;
+}
+
+/* Member hover -> glass wash */
+[class*="member_"] [class*="layout_"]:hover,
+[class*="member_"] [class*="content_"]:hover {
+  background-color: var(--background-modifier-hover) !important;
+}
+
+/* Selected / context-menu-open member */
+[class*="member_"] [class*="layout_"][class*="selected_"],
+[class*="member_"] [class*="layout_"]:active {
+  background-color: var(--background-modifier-selected) !important;
+}
+
+/* Member name + activity text colors from tokens */
+[class*="member_"] [class*="name_"] {
+  color: var(--interactive-normal);
+}
+[class*="member_"] [class*="layout_"]:hover [class*="name_"] {
+  color: var(--interactive-hover);
+}
+[class*="member_"] [class*="activity_"],
+[class*="member_"] [class*="subtext_"] {
+  color: var(--etna-text-muted);
+}
+
+/* Online status dot -> green knob (avatar status ring) */
+[class*="membersWrap_"] [class*="status_"][class*="online"],
+[class*="membersWrap_"] rect[fill="#43b581"] {
+  fill: var(--etna-online);
+  background-color: var(--etna-online);
+}
+
+/* Member-list activity card (Rich Presence row) -> elevated glass chip */
+[class*="membersWrap_"] [class*="activity_"][class*="container_"] {
+  background-color: color-mix(in srgb, var(--etna-bg-elevated) 60%, transparent);
+  border-radius: var(--etna-radius);
+  border: 1px solid var(--etna-border);
+}
+[class*="membersWrap_"] [class*="activity_"][class*="container_"]:hover {
+  background-color: color-mix(in srgb, var(--etna-bg-elevated) 78%, transparent);
+}
+
+/* Bot tag inside the member list -> accent chip */
+[class*="membersWrap_"] [class*="botTag_"] {
+  background-color: var(--etna-accent);
+  color: var(--etna-text);
+  border-radius: calc(var(--etna-radius) - 8px);
+}
+
+/* ------------------------------------------------------------
+ *  DM / PRIVATE-CHANNELS SIDEBAR (the left list in the Home/DM view)
+ *  Same glass treatment as the guild channel sidebar.
+ * ------------------------------------------------------------ */
+[class*="privateChannels_"] {
+  background: var(--etna-glass) !important;
+  backdrop-filter: blur(var(--etna-blur)) saturate(140%);
+  -webkit-backdrop-filter: blur(var(--etna-blur)) saturate(140%);
+  border-right: 1px solid var(--etna-border);
+}
+
+/* DM search bar header -> transparent over the glass */
+[class*="privateChannels_"] [class*="searchBar_"] {
+  background-color: transparent;
+  border-bottom: 1px solid var(--etna-border);
+  box-shadow: none;
+}
+
+/* DM rows: hover + selected mirror the channel-item states */
+[class*="privateChannels_"] [class*="channel_"] [class*="link_"] {
+  border-radius: var(--etna-radius);
+  transition: background-color 0.12s ease, color 0.12s ease;
+}
+[class*="privateChannels_"] [class*="channel_"] [class*="link_"]:hover {
+  background-color: var(--background-modifier-hover);
+}
+[class*="privateChannels_"] [class*="channel_"] [class*="selected_"] {
+  background-color: var(--background-modifier-selected) !important;
+}
+
+
+/* ===================== chat ===================== */
+/* ============================================================
+ *  ETNA Ã¢â‚¬â€ CHAT MESSAGE AREA
+ *  Dark frosted-glass chat surface. Built on stable Discord
+ *  design tokens plus resilient [class*="..."] substring
+ *  selectors (Gambo/Vencord ships obfuscated class hashes;
+ *  matching on the stable prefix survives most client updates).
+ *  All colors/depths come from --etna-* knobs Ã¢â‚¬â€ no hardcoding.
+ * ============================================================ */
+
+/* ------------------------------------------------------------
+ *  MESSAGE LIST BACKGROUND
+ *  The chat scroller stays transparent so the chat-panel glass
+ *  (owned by the chat-area surface) frosts the dark app floor
+ *  through it. We only neutralize Discord's built-in gradients.
+ * ---------------------------------------------------------- */
+[class*="chatContent_"],
+[class*="messagesWrapper_"],
+[class*="scrollerContent_"],
+[class*="scrollerInner_"] {
+  background-color: transparent;
+}
+
+/* Discord's "fade to bottom" typing/scroll gradients Ã¢â‚¬â€ drop them
+ * so the dark glass floor reads cleanly underneath the messages. */
+[class*="chatGradientBase_"],
+[class*="chatTypingGradientAtBottom_"],
+[class*="chatTypingGradientNotAtBottom_"],
+[class*="divider_"][class*="gradient"] {
+  background: transparent;
+}
+
+/* ------------------------------------------------------------
+ *  INDIVIDUAL MESSAGES (cozy + compact)
+ *  Resting state is transparent; hover lifts a faint glass wash
+ *  using the token so it reads as a highlight over the dark base.
+ *  [class*="message_"] is the message <li>; we round its corners.
+ * ---------------------------------------------------------- */
+[class*="message_"][class*="cozyMessage_"],
+[class*="message_"][class*="compact_"],
+li[class*="messageListItem_"] > [class*="message_"] {
+  border-radius: var(--etna-radius);
+  transition: background-color 140ms ease, box-shadow 140ms ease;
+}
+
+/* Hover wash Ã¢â‚¬â€ pairs the design token with a hairline frosted lift. */
+[class*="message_"]:hover,
+ul[class*="scrollerInner_"] [class*="message_"]:hover {
+  background-color: var(--background-message-hover);
+}
+
+/* Grouped (follow-up) messages: keep them flush/transparent so a
+ * run of messages from one author reads as a single stacked group.
+ * groupStart_ marks the first message of a group; non-start ones
+ * tuck up tight with no extra background. */
+[class*="message_"]:not([class*="groupStart_"]) {
+  background-color: transparent;
+}
+
+/* ------------------------------------------------------------
+ *  MENTION + REPLY HIGHLIGHT
+ *  Use the dedicated --etna-mention accent wash. Discord marks
+ *  mentioned messages with .mentioned_ and the active reply
+ *  target with .replying_ ; both get a left accent spine + wash.
+ * ---------------------------------------------------------- */
+[class*="message_"][class*="mentioned_"],
+[class*="message_"][class*="isSystemMessage_"][class*="mentioned_"] {
+  background-color: var(--etna-mention);
+  box-shadow: inset 2px 0 0 0 var(--etna-accent);
+  border-radius: var(--etna-radius);
+}
+
+[class*="message_"][class*="mentioned_"]:hover {
+  /* slightly intensify the wash on hover while staying in-accent */
+  background-color: color-mix(in srgb, var(--etna-mention) 100%, var(--etna-accent) 8%);
+}
+
+/* Active reply target glows with the accent, same language as mention. */
+[class*="message_"][class*="replying_"] {
+  background-color: var(--etna-mention);
+  box-shadow: inset 2px 0 0 0 var(--etna-accent),
+              0 0 14px 2px color-mix(in srgb, var(--etna-accent) 28%, transparent);
+  border-radius: var(--etna-radius);
+}
+
+/* The replied-to reference line / spine above a reply. */
+[class*="repliedMessage_"]::before,
+[class*="repliedMessageClickableSpine_"] {
+  border-color: var(--etna-border);
+}
+[class*="repliedMessageClickableSpine_"]:hover,
+[class*="repliedMessageContentHovered_"] {
+  border-color: color-mix(in srgb, var(--etna-text-muted) 60%, transparent);
+}
+
+/* New / jump-flash highlight (e.g. jump-to-message) reuses the accent. */
+[class*="backgroundFlash_"]:not([style$="0);"]) {
+  background-color: color-mix(in srgb, var(--etna-accent) 26%, transparent) !important;
+}
+
+/* ------------------------------------------------------------
+ *  CHANNEL HEADER / TOPBAR / TOOLBAR  (frosted glass bar)
+ *  container__9293f-style header is the channel top bar; we turn
+ *  it into a frosted glass strip floating over the dark floor.
+ * ---------------------------------------------------------- */
+[class*="title_"][class*="container_"][class*="themed_"],
+section[class*="title_"] > [class*="container_"],
+[class*="container_"][class*="themed_"][class*="hasBanner_"],
+[class*="upperContainer_"] {
+  background: var(--etna-glass);
+  -webkit-backdrop-filter: blur(var(--etna-blur)) saturate(140%);
+  backdrop-filter: blur(var(--etna-blur)) saturate(140%);
+  border-bottom: 1px solid var(--etna-border);
+  box-shadow: none;
+}
+
+/* Discord's header bottom hairline / pseudo-shadow Ã¢â‚¬â€ replace with our edge. */
+[class*="title_"][class*="container_"]::before,
+[class*="title_"][class*="container_"]::after {
+  display: none;
+}
+
+/* Header toolbar (search, pins, members, inbox icons). */
+[class*="toolbar_"] {
+  background-color: transparent;
+}
+[class*="toolbar_"] [class*="iconWrapper_"]:hover,
+[class*="toolbar_"] [class*="clickable_"]:hover {
+  background-color: var(--background-modifier-hover);
+  border-radius: calc(var(--etna-radius) - 6px);
+}
+
+/* Floating format toolbar (the bold/italic popover above the input). */
+[class*="toolbar_"][class*="bba883"],
+[class*="textFormattingToolbar_"] {
+  background: var(--etna-glass-strong);
+  -webkit-backdrop-filter: blur(calc(var(--etna-blur) + 6px)) saturate(150%);
+  backdrop-filter: blur(calc(var(--etna-blur) + 6px)) saturate(150%);
+  border: 1px solid var(--etna-border);
+  border-radius: var(--etna-radius);
+}
+
+/* Header in-chat search pill. */
+[class*="searchBar_"][class*="c322aa"],
+[class*="searchBarComponent_"] {
+  background: color-mix(in srgb, var(--etna-bg-elevated) 70%, transparent);
+  border: 1px solid var(--etna-border);
+  border-radius: 999px;
+}
+
+/* ------------------------------------------------------------
+ *  MESSAGE INPUT  Ã¢â‚¬â€ frosted rounded pill
+ *  The composer becomes a blurred glass pill sitting on the dark
+ *  floor; focus brightens the fill and lights an accent ring.
+ * ---------------------------------------------------------- */
+[class*="channelTextArea_"],
+[class*="channelTextArea_"] [class*="scrollableContainer_"] {
+  background: var(--etna-glass) !important;
+}
+
+[class*="channelTextArea_"] {
+  margin-block: 8px;
+  border: 1px solid var(--etna-border);
+  border-radius: 24px;
+  -webkit-backdrop-filter: blur(var(--etna-blur)) saturate(140%);
+  backdrop-filter: blur(var(--etna-blur)) saturate(140%);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.28);
+  transition: border-color 160ms ease, box-shadow 160ms ease, background-color 160ms ease;
+}
+
+/* The inner scrollable container must not paint its own bg over the pill. */
+[class*="channelTextArea_"] [class*="scrollableContainer_"],
+[class*="channelTextArea_"] [class*="inner_"] {
+  background-color: transparent !important;
+  border-radius: inherit;
+}
+
+/* Focus: brighten the frosted fill + accent ring glow. */
+[class*="channelTextArea_"]:focus-within {
+  background: color-mix(in srgb, var(--etna-glass) 100%, var(--etna-bg-elevated) 18%) !important;
+  border-color: color-mix(in srgb, var(--etna-accent) 55%, transparent);
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.32),
+              0 0 0 1px color-mix(in srgb, var(--etna-accent) 45%, transparent),
+              0 0 16px color-mix(in srgb, var(--etna-accent) 22%, transparent);
+}
+
+/* Composer text + placeholder colors. */
+[class*="channelTextArea_"] [class*="editor_"],
+[class*="channelTextArea_"] [class*="textArea_"] {
+  color: var(--etna-text);
+}
+[class*="channelTextArea_"] [class*="placeholder_"] {
+  color: var(--etna-text-muted);
+}
+
+/* Reply/upload bars stacked above the composer share the glass edge. */
+[class*="stackedBars_"],
+[class*="stackedAttachments_"] {
+  background-color: transparent;
+  border-bottom: 1px solid var(--etna-border);
+}
+[class*="replyBar_"] {
+  background: transparent;
+}
+
+/* Pending upload chips above the composer = mini glass cards. */
+[class*="upload_"][class*="aa605f"],
+[class*="nonMediaAttachment_"] {
+  background: color-mix(in srgb, var(--etna-bg-elevated) 70%, transparent);
+  border: 1px solid var(--etna-border);
+  border-radius: calc(var(--etna-radius) - 2px);
+}
+
+/* "Apps & commands" launcher button mirrors the composer pill fill. */
+[class*="channelAppLauncher_"] [class*="button_"] {
+  background: var(--etna-glass) !important;
+  border-radius: 24px !important;
+}
+
+/* ------------------------------------------------------------
+ *  EMBEDS  (rich embeds + cards) Ã¢â‚¬â€ elevated glass with accent spine
+ *  Discord colors the left bar via inline style; we keep the
+ *  4px accent rail but glassify the body.
+ * ---------------------------------------------------------- */
+article[class*="embedWrapper_"],
+[class*="embedFull_"],
+[class*="embedCard_"],
+[class*="embed_"][class*="markup_"] {
+  background: var(--etna-glass-strong);
+  -webkit-backdrop-filter: blur(var(--etna-blur)) saturate(140%);
+  backdrop-filter: blur(var(--etna-blur)) saturate(140%);
+  border: 1px solid var(--etna-border);
+  border-radius: var(--etna-radius);
+  /* default accent rail when the embed doesn't carry its own color */
+  border-left: 3px solid color-mix(in srgb, var(--etna-accent) 80%, transparent);
+}
+
+/* Embed grid/title links pick up the theme link color. */
+[class*="embedWrapper_"] [class*="embedTitle_"] a,
+[class*="embedWrapper_"] [class*="embedAuthorNameLink_"] {
+  color: var(--etna-link);
+}
+
+/* ------------------------------------------------------------
+ *  ATTACHMENTS  (files, media text wrappers, invites, audio)
+ * ---------------------------------------------------------- */
+[class*="fileWrapper_"],
+[class*="file_"][class*="0ccae"],
+[class*="wrapperAudio_"],
+[class*="container_"][class*="9271d"],
+[class*="root_"][class*="fbc6f7"] {
+  background: color-mix(in srgb, var(--etna-bg-elevated) 75%, transparent);
+  border: 1px solid var(--etna-border);
+  border-radius: var(--etna-radius);
+  box-shadow: none;
+}
+
+/* Caption/footer strip under media (the "spoiler text" / code preview box). */
+[class*="textContainer_"][class*="4d95d"],
+[class*="footer_"][class*="4d95d"] {
+  background: color-mix(in srgb, var(--etna-bg-elevated) 70%, transparent);
+  border: 1px solid var(--etna-border);
+}
+
+/* Invite + GIF/sticker cards. */
+[class*="wrapper_"][class*="d5f3cd"],
+[class*="invite_"][class*="4d3fa"] {
+  background: color-mix(in srgb, var(--etna-bg-elevated) 75%, transparent) !important;
+  border: 1px solid var(--etna-border);
+  border-radius: var(--etna-radius);
+}
+
+/* Link/CTA text inside attachments uses the accent. */
+[class*="cta_"][class*="9271d"],
+[class*="originalLink_"] {
+  color: var(--etna-link);
+}
+
+/* Image/video mosaic items get the glass radius so corners match panels. */
+[class*="imageContainer_"],
+[class*="loadingOverlay_"],
+[class*="clickableWrapper_"][class*="imageWrapper"] {
+  border-radius: calc(var(--etna-radius) - 2px);
+}
+
+/* ------------------------------------------------------------
+ *  REACTIONS  (default + reacted-by-you)
+ *  Default: subtle dark glass chip. Reacted-by-you: accent-tinted
+ *  fill with an accent border + accent count text.
+ * ---------------------------------------------------------- */
+[class*="reaction_"]:not([class*="reactionMe_"]) {
+  background-color: color-mix(in srgb, var(--etna-bg-elevated) 60%, transparent);
+  border: 1px solid var(--etna-border);
+  border-radius: 999px;
+  transition: background-color 120ms ease, border-color 120ms ease;
+}
+[class*="reaction_"]:not([class*="reactionMe_"]):hover {
+  background-color: color-mix(in srgb, var(--etna-bg-elevated) 80%, transparent);
+  border-color: color-mix(in srgb, var(--etna-text-muted) 40%, transparent);
+}
+
+/* Reacted-by-you Ã¢â‚¬â€ accent identity. */
+[class*="reaction_"][class*="reactionMe_"] {
+  background-color: color-mix(in srgb, var(--etna-accent) 24%, transparent);
+  border: 1px solid color-mix(in srgb, var(--etna-accent) 65%, transparent);
+  border-radius: 999px;
+}
+[class*="reaction_"][class*="reactionMe_"]:hover {
+  background-color: color-mix(in srgb, var(--etna-accent) 34%, transparent);
+}
+[class*="reaction_"][class*="reactionMe_"] [class*="reactionCount_"] {
+  color: color-mix(in srgb, var(--etna-accent) 100%, white 22%);
+}
+
+/* "Add reaction" inline button matches the default reaction chip. */
+[class*="reactionInner_"],
+[class*="insertButton_"][class*="reaction"] {
+  border-radius: 999px;
+}
+
+/* Reaction picker default/selected tiles (the emoji grid hover row). */
+[class*="reactionDefault_"],
+[class*="reactionSelected_"] {
+  border-radius: calc(var(--etna-radius) - 4px);
+}
+[class*="reactionSelected_"] {
+  background-color: color-mix(in srgb, var(--etna-accent) 22%, transparent);
+}
+
+/* ------------------------------------------------------------
+ *  CODE BLOCKS  (multi-line ``` and inline `code`)
+ *  Darker frosted panel so code reads as a recessed glass slab.
+ * ---------------------------------------------------------- */
+[class*="markup_"] pre,
+[class*="markup_"] pre > code,
+code.hljs,
+pre .hljs {
+  background: var(--etna-glass-strong) !important;
+  border: 1px solid var(--etna-border);
+  border-radius: calc(var(--etna-radius) - 4px);
+}
+
+[class*="markup_"] pre {
+  -webkit-backdrop-filter: blur(calc(var(--etna-blur) - 6px));
+  backdrop-filter: blur(calc(var(--etna-blur) - 6px));
+}
+
+/* Inline code chip Ã¢â‚¬â€ small dark glass pill, not a full block. */
+[class*="markup_"] code:not(pre code) {
+  background: color-mix(in srgb, var(--etna-bg) 60%, transparent);
+  border: 1px solid var(--etna-border);
+  border-radius: 6px;
+  color: color-mix(in srgb, var(--etna-text) 100%, white 6%);
+}
+
+/* Inline mention chips in message body (the @user / #channel pills). */
+[class*="markup_"] [class*="mention"]:not([class*="mentionWrapper"]) {
+  background-color: color-mix(in srgb, var(--etna-accent) 22%, transparent);
+  color: color-mix(in srgb, var(--etna-link) 100%, white 10%);
+  border-radius: 4px;
+  transition: background-color 120ms ease;
+}
+[class*="markup_"] [class*="mention"]:not([class*="mentionWrapper"]):hover {
+  background-color: color-mix(in srgb, var(--etna-accent) 40%, transparent);
+  color: var(--etna-text);
+}
+
+/* In-message links. */
+[class*="markup_"] a,
+[class*="anchor_"],
+[class*="anchorUnderlineOnHover_"] {
+  color: var(--etna-link);
+}
+
+/* Blockquote spine uses a hairline glass edge. */
+[class*="markup_"] blockquote [class*="blockquoteDivider_"],
+[class*="markup_"] blockquote::before {
+  background-color: var(--etna-border);
+}
+
+/* ------------------------------------------------------------
+ *  SPOILERS  Ã¢â‚¬â€ dark frosted chip; reveals to plain on click.
+ * ---------------------------------------------------------- */
+[class*="spoilerContent_"],
+[class*="spoilerMarkdownContent_"],
+[class*="spoilerText_"] {
+  background-color: color-mix(in srgb, var(--etna-bg) 78%, transparent);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  border-radius: 6px;
+  transition: background-color 150ms ease;
+}
+[class*="spoilerContent_"]:hover,
+[class*="spoilerMarkdownContent_"]:hover {
+  background-color: color-mix(in srgb, var(--etna-bg-elevated) 85%, transparent);
+}
+
+/* Hidden-spoiler image overlay = denser dark glass with a label edge. */
+[class*="hiddenSpoilers_"],
+[class*="spoilerWarning_"] {
+  background-color: color-mix(in srgb, var(--etna-bg) 82%, transparent);
+  -webkit-backdrop-filter: blur(var(--etna-blur));
+  backdrop-filter: blur(var(--etna-blur));
+  border-radius: calc(var(--etna-radius) - 4px);
+}
+[class*="spoilerWarning_"] {
+  color: var(--etna-text);
+  border: 1px solid var(--etna-border);
+}
+
+/* Revealed spoiler drops the frosting entirely. */
+[class*="spoilerContentVisible_"],
+[class*="spoilerVisible_"] {
+  background-color: transparent;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+/* ------------------------------------------------------------
+ *  MISC CHAT SURFACE POLISH
+ * ---------------------------------------------------------- */
+
+/* New-messages / jump-to-present floating bars = accent + glass. */
+[class*="newMessagesBar_"] {
+  background: color-mix(in srgb, var(--etna-accent) 88%, transparent);
+  border: 1px solid var(--etna-border);
+  border-radius: 999px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+}
+[class*="jumpToPresentBar_"] {
+  background: var(--etna-glass-strong);
+  -webkit-backdrop-filter: blur(var(--etna-blur));
+  backdrop-filter: blur(var(--etna-blur));
+  border: 1px solid var(--etna-border);
+  border-radius: 999px;
+}
+
+/* Unread divider pill picks up the accent. */
+[class*="divider_"][class*="isUnread_"] {
+  border-color: color-mix(in srgb, var(--etna-accent) 70%, transparent);
+}
+[class*="unreadPill_"] {
+  background-color: var(--etna-accent);
+  color: var(--etna-text);
+}
+
+/* Polls inside chat = glass card with accent voting bar. */
+[class*="pollContainer_"] {
+  background: color-mix(in srgb, var(--etna-bg-elevated) 70%, transparent);
+  border: 1px solid var(--etna-border);
+  border-radius: var(--etna-radius);
+}
+[class*="answerInner_"] {
+  background: color-mix(in srgb, var(--etna-bg-elevated) 65%, transparent);
+  border-radius: calc(var(--etna-radius) - 2px);
+}
+[class*="votePercentageBar_"],
+[class*="resultBar_"] {
+  background-color: color-mix(in srgb, var(--etna-accent) 28%, transparent);
+}
+
+/* ===================== overlays ===================== */
+/* ============================================================
+ *  ETNA Ã¢â‚¬â€ OVERLAYS SURFACE GROUP
+ *  Floating glass: modals, popouts, profile popout + full
+ *  profile modal, context menus, tooltips, search-results
+ *  popout, emoji/gif/sticker picker, and the quick-switcher.
+ *
+ *  Pattern: strong frosted glass Ã¢â‚¬â€ backdrop blur,
+ *  --etna-glass-strong fill, 1px glass edge, soft shadow,
+ *  --etna-radius corners. All color/depth via --etna-* knobs.
+ * ============================================================ */
+
+/* Reusable soft drop-shadow for floating layers (derived, no
+ * hardcoded colour beyond neutral black shadow which is depth,
+ * not a theme colour). */
+
+/* ------------------------------------------------------------
+ *  GENERIC FLOATING LAYER
+ *  Discord renders most overlays inside the app-mount layer
+ *  container. We target the stable layer wrapper plus the
+ *  design-token-driven --background-floating consumers.
+ *  [class*="layer_"]  Ã¢â‚¬â€ overlay layer host
+ *  [class*="layerContainer"] Ã¢â‚¬â€ alt host in newer builds
+ * ------------------------------------------------------------ */
+[class*="layerContainer_"] [class*="layer_"] {
+  border-radius: var(--etna-radius);
+}
+
+/* ------------------------------------------------------------
+ *  MODALS  (root container of every centered modal)
+ *  [class*="root_"] inside the modal layer; pair with the
+ *  --modal-background token already mapped to glass-strong.
+ *  Covers settings sub-modals, full profile modal shell, etc.
+ * ------------------------------------------------------------ */
+[role="dialog"][class*="root_"],
+[class*="modal_"][class*="root_"],
+[class*="focusLock_"] > [class*="root_"] {
+  backdrop-filter: blur(calc(var(--etna-blur) + 6px)) saturate(150%) brightness(1.05);
+  -webkit-backdrop-filter: blur(calc(var(--etna-blur) + 6px)) saturate(150%) brightness(1.05);
+  background: var(--etna-glass-strong);
+  border: 1px solid var(--etna-border);
+  border-radius: var(--etna-radius);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.55),
+              0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+/* Modal inner regions stay transparent so the one glass pane
+ * shows through (avoids stacked opaque blocks killing blur). */
+[role="dialog"][class*="root_"] [class*="content_"],
+[role="dialog"][class*="root_"] [class*="header_"],
+[role="dialog"][class*="root_"] [class*="footer_"] {
+  background: transparent;
+}
+
+/* Modal footer keeps a faint divider as a glass seam */
+[role="dialog"][class*="root_"] [class*="footer_"] {
+  border-top: 1px solid var(--etna-border);
+}
+
+/* ------------------------------------------------------------
+ *  POPOUTS  (generic floating popout shell)
+ *  [class*="popout"] is the wrapper Discord reuses for most
+ *  hover/click popouts; the inner [class*="container"] holds
+ *  the visible surface.
+ * ------------------------------------------------------------ */
+[class*="popout_"] > [class*="container_"],
+[class*="layer_"] > [class*="container_"] {
+  backdrop-filter: blur(calc(var(--etna-blur) + 6px)) saturate(150%) brightness(1.05);
+  -webkit-backdrop-filter: blur(calc(var(--etna-blur) + 6px)) saturate(150%) brightness(1.05);
+  background: var(--etna-glass-strong);
+  border: 1px solid var(--etna-border);
+  border-radius: var(--etna-radius);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.5);
+}
+
+/* ------------------------------------------------------------
+ *  USER PROFILE POPOUT  (the small hovercard) AND
+ *  FULL USER PROFILE MODAL (the large profile sheet)
+ *  Discord uses [class*="userPopout"] / [class*="userProfile"]
+ *  shells. We frost the outer shell and let the banner +
+ *  body sit on top, keeping inner panels translucent.
+ * ------------------------------------------------------------ */
+[class*="userPopoutOuter_"],
+[class*="userPopoutInner_"],
+[class*="userProfileOuter_"],
+[class*="userProfileInner_"],
+[class*="userProfileModalOuter_"],
+[class*="outerContainer_"][class*="userProfile" i] {
+  backdrop-filter: blur(calc(var(--etna-blur) + 6px)) saturate(150%) brightness(1.05);
+  -webkit-backdrop-filter: blur(calc(var(--etna-blur) + 6px)) saturate(150%) brightness(1.05);
+  background: var(--etna-glass-strong);
+  border: 1px solid var(--etna-border);
+  border-radius: var(--etna-radius);
+  box-shadow: 0 14px 42px rgba(0, 0, 0, 0.5);
+}
+
+/* Profile body / bio / connections panels read as inner glass
+ * tiles layered on the strong shell. */
+[class*="userPopout"] [class*="body_"],
+[class*="userProfile"] [class*="body_"],
+[class*="userPopout"] [class*="userInfoSection_"],
+[class*="userProfile"] [class*="userInfoSection_"],
+[class*="userProfile"] [class*="userBio_"] {
+  background: var(--etna-glass);
+  border: 1px solid var(--etna-border);
+  border-radius: var(--etna-radius);
+}
+
+/* The accent/overlay strip behind the avatar+name in popouts
+ * uses the theme accent wash instead of a flat fill. */
+[class*="userPopout"] [class*="overlay_"],
+[class*="userProfile"] [class*="overlay_"] {
+  background: color-mix(in srgb, var(--etna-accent) 12%, transparent);
+}
+
+/* ------------------------------------------------------------
+ *  CONTEXT MENUS  (right-click menus)
+ *  Stable role + class wrapper. Items get accent hover.
+ * ------------------------------------------------------------ */
+[role="menu"][class*="menu_"],
+[class*="menu_"][class*="scroller_"] {
+  backdrop-filter: blur(var(--etna-blur)) saturate(150%) brightness(1.04);
+  -webkit-backdrop-filter: blur(var(--etna-blur)) saturate(150%) brightness(1.04);
+  background: var(--etna-glass-strong);
+  border: 1px solid var(--etna-border);
+  border-radius: var(--etna-radius);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+/* Menu items: transparent base, accent fill on focus/hover */
+[role="menuitem"][class*="item_"],
+[class*="menu_"] [class*="labelContainer_"] {
+  background: transparent;
+  border-radius: calc(var(--etna-radius) - 6px);
+}
+
+[role="menuitem"][class*="item_"]:hover,
+[role="menuitem"][class*="item_"]:focus,
+[role="menuitem"][class*="item_"][class*="focused_"] {
+  background: color-mix(in srgb, var(--etna-accent) 22%, transparent);
+  color: var(--etna-text);
+}
+
+/* Destructive (danger/colorDanger) items keep red intent on
+ * hover but use a translucent wash so glass shows through. */
+[role="menuitem"][class*="colorDanger_"]:hover,
+[role="menuitem"][class*="colorDanger_"]:focus {
+  background: color-mix(in srgb, #d83c3e 26%, transparent);
+  color: var(--etna-text);
+}
+
+/* Menu separators read as faint glass seams */
+[class*="menu_"] [class*="separator_"] {
+  background: var(--etna-border);
+}
+
+/* Submenu / nested popouts inherit the same strong glass via
+ * the generic popout rule above. */
+
+/* ------------------------------------------------------------
+ *  TOOLTIPS
+ *  [class*="tooltip_"] is the bubble; arrow gets the same fill.
+ * ------------------------------------------------------------ */
+[class*="tooltip_"][class*="tooltipContent_"],
+[class*="tooltip_"] > [class*="tooltipContent_"],
+div[class*="tooltip_"] {
+  backdrop-filter: blur(var(--etna-blur)) saturate(150%);
+  -webkit-backdrop-filter: blur(var(--etna-blur)) saturate(150%);
+  background: var(--etna-glass-strong);
+  border: 1px solid var(--etna-border);
+  border-radius: calc(var(--etna-radius) - 4px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.45);
+  color: var(--etna-text);
+}
+
+/* Tooltip pointer arrow Ã¢â‚¬â€ tint to match the glass so the
+ * bubble reads as one piece. */
+[class*="tooltipPointer_"] {
+  background: var(--etna-glass-strong);
+  border-color: var(--etna-border);
+}
+
+/* ------------------------------------------------------------
+ *  SEARCH RESULTS POPOUT
+ *  The search dropdown + the full search results panel.
+ * ------------------------------------------------------------ */
+[class*="searchPopout_"],
+[class*="search-popout_"],
+[class*="searchResultsWrap_"],
+[class*="searchResults_"] {
+  backdrop-filter: blur(var(--etna-blur)) saturate(150%);
+  -webkit-backdrop-filter: blur(var(--etna-blur)) saturate(150%);
+  background: var(--etna-glass-strong);
+  border: 1px solid var(--etna-border);
+  border-radius: var(--etna-radius);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.5);
+}
+
+/* Individual search filter/answer options: accent hover */
+[class*="searchPopout_"] [class*="option_"]:hover,
+[class*="searchPopout_"] [class*="option_"][class*="selected_"] {
+  background: color-mix(in srgb, var(--etna-accent) 20%, transparent);
+  border-radius: calc(var(--etna-radius) - 6px);
+}
+
+/* ------------------------------------------------------------
+ *  EMOJI / GIF / STICKER PICKER
+ *  Shared picker shell + category sidebar + search input.
+ * ------------------------------------------------------------ */
+[class*="contentWrapper_"][class*="picker" i],
+[class*="emojiPicker"],
+[class*="stickerPicker"],
+[class*="gifPicker"],
+[class*="expressionPicker"],
+#expression-picker,
+[id*="expression-picker"] {
+  backdrop-filter: blur(calc(var(--etna-blur) + 4px)) saturate(150%) brightness(1.04);
+  -webkit-backdrop-filter: blur(calc(var(--etna-blur) + 4px)) saturate(150%) brightness(1.04);
+  background: var(--etna-glass-strong);
+  border: 1px solid var(--etna-border);
+  border-radius: var(--etna-radius);
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.5);
+}
+
+/* Picker category nav + header stay transparent over the glass */
+[class*="expressionPicker"] [class*="header_"],
+[class*="expressionPicker"] [class*="navButton_"],
+[class*="expressionPicker"] [class*="categoryList_"],
+[class*="emojiPicker"] [class*="header_"] {
+  background: transparent;
+}
+
+/* Picker category buttons: accent on active/hover */
+[class*="expressionPicker"] [class*="categoryItem_"]:hover,
+[class*="expressionPicker"] [class*="categoryItem_"][class*="selected_"],
+[class*="expressionPicker"] [class*="navButtonActive_"] {
+  background: color-mix(in srgb, var(--etna-accent) 20%, transparent);
+  border-radius: calc(var(--etna-radius) - 6px);
+}
+
+/* Emoji/sticker grid hover cells */
+[class*="expressionPicker"] [class*="emojiItem_"]:hover,
+[class*="expressionPicker"] [class*="sticker_"]:hover,
+[class*="gifPicker"] [class*="gif_"]:hover {
+  background: var(--background-modifier-hover);
+  border-radius: calc(var(--etna-radius) - 8px);
+}
+
+/* Picker search field reads as a recessed glass slot */
+[class*="expressionPicker"] [class*="searchBar_"],
+[class*="expressionPicker"] [class*="container_"][class*="searchBar" i] {
+  background: var(--channeltextarea-background);
+  border: 1px solid var(--etna-border);
+  border-radius: calc(var(--etna-radius) - 4px);
+}
+
+/* ------------------------------------------------------------
+ *  QUICK-SWITCHER  (Ctrl/Cmd+K)
+ *  Outer shell is a strong glass card; result rows get accent
+ *  selection. Discord uses [class*="quickswitcher"].
+ * ------------------------------------------------------------ */
+[class*="quickswitcher_"],
+[class*="quickSwitcher_"],
+[aria-label*="Quick switcher" i] [class*="root_"] {
+  backdrop-filter: blur(calc(var(--etna-blur) + 6px)) saturate(150%) brightness(1.05);
+  -webkit-backdrop-filter: blur(calc(var(--etna-blur) + 6px)) saturate(150%) brightness(1.05);
+  background: var(--etna-glass-strong);
+  border: 1px solid var(--etna-border);
+  border-radius: var(--etna-radius);
+  box-shadow: 0 18px 52px rgba(0, 0, 0, 0.55);
+}
+
+/* Quick-switcher input stays clear so the glass reads as one card */
+[class*="quickswitcher_"] [class*="input_"],
+[class*="quickSwitcher_"] [class*="input_"] {
+  background: transparent;
+  color: var(--etna-text);
+}
+
+/* Quick-switcher selected result row: accent wash */
+[class*="quickswitcher_"] [class*="selected_"],
+[class*="quickSwitcher_"] [class*="selected_"],
+[class*="quickswitcher_"] [class*="resultFocused_"] {
+  background: color-mix(in srgb, var(--etna-accent) 24%, transparent);
+  border-radius: calc(var(--etna-radius) - 6px);
+}
+
+/* ------------------------------------------------------------
+ *  AUTOCOMPLETE POPOUT (@mention / :emoji: / #channel)
+ *  Shares the floating glass language with the pickers above.
+ * ------------------------------------------------------------ */
+[class*="autocomplete_"],
+[class*="autocompleteInner_"] {
+  backdrop-filter: blur(var(--etna-blur)) saturate(150%);
+  -webkit-backdrop-filter: blur(var(--etna-blur)) saturate(150%);
+  background: var(--etna-glass-strong);
+  border: 1px solid var(--etna-border);
+  border-radius: var(--etna-radius);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.48);
+}
+
+[class*="autocomplete_"] [class*="selected_"],
+[class*="autocomplete_"] [class*="selectable_"]:hover {
+  background: color-mix(in srgb, var(--etna-accent) 20%, transparent);
+  border-radius: calc(var(--etna-radius) - 8px);
+}
+
+/* ------------------------------------------------------------
+ *  Shared focus ring for interactive rows inside overlays Ã¢â‚¬â€
+ *  keyboard accessibility against the dark glass.
+ * ------------------------------------------------------------ */
+[role="menuitem"]:focus-visible,
+[class*="quickswitcher_"] [class*="result_"]:focus-visible,
+[class*="expressionPicker"] [class*="categoryItem_"]:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--etna-accent) 70%, transparent);
+  outline-offset: -2px;
+}
+
+/* ===================== controls ===================== */
+/* ============================================================
+ *  ETNA Ã¢â‚¬â€ CONTROLS surface
+ *  Form & control elements everywhere: User Settings + Gambo/
+ *  Vencord settings, cards, buttons, inputs, switches, checkboxes,
+ *  radios, sliders, scrollbars, toasts, badges, search bar.
+ *  Uses only --etna-* knobs + Discord design tokens. Class
+ *  selectors use substring matchers for update resilience.
+ * ============================================================ */
+
+/* ------------------------------------------------------------
+ *  CARDS Ã¢â‚¬â€ settings cards, info cards, Gambo/Vencord setting rows.
+ *  Frosted glass panes over the dark floor.
+ * ------------------------------------------------------------ */
+[class*="card_"],
+[class*="cardPrimary"],
+[class*="container_"][class*="settings"],
+.vc-settings-card,
+[class*="vc-"][class*="card"] {
+  background: var(--etna-glass);
+  backdrop-filter: blur(var(--etna-blur)) saturate(140%);
+  -webkit-backdrop-filter: blur(var(--etna-blur)) saturate(140%);
+  border: 1px solid var(--etna-border);
+  border-radius: var(--etna-radius);
+}
+
+/* Note Discord tokens that some cards read directly */
+:root,
+.theme-dark,
+.theme-darker,
+.theme-midnight {
+  --info-positive-background: color-mix(in srgb, var(--etna-online) 18%, transparent);
+  --info-warning-background: color-mix(in srgb, var(--etna-accent) 12%, transparent);
+}
+
+/* ------------------------------------------------------------
+ *  BUTTONS Ã¢â‚¬â€ primary uses --etna-accent; secondary is dark glass.
+ *  Discord ships button colors as tokens; override those plus the
+ *  stable [class*="button"] role classes for full coverage.
+ * ------------------------------------------------------------ */
+
+/* Primary / brand-filled buttons */
+[class*="lookFilled_"][class*="colorBrand_"],
+[class*="lookFilled_"][class*="colorPrimary_"],
+button[class*="colorBrand_"] {
+  background-color: var(--etna-accent);
+  color: var(--etna-text);
+  border: none;
+  border-radius: calc(var(--etna-radius) - 6px);
+  transition: background-color 0.15s ease, box-shadow 0.15s ease, transform 0.05s ease;
+}
+[class*="lookFilled_"][class*="colorBrand_"]:hover,
+[class*="lookFilled_"][class*="colorPrimary_"]:hover,
+button[class*="colorBrand_"]:hover {
+  background-color: var(--etna-accent-hover);
+  box-shadow: 0 2px 12px color-mix(in srgb, var(--etna-accent) 40%, transparent);
+}
+[class*="lookFilled_"][class*="colorBrand_"]:active,
+[class*="lookFilled_"][class*="colorPrimary_"]:active,
+button[class*="colorBrand_"]:active {
+  background-color: var(--etna-accent-hover);
+  transform: translateY(1px);
+}
+[class*="lookFilled_"][class*="colorBrand_"]:focus-visible,
+button[class*="colorBrand_"]:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--etna-bg), 0 0 0 4px color-mix(in srgb, var(--etna-accent) 60%, transparent);
+}
+
+/* Secondary buttons Ã¢â‚¬â€ dark glass fill */
+[class*="lookFilled_"][class*="colorSecondary_"],
+button[class*="colorSecondary_"] {
+  background-color: var(--button-secondary-background);
+  color: var(--etna-text);
+  border: 1px solid var(--etna-border);
+  border-radius: calc(var(--etna-radius) - 6px);
+  backdrop-filter: blur(var(--etna-blur)) saturate(140%);
+  -webkit-backdrop-filter: blur(var(--etna-blur)) saturate(140%);
+  transition: background-color 0.15s ease, border-color 0.15s ease, transform 0.05s ease;
+}
+[class*="lookFilled_"][class*="colorSecondary_"]:hover,
+button[class*="colorSecondary_"]:hover {
+  background-color: color-mix(in srgb, var(--etna-bg-elevated) 92%, white 6%);
+  border-color: color-mix(in srgb, var(--etna-accent) 35%, var(--etna-border));
+}
+[class*="lookFilled_"][class*="colorSecondary_"]:active,
+button[class*="colorSecondary_"]:active {
+  transform: translateY(1px);
+}
+
+/* Outlined / inverted look buttons */
+[class*="lookOutlined_"] {
+  border-color: var(--etna-border);
+  color: var(--etna-text);
+  border-radius: calc(var(--etna-radius) - 6px);
+}
+[class*="lookOutlined_"]:hover {
+  border-color: color-mix(in srgb, var(--etna-accent) 45%, var(--etna-border));
+  background-color: var(--background-modifier-hover);
+}
+
+/* Link-look buttons */
+[class*="lookLink_"] {
+  color: var(--etna-link);
+}
+[class*="lookLink_"]:hover {
+  color: color-mix(in srgb, var(--etna-link) 100%, white 12%);
+}
+
+/* Danger buttons keep destructive red but adopt our radius */
+[class*="colorRed_"] {
+  border-radius: calc(var(--etna-radius) - 6px);
+}
+
+/* ------------------------------------------------------------
+ *  TEXT INPUTS / TEXTAREAS / SELECTS Ã¢â‚¬â€ frosted dark fields.
+ *  channeltextarea-background token is mapped in the foundation;
+ *  here we cover settings inputs and selects.
+ * ------------------------------------------------------------ */
+[class*="inputDefault_"],
+[class*="inputWrapper_"] input,
+input[class*="input_"],
+textarea[class*="input_"],
+[class*="textArea_"],
+.vc-text-input,
+[class*="vc-"][class*="input"] {
+  background: color-mix(in srgb, var(--etna-bg-elevated) 70%, transparent);
+  color: var(--etna-text);
+  border: 1px solid var(--etna-border);
+  border-radius: calc(var(--etna-radius) - 4px);
+  backdrop-filter: blur(var(--etna-blur)) saturate(130%);
+  -webkit-backdrop-filter: blur(var(--etna-blur)) saturate(130%);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+[class*="inputDefault_"]::placeholder,
+input[class*="input_"]::placeholder,
+textarea[class*="input_"]::placeholder {
+  color: var(--etna-text-muted);
+}
+[class*="inputDefault_"]:hover,
+input[class*="input_"]:hover,
+textarea[class*="input_"]:hover {
+  border-color: color-mix(in srgb, var(--etna-accent) 30%, var(--etna-border));
+}
+[class*="inputDefault_"]:focus,
+[class*="inputDefault_"]:focus-within,
+input[class*="input_"]:focus,
+textarea[class*="input_"]:focus {
+  border-color: var(--etna-accent);
+  box-shadow: 0 0 0 1px var(--etna-accent),
+              0 0 0 4px color-mix(in srgb, var(--etna-accent) 22%, transparent);
+  outline: none;
+}
+
+/* Select / dropdown control surface */
+[class*="select_"] [class*="selectControl_"],
+[class*="select_"] [class*="control_"] {
+  background: color-mix(in srgb, var(--etna-bg-elevated) 70%, transparent);
+  border: 1px solid var(--etna-border);
+  border-radius: calc(var(--etna-radius) - 4px);
+  color: var(--etna-text);
+}
+[class*="select_"] [class*="selectControl_"]:hover {
+  border-color: color-mix(in srgb, var(--etna-accent) 30%, var(--etna-border));
+}
+
+/* Dropdown popout list Ã¢â‚¬â€ floating glass */
+[class*="select_"] [class*="popout_"],
+[class*="autocomplete_"] {
+  background: var(--etna-glass-strong);
+  backdrop-filter: blur(calc(var(--etna-blur) + 6px)) saturate(150%);
+  -webkit-backdrop-filter: blur(calc(var(--etna-blur) + 6px)) saturate(150%);
+  border: 1px solid var(--etna-border);
+  border-radius: var(--etna-radius);
+}
+
+/* ------------------------------------------------------------
+ *  SEARCH BAR Ã¢â‚¬â€ channel/member/settings search, Quick Switcher.
+ * ------------------------------------------------------------ */
+[class*="searchBar_"],
+[class*="searchBarComponent_"],
+[class*="container_"][class*="search"] {
+  background: color-mix(in srgb, var(--etna-bg-elevated) 65%, transparent);
+  border: 1px solid var(--etna-border);
+  border-radius: calc(var(--etna-radius) - 2px);
+  backdrop-filter: blur(var(--etna-blur)) saturate(130%);
+  -webkit-backdrop-filter: blur(var(--etna-blur)) saturate(130%);
+  color: var(--etna-text);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+[class*="searchBar_"]:focus-within,
+[class*="searchBarComponent_"]:focus-within {
+  border-color: var(--etna-accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--etna-accent) 20%, transparent);
+}
+[class*="searchBar_"] input,
+[class*="searchBarComponent_"] input {
+  color: var(--etna-text);
+}
+[class*="searchBar_"] [class*="icon_"],
+[class*="searchBarComponent_"] [class*="icon_"] {
+  color: var(--etna-text-muted);
+}
+
+/* ------------------------------------------------------------
+ *  SWITCHES / TOGGLES Ã¢â‚¬â€ track recolors to accent when enabled.
+ * ------------------------------------------------------------ */
+[class*="container_"][class*="switch"] [class*="slider_"],
+input[type="checkbox"][class*="input_"] + [class*="track_"],
+[class*="switchEnabled_"],
+[class*="switch_"] {
+  border-radius: 999px;
+  transition: background-color 0.15s ease, box-shadow 0.15s ease;
+}
+/* Off state track */
+[class*="switch_"]:not([class*="checked"]),
+[class*="container_"][class*="switch"] input:not(:checked) ~ * {
+  background-color: color-mix(in srgb, var(--etna-bg-elevated) 90%, white 4%);
+}
+/* On state track Ã¢â‚¬â€ accent fill */
+[class*="switch_"][class*="checked"],
+[class*="container_"][class*="switch"] input:checked ~ [class*="slider_"] {
+  background-color: var(--etna-accent) !important;
+  box-shadow: 0 0 10px color-mix(in srgb, var(--etna-accent) 45%, transparent);
+}
+/* The Discord form-switch token (newer builds) */
+:root,
+.theme-dark,
+.theme-darker,
+.theme-midnight {
+  --control-brand-foreground: var(--etna-accent);
+}
+
+/* ------------------------------------------------------------
+ *  CHECKBOXES Ã¢â‚¬â€ accent fill + check when selected.
+ * ------------------------------------------------------------ */
+[class*="checkbox_"] {
+  border-radius: 6px;
+  border: 1px solid var(--etna-border);
+  background: color-mix(in srgb, var(--etna-bg-elevated) 70%, transparent);
+  transition: background-color 0.12s ease, border-color 0.12s ease;
+}
+[class*="checkbox_"]:hover {
+  border-color: color-mix(in srgb, var(--etna-accent) 45%, var(--etna-border));
+}
+[class*="checkbox_"][class*="checkboxChecked_"],
+[class*="checkbox_"]:has(input:checked) {
+  background: var(--etna-accent);
+  border-color: var(--etna-accent);
+}
+
+/* ------------------------------------------------------------
+ *  RADIO BUTTONS Ã¢â‚¬â€ settings radio groups (e.g. theme pickers).
+ * ------------------------------------------------------------ */
+[class*="radioBar_"],
+[class*="radioItem_"],
+[class*="radioGroup_"] [role="radio"] {
+  border: 1px solid var(--etna-border);
+  border-radius: calc(var(--etna-radius) - 4px);
+  background: color-mix(in srgb, var(--etna-bg-elevated) 55%, transparent);
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+[class*="radioBar_"]:hover,
+[class*="radioItem_"]:hover {
+  border-color: color-mix(in srgb, var(--etna-accent) 35%, var(--etna-border));
+}
+[class*="radioBar_"][class*="checked"],
+[class*="radioItem_"][class*="checked"],
+[role="radio"][aria-checked="true"] {
+  border-color: var(--etna-accent);
+  background: color-mix(in srgb, var(--etna-accent) 16%, transparent);
+}
+/* Inner dot for circular radios */
+[role="radio"][aria-checked="true"] [class*="radioIcon_"],
+[class*="radioSelected_"] {
+  color: var(--etna-accent);
+  fill: var(--etna-accent);
+}
+
+/* ------------------------------------------------------------
+ *  SLIDERS Ã¢â‚¬â€ track + accent fill + grabber.
+ * ------------------------------------------------------------ */
+[class*="slider_"] [class*="bar_"],
+[class*="sliderContainer_"] [class*="bar_"] {
+  background: color-mix(in srgb, var(--etna-bg-elevated) 90%, white 4%);
+  border-radius: 999px;
+}
+[class*="slider_"] [class*="barFill_"],
+[class*="sliderContainer_"] [class*="barFill_"] {
+  background: var(--etna-accent);
+  border-radius: 999px;
+}
+[class*="slider_"] [class*="grabber_"],
+[class*="sliderContainer_"] [class*="grabber_"] {
+  background: var(--etna-text);
+  border: 2px solid var(--etna-accent);
+  border-radius: 50%;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+  transition: box-shadow 0.15s ease;
+}
+[class*="slider_"] [class*="grabber_"]:hover,
+[class*="slider_"] [class*="grabber_"]:active {
+  box-shadow: 0 0 0 6px color-mix(in srgb, var(--etna-accent) 22%, transparent);
+}
+
+/* ------------------------------------------------------------
+ *  SCROLLBARS Ã¢â‚¬â€ thin + auto. Thumb tints toward accent.
+ *  Tokens are mapped in the foundation; reinforce the WebKit
+ *  scrollbar here for the settings region and accent tint.
+ * ------------------------------------------------------------ */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track,
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--etna-accent) 40%, rgba(255, 255, 255, 0.12));
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: color-mix(in srgb, var(--etna-accent) 70%, rgba(255, 255, 255, 0.18));
+  background-clip: padding-box;
+}
+/* Discord's thin/auto scrollbar tokens reuse accent for the thumb */
+:root,
+.theme-dark,
+.theme-darker,
+.theme-midnight {
+  --scrollbar-thin-thumb: color-mix(in srgb, var(--etna-accent) 38%, rgba(255, 255, 255, 0.12));
+  --scrollbar-auto-thumb: color-mix(in srgb, var(--etna-accent) 42%, rgba(255, 255, 255, 0.14));
+  --scrollbar-thin-track: transparent;
+  --scrollbar-auto-track: transparent;
+}
+
+/* ------------------------------------------------------------
+ *  TOASTS / NOTIFICATIONS Ã¢â‚¬â€ floating frosted glass.
+ *  Covers Discord toasts and Vencord/Gambo notification cards.
+ * ------------------------------------------------------------ */
+[class*="toast_"],
+[class*="toasts_"] > div,
+.vc-toast,
+[class*="vc-"][class*="notification"],
+[class*="notificationContainer_"] {
+  background: var(--etna-glass-strong);
+  backdrop-filter: blur(calc(var(--etna-blur) + 6px)) saturate(150%) brightness(1.05);
+  -webkit-backdrop-filter: blur(calc(var(--etna-blur) + 6px)) saturate(150%) brightness(1.05);
+  border: 1px solid var(--etna-border);
+  border-radius: var(--etna-radius);
+  color: var(--etna-text);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.45);
+}
+
+/* ------------------------------------------------------------
+ *  BADGES / PILLS Ã¢â‚¬â€ counts, NEW pills, tag badges.
+ *  Accent-tinted glass; keep mention/ping red defaults intact.
+ * ------------------------------------------------------------ */
+[class*="badge_"],
+[class*="numberBadge_"],
+[class*="pill_"]:not([class*="mention"]),
+[class*="tag_"] {
+  border-radius: 999px;
+}
+[class*="badge_"][class*="brand"],
+[class*="newBadge_"],
+[class*="betaBadge_"] {
+  background: var(--etna-accent);
+  color: var(--etna-text);
+}
+/* Generic accent badge tint where Discord uses a brand pill */
+:root,
+.theme-dark,
+.theme-darker,
+.theme-midnight {
+  --badge-brand: var(--etna-accent);
+}
+
+/* ------------------------------------------------------------
+ *  SETTINGS / MODAL FORM CONTAINERS Ã¢â‚¬â€ keep the surrounding
+ *  settings shell on the dark glass so the controls above read
+ *  as panes against it (without re-declaring root tokens).
+ * ------------------------------------------------------------ */
+[class*="contentColumn_"] [class*="container_"][class*="card"],
+[class*="vc-settings"] [class*="card"] {
+  background: var(--etna-glass);
+  border: 1px solid var(--etna-border);
+  border-radius: var(--etna-radius);
+}
+
+/* Divider hairlines between settings sections */
+[class*="divider_"],
+[class*="dividerDefault_"] {
+  border-color: var(--etna-border);
+}
+
+/* ===================== QA additions ===================== */
+/* ============================================================
+ *  ETNA Ã¢â‚¬â€ QA COMPLETENESS PASS (append-only gap fixes)
+ *  Concatenated last so these rules win on conflicts.
+ *  Everything below routes through --etna-* knobs.
+ * ============================================================ */
+
+/* ------------------------------------------------------------
+ *  GREEN / ONLINE ACCENT Ã¢â‚¬â€ stop the old Discord blurple+green
+ *  leaking through status tokens and svg status fills.
+ *  Maps Discord's status design tokens onto --etna-online and
+ *  re-targets the hardcoded #43b581 / #3ba55c / #23a55a fills.
+ * ------------------------------------------------------------ */
+:root,
+.theme-dark,
+.theme-darker,
+.theme-midnight {
+  --status-positive-background: var(--etna-online);
+  --status-online: var(--etna-online);
+  --green-360: var(--etna-online);
+  --green-historical: var(--etna-online);
+  --info-positive-foreground: var(--etna-online);
+  --text-positive: var(--etna-online);
+}
+
+/* Avatar / member / mobile status dots painted as raw svg rects/circles */
+rect[fill="#43b581"],
+rect[fill="#3ba55c"],
+rect[fill="#3ba55d"],
+rect[fill="#23a55a"],
+circle[fill="#43b581"],
+circle[fill="#23a55a"],
+[class*="status_"][style*="background-color: rgb(35, 165, 90)"],
+[class*="status_"][style*="background-color: rgb(59, 165, 92)"] {
+  fill: var(--etna-online) !important;
+  background-color: var(--etna-online) !important;
+}
+
+/* "Voice Connected" / RTC ping-good text + the typing/online green sublabels */
+[class*="rtcConnectionStatus_"] [class*="ping_"][class*="good"],
+[class*="connectionTextGreen_"],
+[class*="online_"] {
+  color: var(--etna-online);
+}
+
+/* ------------------------------------------------------------
+ *  KILL WHITE / HARDCODED NON-ETNA FLASHES
+ *  Discord still ships several literal whites and a stray blurple
+ *  for focus rings, list-row hover, and modifier active. Reroute.
+ * ------------------------------------------------------------ */
+:root,
+.theme-dark,
+.theme-darker,
+.theme-midnight {
+  /* hover/active/selected washes Ã¢â‚¬â€ keep them dark-glass, not white */
+  --background-modifier-active: color-mix(in srgb, var(--etna-accent) 14%, transparent);
+  --background-modifier-accent: var(--etna-border);
+  /* Discord's white-ish focus ring -> accent */
+  --focus-primary: var(--etna-accent);
+  --white-500: var(--etna-text);
+  /* deprecated-but-still-read interactive muted whites */
+  --channels-default: var(--etna-text-muted);
+  --channel-icon: var(--etna-text-muted);
+  --channel-text-area-placeholder: var(--etna-text-muted);
+}
+
+/* ------------------------------------------------------------
+ *  GLOBAL FOCUS RING Ã¢â‚¬â€ keyboard accessibility, theme-colored.
+ *  Catch-all so focus-visible never shows the default blurple.
+ * ------------------------------------------------------------ */
+:focus-visible,
+[class*="focusRing_"]:focus-visible,
+a:focus-visible,
+button:focus-visible {
+  outline-color: color-mix(in srgb, var(--etna-accent) 75%, transparent);
+}
+/* Discord's injected focus-ring box-shadow element */
+[class*="focusRingClip_"] [class*="ring_"],
+[class*="focusRing_"]::after {
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--etna-accent) 70%, transparent) !important;
+}
+
+/* ------------------------------------------------------------
+ *  LOGIN / SPLASH / LOADING SCREENS
+ *  Pre-app surfaces: the loader, the auth box, and the gateway
+ *  "connecting" overlay. Keep the dark floor; no blurple gradient.
+ * ------------------------------------------------------------ */
+[class*="appLoadingWrapper_"],
+[class*="loadingWrapper_"],
+[class*="initialLoad_"],
+#app-mount > [class*="container_"][class*="loading"] {
+  background-color: var(--etna-bg) !important;
+  background-image: none !important;
+}
+
+/* Auth (login/register) page Ã¢â‚¬â€ frosted card on the dark floor */
+[class*="authBox_"],
+[class*="authBoxStyles_"],
+[class*="block_"][class*="authBox"] {
+  background: var(--etna-glass-strong) !important;
+  backdrop-filter: blur(calc(var(--etna-blur) + 6px)) saturate(150%);
+  -webkit-backdrop-filter: blur(calc(var(--etna-blur) + 6px)) saturate(150%);
+  border: 1px solid var(--etna-border);
+  border-radius: var(--etna-radius);
+}
+[class*="wrapper_"][class*="authBackground"],
+[class*="theme-dark"] [class*="loginAuthForm"] {
+  background: var(--etna-bg) !important;
+}
+
+/* Connection / reconnecting status bar (top notice) */
+[class*="notice_"][class*="colorDefault"],
+[class*="connectionStatus_"][class*="bar"] {
+  background: var(--etna-glass-strong);
+  color: var(--etna-text);
+}
+
+/* ------------------------------------------------------------
+ *  THREADS PANEL  (sidebar list of threads + the inline thread view)
+ * ------------------------------------------------------------ */
+[class*="threadSidebar_"],
+[class*="container_"][class*="threadBrowser"],
+[class*="floating_"][class*="threadSidebar"] {
+  background: var(--etna-glass) !important;
+  backdrop-filter: blur(var(--etna-blur)) saturate(140%);
+  -webkit-backdrop-filter: blur(var(--etna-blur)) saturate(140%);
+  border-left: 1px solid var(--etna-border);
+}
+[class*="threadCard_"],
+[class*="card_"][class*="thread"] {
+  background: color-mix(in srgb, var(--etna-bg-elevated) 70%, transparent);
+  border: 1px solid var(--etna-border);
+  border-radius: var(--etna-radius);
+}
+[class*="threadCard_"]:hover {
+  background: color-mix(in srgb, var(--etna-bg-elevated) 85%, transparent);
+}
+/* the "X messages" / new-thread spine in chat */
+[class*="newThread_"] [class*="text_"] {
+  color: var(--etna-link);
+}
+
+/* ------------------------------------------------------------
+ *  FORUM CHANNELS  (post grid + composer + tags)
+ * ------------------------------------------------------------ */
+[class*="container_"][class*="forumOrHomeHeader"],
+[class*="forumPostListScroller_"],
+[class*="forumOrHome_"] {
+  background-color: transparent !important;
+}
+/* Forum post preview cards -> glass tiles */
+[class*="container_"][class*="mainCard"],
+[class*="card_"][class*="forumPost"],
+[class*="forumPostContainer_"] {
+  background: var(--etna-glass) !important;
+  backdrop-filter: blur(var(--etna-blur)) saturate(140%);
+  -webkit-backdrop-filter: blur(var(--etna-blur)) saturate(140%);
+  border: 1px solid var(--etna-border) !important;
+  border-radius: var(--etna-radius);
+}
+[class*="forumPostContainer_"]:hover,
+[class*="card_"][class*="forumPost"]:hover {
+  border-color: color-mix(in srgb, var(--etna-accent) 35%, var(--etna-border)) !important;
+}
+/* Forum / channel tag pills */
+[class*="tagPill_"]:not([class*="selected"]),
+[class*="pill_"][class*="tag"] {
+  background: color-mix(in srgb, var(--etna-bg-elevated) 75%, transparent);
+  border: 1px solid var(--etna-border);
+  color: var(--etna-text-muted);
+}
+[class*="tagPill_"][class*="selected"] {
+  background: color-mix(in srgb, var(--etna-accent) 24%, transparent);
+  border-color: color-mix(in srgb, var(--etna-accent) 60%, transparent);
+  color: var(--etna-text);
+}
+
+/* ------------------------------------------------------------
+ *  CALL / VOICE STAGE UI  (full-window call view, tiles, controls)
+ * ------------------------------------------------------------ */
+[class*="callContainer_"],
+[class*="wrapper_"][class*="callContainer"],
+[class*="root_"][class*="voiceCall"] {
+  background-color: var(--etna-bg) !important;
+  background-image: none !important;
+}
+/* Participant video/voice tiles -> glass cards */
+[class*="tile_"][class*="participant"],
+[class*="videoWrapper_"],
+[class*="voiceUser_"] [class*="tile_"] {
+  border-radius: var(--etna-radius);
+  border: 1px solid var(--etna-border);
+}
+/* Speaking ring -> online/accent instead of default green box */
+[class*="tile_"][class*="speaking"],
+[class*="voiceUser_"][class*="speaking_"] {
+  box-shadow: 0 0 0 2px var(--etna-online);
+}
+/* Bottom call control bar -> frosted glass tray */
+[class*="controls_"][class*="wrapper"],
+[class*="callControls_"],
+[class*="root_"][class*="callTray"] {
+  background: var(--etna-glass-strong);
+  backdrop-filter: blur(calc(var(--etna-blur) + 4px)) saturate(150%);
+  -webkit-backdrop-filter: blur(calc(var(--etna-blur) + 4px)) saturate(150%);
+  border: 1px solid var(--etna-border);
+  border-radius: 999px;
+}
+/* Call control buttons; keep the red "leave call" intent */
+[class*="callControls_"] button:not([class*="colorRed"]):hover {
+  background-color: var(--background-modifier-hover);
+}
+/* "Open Stage" / stage channel banner */
+[class*="stageChannel_"],
+[class*="stage_"][class*="container_"] {
+  background: var(--etna-glass) !important;
+  border: 1px solid var(--etna-border);
+  border-radius: var(--etna-radius);
+}
+
+/* ------------------------------------------------------------
+ *  STATUS PICKER + CUSTOM STATUS  (set-status popout colors)
+ * ------------------------------------------------------------ */
+[class*="statusItem_"]:hover {
+  background: var(--background-modifier-hover);
+}
+/* the colored status dots in the picker */
+[class*="online_"] [class*="dot_"],
+svg[class*="status_"] [fill="#23a55a"] {
+  fill: var(--etna-online);
+}
+
+/* ------------------------------------------------------------
+ *  SETTINGS LAYOUT SHELL  (sidebar nav + content background)
+ *  User Settings + Gambo/Vencord. The cards rule above handled
+ *  panes; here we fix the surrounding shell + selected nav item.
+ * ------------------------------------------------------------ */
+[class*="standardSidebarView_"],
+[class*="layer_"] [class*="contentRegion_"],
+[class*="sidebarRegion_"] {
+  background-color: transparent !important;
+}
+[class*="standardSidebarView_"] {
+  background: var(--etna-bg) !important;
+}
+/* Settings nav items: hover + selected route to accent, not blurple */
+[class*="side_"] [class*="item_"]:hover {
+  background: var(--background-modifier-hover);
+  border-radius: calc(var(--etna-radius) - 6px);
+}
+[class*="side_"] [class*="item_"][class*="selected_"] {
+  background: color-mix(in srgb, var(--etna-accent) 20%, transparent) !important;
+  color: var(--etna-text) !important;
+  border-radius: calc(var(--etna-radius) - 6px);
+}
+
+/* ------------------------------------------------------------
+ *  MENTION / PING BADGES & UNREAD Ã¢â‚¬â€ keep red intent (not blurple
+ *  or etna), but make the mention-count pill consistent. Discord
+ *  reads these tokens; pin them so they don't fall back to white.
+ * ------------------------------------------------------------ */
+:root,
+.theme-dark,
+.theme-darker,
+.theme-midnight {
+  --mention-background: color-mix(in srgb, var(--etna-accent) 16%, transparent);
+  --mention-foreground: var(--etna-link);
+  --unread-bar-background: var(--etna-accent);
+}
+
+/* ------------------------------------------------------------
+ *  EMPTY STATES / PLACEHOLDERS  (no-messages, no-DMs, "wumpus")
+ *  Text legibility on the dark glass; avoid muddy default greys.
+ * ------------------------------------------------------------ */
+[class*="emptyStateText_"],
+[class*="emptyState_"] [class*="text_"],
+[class*="noResults_"] [class*="text_"],
+[class*="friendsEmpty_"] {
+  color: var(--etna-text-muted);
+}
+
+/* ------------------------------------------------------------
+ *  SCROLLERS LEAKING OPAQUE BG inside glass panels Ã¢â‚¬â€ neutralize
+ *  any remaining default --background-* paints on inner scrollers
+ *  so the parent blur isn't covered.
+ * ------------------------------------------------------------ */
+[class*="thin_"][class*="scrollerBase_"],
+[class*="auto_"][class*="scrollerBase_"],
+[class*="none_"][class*="scrollerBase_"] {
+  background-color: transparent;
+}
+
+/* ------------------------------------------------------------
+ *  SELECTED TEXT inside inputs/textarea (composer + search)
+ *  ensure the accent selection knob applies in editable fields.
+ * ------------------------------------------------------------ */
+input::selection,
+textarea::selection,
+[class*="editor_"] ::selection,
+[contenteditable] ::selection {
+  background: color-mix(in srgb, var(--etna-accent) 55%, transparent);
+  color: var(--etna-text);
+}
+
+/* ------------------------------------------------------------
+ *  PROGRESS / LOADING SPINNERS & BARS -> accent
+ * ------------------------------------------------------------ */
+[class*="spinner_"] [class*="path"],
+[class*="wanderingCubes_"] [class*="item_"],
+[class*="pulsingEllipsis_"] {
+  color: var(--etna-accent);
+  background-color: var(--etna-accent);
+}
+[class*="bar_"][class*="progress"] [class*="fill"] {
+  background-color: var(--etna-accent);
+}
+
+/* ------------------------------------------------------------
+ *  TItLE BAR / WINDOW CHROME (Gambo desktop window controls strip)
+ *  Keep it on the dark floor, not the OS default.
+ * ------------------------------------------------------------ */
+[class*="titleBar_"],
+[class*="typeWindows_"],
+[class*="macOSFrame_"] {
+  background-color: transparent !important;
+}
+
+/* ------------------------------------------------------------
+ *  GUILD-BANNER / HOME-HEADER gradient overlays Ã¢â‚¬â€ strip the
+ *  blurple-tinted scrim Discord paints under server banners.
+ * ------------------------------------------------------------ */
+[class*="bannerImage_"] + [class*="overlay_"],
+[class*="animatedContainer_"][class*="banner"]::after {
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    color-mix(in srgb, var(--etna-bg) 70%, transparent)
+  ) !important;
+}

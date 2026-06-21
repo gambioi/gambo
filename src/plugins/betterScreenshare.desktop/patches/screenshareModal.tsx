@@ -60,30 +60,38 @@ const ReplacedStreamSettings = () => {
 
 export function replacedSubmitFunction(fn) { // This is used to hook over the new OnSubmit function instead of implementing an OnClick function
     return (...args) => {
-        const { screensharePatcher, screenshareAudioPatcher } = Plugin;
-
-        if (screensharePatcher) {
-            screensharePatcher.forceUpdateTransportationOptions();
-            if (screensharePatcher.connection?.connectionState === "CONNECTED")
-                screensharePatcher.forceUpdateDesktopSourceOptions();
-        }
-
-        if (screenshareAudioPatcher)
-            screenshareAudioPatcher.forceUpdateTransportationOptions();
+        // Patchers only do anything on real Discord desktop (native conn). On Vesktop they
+        // no-op; never let them block the actual submit.
+        try {
+            const { screensharePatcher, screenshareAudioPatcher } = Plugin;
+            if (screensharePatcher) {
+                screensharePatcher.forceUpdateTransportationOptions();
+                if (screensharePatcher.connection?.connectionState === "CONNECTED")
+                    screensharePatcher.forceUpdateDesktopSourceOptions();
+            }
+            if (screenshareAudioPatcher)
+                screenshareAudioPatcher.forceUpdateTransportationOptions();
+        } catch { /* don't break Go Live */ }
         return fn(...args);
     };
 }
 
 export function GoLivePanelWrapper({ children }: { children: React.JSX.Element; }) {
-    if (!children)
-        return;
+    // Defensive: on Vesktop the Go-Live modal structure differs and pushing into it throws,
+    // which makes the screen-source picker fail to open. Never break the modal — fall back
+    // to the original children on any error.
+    try {
+        if (!children) return children;
 
-    const { hideDefaultSettings } = Settings.plugins[PluginInfo.PLUGIN_NAME];
-    if (hideDefaultSettings)
-        return <ReplacedStreamSettings />;
+        const { hideDefaultSettings } = Settings.plugins[PluginInfo.PLUGIN_NAME];
+        if (hideDefaultSettings)
+            return <ReplacedStreamSettings />;
 
-    children.props.children.push(<ReplacedStreamSettings />);
+        if (Array.isArray(children?.props?.children))
+            children.props.children.push(<ReplacedStreamSettings />);
 
-    return children;
-
+        return children;
+    } catch {
+        return children;
+    }
 }

@@ -194,6 +194,9 @@ export function patchConnectionVideoSetDesktopSourceWithOptions(
     get: ProfilableStore<ScreenshareStore, ScreenshareProfile>["get"],
     logger?: Logger
 ) {
+    // On Vesktop/web there's no native `conn` — skip gracefully instead of crashing
+    // (which would break screen share entirely).
+    if (!connection.conn) return { oldSetDesktopSourceWithOptions: (() => void 0) as any, forceUpdateDesktopSourceOptions: () => void 0 };
     const oldSetDesktopSourceWithOptions = connection.conn.setDesktopSourceWithOptions;
 
     connection.conn.setDesktopSourceWithOptions = function (this: any, options: Record<string, any>) {
@@ -224,6 +227,8 @@ export function patchConnectionVideoTransportOptions(
     get: ProfilableStore<ScreenshareStore, ScreenshareProfile>["get"],
     logger?: Logger
 ) {
+    // No native `conn` on Vesktop/web → skip gracefully (don't break screen share).
+    if (!connection.conn) return { oldSetTransportOptions: (() => void 0) as any, forceUpdateTransportationOptions: () => void 0 };
     const oldSetTransportOptions = connection.conn.setTransportOptions;
     const oldGetQuality = connection.videoQualityManager.getQuality;
 

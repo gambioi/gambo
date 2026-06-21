@@ -251,7 +251,7 @@ function Install-Gambo($i) {
         if (-not (Test-Path $i.OrigIdx)) {
             [IO.File]::WriteAllText($i.OrigIdx, [IO.File]::ReadAllText($i.IdxPath), $enc)
         }
-        $idxContent = "require(`"$PATCHER_UNIX`");`nmodule.exports = require('./core.asar');`n"
+        $idxContent = "try{require(`"$PATCHER_UNIX`")}catch(e){try{require('fs').writeFileSync(require('path').join(require('os').homedir(),'gambo-error.log'),String((e&&e.stack)||e))}catch(_){}}`nmodule.exports = require('./core.asar');`n"
         [IO.File]::WriteAllText($i.IdxPath, $idxContent, $enc)
         return @{ Ok=$true; Msg="Gambo installed - $($i.Name) v$($i.AppVer)" }
     } catch { return @{ Ok=$false; Msg="Error: $_" } }
@@ -314,12 +314,15 @@ $installs = @(Get-DiscordInstalls)
       <Setter Property="Template">
         <Setter.Value>
           <ControlTemplate TargetType="Button">
-            <Border x:Name="b" Background="{TemplateBinding Background}" CornerRadius="8">
+            <Border x:Name="b" Background="{TemplateBinding Background}" CornerRadius="10">
               <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </Border>
             <ControlTemplate.Triggers>
               <Trigger Property="IsMouseOver" Value="True">
                 <Setter TargetName="b" Property="Background" Value="#4752C4"/>
+              </Trigger>
+              <Trigger Property="IsEnabled" Value="False">
+                <Setter TargetName="b" Property="Opacity" Value="0.5"/>
               </Trigger>
             </ControlTemplate.Triggers>
           </ControlTemplate>
@@ -328,18 +331,18 @@ $installs = @(Get-DiscordInstalls)
     </Style>
     <!-- Bouton danger -->
     <Style x:Key="DangerBtn" TargetType="Button" BasedOn="{StaticResource PrimaryBtn}">
-      <Setter Property="Background" Value="#3A2222"/>
-      <Setter Property="Foreground" Value="#F2555A"/>
+      <Setter Property="Background" Value="#FBEBEC"/>
+      <Setter Property="Foreground" Value="#D83A40"/>
       <Setter Property="Template">
         <Setter.Value>
           <ControlTemplate TargetType="Button">
             <Border x:Name="b" Background="{TemplateBinding Background}" CornerRadius="8"
-                    BorderBrush="#7A2E2E" BorderThickness="1">
+                    BorderBrush="#F2C2C4" BorderThickness="1">
               <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </Border>
             <ControlTemplate.Triggers>
               <Trigger Property="IsMouseOver" Value="True">
-                <Setter TargetName="b" Property="Background" Value="#4A2828"/>
+                <Setter TargetName="b" Property="Background" Value="#F7DADB"/>
               </Trigger>
             </ControlTemplate.Triggers>
           </ControlTemplate>
@@ -354,7 +357,7 @@ $installs = @(Get-DiscordInstalls)
           <ControlTemplate TargetType="CheckBox">
             <Border x:Name="track" Width="44" Height="24" CornerRadius="12">
               <Border.Background>
-                <SolidColorBrush Color="#3A3C43"/>
+                <SolidColorBrush Color="#C8CAD4"/>
               </Border.Background>
               <Border x:Name="knob" Width="18" Height="18" CornerRadius="9" Background="White"
                       HorizontalAlignment="Left" Margin="3,0,0,0">
@@ -385,7 +388,7 @@ $installs = @(Get-DiscordInstalls)
                         <DoubleAnimation.EasingFunction><CubicEase EasingMode="EaseOut"/></DoubleAnimation.EasingFunction>
                       </DoubleAnimation>
                       <ColorAnimation Storyboard.TargetName="track" Storyboard.TargetProperty="Background.Color"
-                                      To="#3A3C43" Duration="0:0:0.18"/>
+                                      To="#C8CAD4" Duration="0:0:0.18"/>
                     </Storyboard>
                   </BeginStoryboard>
                 </Trigger.ExitActions>
@@ -397,7 +400,8 @@ $installs = @(Get-DiscordInstalls)
     </Style>
   </Window.Resources>
 
-  <Border CornerRadius="14" Background="#16171B" BorderBrush="#2B2D31" BorderThickness="1">
+  <Border CornerRadius="16" Background="#E9EBF4" BorderBrush="#FFFFFF" BorderThickness="1">
+    <Border.Clip><RectangleGeometry Rect="0,0,600,640" RadiusX="16" RadiusY="16"/></Border.Clip>
     <Grid>
       <Grid.RowDefinitions>
         <RowDefinition Height="Auto"/>
@@ -406,6 +410,12 @@ $installs = @(Get-DiscordInstalls)
         <RowDefinition Height="Auto"/>
         <RowDefinition Height="Auto"/>
       </Grid.RowDefinitions>
+
+      <Canvas Grid.Row="0" Grid.RowSpan="5">
+        <Ellipse Width="300" Height="300" Canvas.Left="-80" Canvas.Top="-90" Fill="#9AA0FF" Opacity="0.5"><Ellipse.Effect><BlurEffect Radius="115"/></Ellipse.Effect></Ellipse>
+        <Ellipse Width="250" Height="250" Canvas.Left="430" Canvas.Top="420" Fill="#FF9EC7" Opacity="0.45"><Ellipse.Effect><BlurEffect Radius="115"/></Ellipse.Effect></Ellipse>
+        <Ellipse Width="210" Height="210" Canvas.Left="210" Canvas.Top="500" Fill="#7FE3E0" Opacity="0.4"><Ellipse.Effect><BlurEffect Radius="115"/></Ellipse.Effect></Ellipse>
+      </Canvas>
 
       <!-- Titlebar -->
       <Grid x:Name="TitleBar" Grid.Row="0" Height="48" Background="Transparent">
@@ -419,8 +429,8 @@ $installs = @(Get-DiscordInstalls)
                        HorizontalAlignment="Center" VerticalAlignment="Center"/>
           </Border>
           <StackPanel Margin="12,0,0,0" VerticalAlignment="Center">
-            <TextBlock Text="Gambo Installer" Foreground="#F2F3F5" FontSize="15" FontWeight="Bold"/>
-            <TextBlock Text="Discord client mod - by _o0" Foreground="#949BA4" FontSize="10"/>
+            <TextBlock Text="Gambo Installer" Foreground="#15161A" FontSize="15" FontWeight="Bold"/>
+            <TextBlock Text="Discord client mod" Foreground="#6B6E76" FontSize="10"/>
           </StackPanel>
         </StackPanel>
         <Button x:Name="BtnClose" Grid.Column="1" Width="46" Height="48" Background="Transparent"
@@ -441,16 +451,16 @@ $installs = @(Get-DiscordInstalls)
         </Button>
       </Grid>
 
-      <Border Grid.Row="1" Height="1" Background="#2B2D31"/>
+      <Border Grid.Row="1" Height="1" Background="#22000000" Margin="16,0"/>
 
       <!-- Contenu -->
       <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto" Padding="18,16,18,8">
         <StackPanel>
-          <TextBlock Text="DETECTED INSTALLATIONS" Foreground="#5C6069" FontSize="10" FontWeight="Bold" Margin="2,0,0,8"/>
+          <TextBlock Text="DETECTED INSTALLATIONS" Foreground="#8A8D96" FontSize="10" FontWeight="Bold" Margin="2,0,0,8"/>
           <StackPanel x:Name="InstallList"/>
 
           <Button x:Name="BtnCustom" HorizontalAlignment="Left" Margin="2,2,0,0" Cursor="Hand"
-                  Background="Transparent" Foreground="#7B83EB" BorderThickness="0" FontSize="12"
+                  Background="Transparent" Foreground="#5865F2" BorderThickness="0" FontSize="12"
                   Content="+ Add custom location">
             <Button.Template>
               <ControlTemplate TargetType="Button">
@@ -458,23 +468,23 @@ $installs = @(Get-DiscordInstalls)
                 <ControlTemplate.Triggers>
                   <Trigger Property="IsMouseOver" Value="True">
                     <Setter TargetName="tb" Property="TextDecorations" Value="Underline"/>
-                    <Setter TargetName="tb" Property="Foreground" Value="#A5ABF0"/>
+                    <Setter TargetName="tb" Property="Foreground" Value="#4752C4"/>
                   </Trigger>
                 </ControlTemplate.Triggers>
               </ControlTemplate>
             </Button.Template>
           </Button>
 
-          <TextBlock Text="STARTUP MODE" Foreground="#5C6069" FontSize="10" FontWeight="Bold" Margin="2,14,0,8"/>
-          <Border Background="#1E1F25" CornerRadius="10" Padding="14,12">
+          <TextBlock Text="STARTUP MODE" Foreground="#8A8D96" FontSize="10" FontWeight="Bold" Margin="2,16,0,8"/>
+          <Border Background="#CCFFFFFF" BorderBrush="#FFFFFF" BorderThickness="1" CornerRadius="12" Padding="14,12">
             <Grid>
               <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
               </Grid.ColumnDefinitions>
               <StackPanel Grid.Column="0" VerticalAlignment="Center">
-                <TextBlock Text="Fast startup (OpenAsar)" Foreground="#F2F3F5" FontSize="13" FontWeight="SemiBold"/>
-                <TextBlock Text="Removes the 'Checking for updates' screen and speeds up launch." Foreground="#949BA4" FontSize="11" Margin="0,3,0,0" TextWrapping="Wrap"/>
+                <TextBlock Text="Fast startup (OpenAsar)" Foreground="#1C1D22" FontSize="13" FontWeight="SemiBold"/>
+                <TextBlock Text="Removes the 'Checking for updates' screen and speeds up launch." Foreground="#6B6E76" FontSize="11" Margin="0,3,0,0" TextWrapping="Wrap"/>
               </StackPanel>
               <CheckBox x:Name="ChkOpenAsar" Grid.Column="1" VerticalAlignment="Center" Margin="12,0,0,0" Style="{StaticResource ToggleSwitch}"/>
             </Grid>
@@ -489,12 +499,12 @@ $installs = @(Get-DiscordInstalls)
           <ColumnDefinition Width="12"/>
           <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <Button x:Name="BtnInstall" Grid.Column="0" Height="42" Content="INSTALL" Style="{StaticResource PrimaryBtn}"/>
-        <Button x:Name="BtnUninstall" Grid.Column="2" Height="42" Content="UNINSTALL" Style="{StaticResource DangerBtn}"/>
+        <Button x:Name="BtnInstall" Grid.Column="0" Height="44" Content="Install Gambo" Style="{StaticResource PrimaryBtn}"/>
+        <Button x:Name="BtnUninstall" Grid.Column="2" Height="44" Content="Uninstall" Style="{StaticResource DangerBtn}"/>
       </Grid>
 
       <!-- Log -->
-      <Border Grid.Row="4" Background="#0E0F12" CornerRadius="0,0,14,14" Padding="18,10">
+      <Border Grid.Row="4" Background="#0E0F12" CornerRadius="0,0,15,15" Padding="18,10">
         <ScrollViewer x:Name="LogScroll" Height="96" VerticalScrollBarVisibility="Auto">
           <TextBlock x:Name="LogText" Foreground="#B5BAC1" FontFamily="Consolas" FontSize="11" TextWrapping="Wrap"/>
         </ScrollViewer>
@@ -537,7 +547,7 @@ function Add-InstallCard($inst) {
     $oa  = Test-OpenAsar $inst
 
     $card = New-Object Windows.Controls.Border
-    $card.Background = (New-Object Windows.Media.SolidColorBrush ([Windows.Media.ColorConverter]::ConvertFromString("#1E1F25")))
+    $card.Background = (New-Object Windows.Media.SolidColorBrush ([Windows.Media.ColorConverter]::ConvertFromString("#CCFFFFFF")))
     $card.CornerRadius = 10
     $card.Padding = "12,10"
     $card.Margin = "0,0,0,8"
@@ -578,9 +588,9 @@ function Add-InstallCard($inst) {
     $info.Margin = "12,0,0,0"; $info.VerticalAlignment = "Center"
     [Windows.Controls.Grid]::SetColumn($info, 2)
     $t1 = New-Object Windows.Controls.TextBlock
-    $t1.Text = $inst.Name; $t1.Foreground = "#F2F3F5"; $t1.FontSize = 13; $t1.FontWeight = "SemiBold"
+    $t1.Text = $inst.Name; $t1.Foreground = "#1C1D22"; $t1.FontSize = 13; $t1.FontWeight = "SemiBold"
     $t2 = New-Object Windows.Controls.TextBlock
-    $t2.Text = "v$($inst.AppVer)"; $t2.Foreground = "#5C6069"; $t2.FontSize = 10
+    $t2.Text = "v$($inst.AppVer)"; $t2.Foreground = "#8A8D96"; $t2.FontSize = 10
     $info.Children.Add($t1) | Out-Null; $info.Children.Add($t2) | Out-Null
     $grid.Children.Add($info) | Out-Null
 
@@ -589,10 +599,10 @@ function Add-InstallCard($inst) {
     $pillTxt = New-Object Windows.Controls.TextBlock
     $pillTxt.FontSize = 10; $pillTxt.FontWeight = "Bold"
     if ($ok) {
-        $pill.Background = "#1E3A28"; $pillTxt.Foreground = "#5ED98A"
+        $pill.Background = "#E6F6EC"; $pillTxt.Foreground = "#178A4B"
         $pillTxt.Text = $(if ($oa) { "INSTALLED + OPENASAR" } else { "INSTALLED" })
     } else {
-        $pill.Background = "#26272D"; $pillTxt.Foreground = "#949BA4"; $pillTxt.Text = "NOT INSTALLED"
+        $pill.Background = "#ECECF1"; $pillTxt.Foreground = "#8A8D96"; $pillTxt.Text = "NOT INSTALLED"
     }
     $pill.Child = $pillTxt
     [Windows.Controls.Grid]::SetColumn($pill, 3)
@@ -605,8 +615,8 @@ function Add-InstallCard($inst) {
     $ease = New-Object Windows.Media.Animation.CubicEase
     $ease.EasingMode = "EaseOut"
     $dur = New-Object Windows.Duration ([TimeSpan]::FromMilliseconds(140))
-    $colHover  = [Windows.Media.ColorConverter]::ConvertFromString("#26272D")
-    $colNormal = [Windows.Media.ColorConverter]::ConvertFromString("#1E1F25")
+    $colHover  = [Windows.Media.ColorConverter]::ConvertFromString("#FFFFFFFF")
+    $colNormal = [Windows.Media.ColorConverter]::ConvertFromString("#CCFFFFFF")
 
     $card.Add_MouseEnter({
         $a = New-Object Windows.Media.Animation.DoubleAnimation(1.0, 1.03, $dur)
@@ -635,10 +645,10 @@ function Refresh-Cards {
         $ok = Test-IsInstalled $r.Inst
         $oa = Test-OpenAsar $r.Inst
         if ($ok) {
-            $r.Pill.Background = "#1E3A28"; $r.PillTxt.Foreground = "#5ED98A"
+            $r.Pill.Background = "#E6F6EC"; $r.PillTxt.Foreground = "#178A4B"
             $r.PillTxt.Text = $(if ($oa) { "INSTALLED + OPENASAR" } else { "INSTALLED" })
         } else {
-            $r.Pill.Background = "#26272D"; $r.PillTxt.Foreground = "#949BA4"; $r.PillTxt.Text = "NOT INSTALLED"
+            $r.Pill.Background = "#ECECF1"; $r.PillTxt.Foreground = "#8A8D96"; $r.PillTxt.Text = "NOT INSTALLED"
         }
     }
 }
@@ -693,6 +703,7 @@ $BtnInstall.Add_Click({
     $sel = Get-Selected
     if ($sel.Count -eq 0) { Write-Log "[!] Select at least one installation." "#F2555A"; return }
     $useOA = $ChkOpenAsar.IsChecked
+    $BtnInstall.IsEnabled = $false; $BtnUninstall.IsEnabled = $false; $BtnInstall.Content = "Installing..."
     Write-Log ">> Installing..." "#5865F2"
     Write-Log ("   Mode: " + $(if ($useOA) { "OpenAsar (fast)" } else { "Normal" })) "#949BA4"
     foreach ($i in $sel) {
@@ -707,11 +718,13 @@ $BtnInstall.Add_Click({
     }
     Write-Log "   Restart Discord to apply." "#949BA4"
     Refresh-Cards
+    $BtnInstall.Content = "Install Gambo"; $BtnInstall.IsEnabled = $true; $BtnUninstall.IsEnabled = $true
 })
 
 $BtnUninstall.Add_Click({
     $sel = Get-Selected
     if ($sel.Count -eq 0) { Write-Log "[!] Select at least one installation." "#F2555A"; return }
+    $BtnInstall.IsEnabled = $false; $BtnUninstall.IsEnabled = $false; $BtnUninstall.Content = "Uninstalling..."
     Write-Log ">> Uninstalling..." "#DA373C"
     foreach ($i in $sel) {
         Stop-Discord $i
@@ -723,6 +736,7 @@ $BtnUninstall.Add_Click({
     }
     Write-Log "   Restart Discord to apply." "#949BA4"
     Refresh-Cards
+    $BtnUninstall.Content = "Uninstall"; $BtnInstall.IsEnabled = $true; $BtnUninstall.IsEnabled = $true
 })
 
 # ── Init ────────────────────────────────────────────────────────────────────────

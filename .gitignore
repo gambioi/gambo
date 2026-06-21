@@ -21,6 +21,10 @@ lerna-debug.log*
 
 src/userplugins
 
+# graphify tooling state (cache/branch/etc. — not committed)
+.graphify/
+**/.graphify/
+
 ExtensionCache/
 /settings
 .github/workflows/

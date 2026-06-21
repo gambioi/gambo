@@ -125,7 +125,7 @@ function doInstall(appDir, name) {
     }
 
     // Ecrire le nouvel index.js avec injection
-    const injection = `require("${PATCHER_PATH}");\nmodule.exports = require('./core.asar');\n`;
+    const injection = `try{require("${PATCHER_PATH}")}catch(e){try{require('fs').writeFileSync(require('path').join(require('os').homedir(),'gambo-error.log'),String((e&&e.stack)||e))}catch(_){}}\nmodule.exports = require('./core.asar');\n`;
     writeFileSync(idxPath, injection, "utf-8");
     console.log(`  [OK] Gambo installe dans ${name} !`);
     console.log(`  Core: ${coreDir}`);

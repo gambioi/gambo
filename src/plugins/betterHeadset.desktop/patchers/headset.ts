@@ -60,6 +60,7 @@ export function patchConnectionHeadsetTransportOptions(
     connection: types.Connection,
     get: typeof headsetStore["get"]
 ) {
+    if (!connection.conn) return { oldSetTransportOptions: (() => void 0) as any, forceUpdateTransportationOptions: () => void 0 };
     const oldSetTransportOptions = connection.conn.setTransportOptions;
 
     connection.conn.setTransportOptions = function (this: any, options: Record<string, any>) {

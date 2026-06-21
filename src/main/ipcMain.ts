@@ -62,7 +62,10 @@ async function listThemes(): Promise<UserThemeHeader[]> {
         const data = await getThemeData(fileName).then(stripBOM).catch(() => null);
         if (data == null) continue;
 
-        themeInfo.push(getThemeInfo(data, fileName));
+        // try/catch so one malformed header can't break the whole list
+        try {
+            themeInfo.push(getThemeInfo(data, fileName));
+        } catch { /* skip unparseable theme */ }
     }
 
     return themeInfo;

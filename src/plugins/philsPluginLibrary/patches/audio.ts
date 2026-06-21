@@ -23,7 +23,7 @@ import { lodash } from "@webpack/common";
 
 export function getDefaultAudioTransportationOptions(connection: types.Connection) {
     return {
-        audioEncoder: { ...connection.getCodecOptions("opus").audioEncoder },
+        audioEncoder: { ...(connection.getCodecOptions?.("opus")?.audioEncoder ?? {}) },
         encodingVoiceBitRate: 64000
     };
 }
@@ -53,6 +53,10 @@ export function getReplaceableAudioTransportationOptions(
     const disableNS = noiseSuppressionOff || activeLevel >= 3;
     const disableEC = echoCancellationOff || activeLevel >= 4;
 
+    // Passthrough — keep Discord-stable audio. Only apply settings the user explicitly
+    // toggled. NB: receiving a friend's stereo (L/R) is NOT achievable here — the decoder
+    // channel count is set by native SDP negotiation, not exposed to plugins. That's a
+    // Discord Canary voice feature; Vesktop's stable base negotiates mono receive.
     return {
         ...(forceBitrate
             ? { encodingVoiceBitRate: 320000 }
@@ -61,12 +65,12 @@ export function getReplaceableAudioTransportationOptions(
         ...(disableNS ? { noiseSuppression: false } : {}),
         ...(disableEC ? { echoCancellation: false } : {}),
         audioEncoder: {
-            ...connection.getCodecOptions("opus").audioEncoder,
+            ...(connection.getCodecOptions?.("opus")?.audioEncoder ?? {}),
             ...(opusAudioMode ? { application: "audio" } : {}),
             ...(rateEnabled && rate ? { rate } : {}),
             ...(pacsizeEnabled && pacsize ? { pacsize } : {}),
             ...(freqEnabled && freq ? { freq } : {}),
-            ...(channelsEnabled && channels ? { channels } : { channels: 1 })
+            ...(channelsEnabled && channels ? { channels } : {})
         }
     };
 }
@@ -76,6 +80,7 @@ export function patchConnectionAudioTransportOptions(
     get: ProfilableStore<MicrophoneStore, MicrophoneProfile>["get"],
     logger?: Logger
 ) {
+    if (!connection.conn) return { oldSetTransportOptions: (() => void 0) as any, forceUpdateTransportationOptions: () => void 0 };
     const oldSetTransportOptions = connection.conn.setTransportOptions;
 
     connection.conn.setTransportOptions = function (this: any, options: Record<string, any>) {

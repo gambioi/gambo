@@ -1,0 +1,197 @@
+/* Voice3D — 3D room (original design) */
+
+.vc-v3-root {
+    position: fixed;
+    inset: 0;
+    z-index: 100000;
+    overflow: hidden;
+    perspective: 1100px;
+    perspective-origin: 50% 44%;
+    background:
+        radial-gradient(120% 80% at 50% 14%, rgba(60, 70, 140, 0.40), transparent 60%),
+        radial-gradient(120% 80% at 50% 100%, rgba(120, 40, 110, 0.32), transparent 55%),
+        #05060b;
+    opacity: 0;
+    transition: opacity 280ms cubic-bezier(0.22, 1, 0.36, 1);
+    user-select: none;
+}
+
+.vc-v3-root.vc-v3-on { opacity: 1; }
+
+.vc-v3-root::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    box-shadow: inset 0 0 240px rgba(0, 0, 0, 0.55);
+}
+
+.vc-v3-stage {
+    position: absolute;
+    left: 50%;
+    top: 46%;
+    width: 0;
+    height: 0;
+    transform-style: preserve-3d;
+    will-change: transform;
+}
+
+.vc-v3-room { position: absolute; left: 0; top: 0; transform-style: preserve-3d; pointer-events: none; }
+.vc-v3-wall { position: absolute; backface-visibility: hidden; }
+
+.vc-v3-wall.back {
+    width: 1700px; height: 860px; margin-left: -850px; margin-top: -640px;
+    transform: translateZ(-850px);
+    border-radius: 10px;
+    background:
+        linear-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px) 0 0 / 100px 100px,
+        linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px) 0 0 / 100px 100px,
+        radial-gradient(60% 65% at 50% 28%, rgba(124, 110, 210, 0.45), transparent 70%),
+        linear-gradient(180deg, rgba(74, 62, 122, 0.82), rgba(24, 20, 44, 0.9));
+    box-shadow: inset 0 -8px 0 rgba(180, 170, 255, 0.12), inset 0 -130px 170px rgba(0, 0, 0, 0.5);
+}
+
+.vc-v3-wall.left {
+    width: 950px; height: 860px; margin-left: -475px; margin-top: -640px;
+    transform: translateX(-848px) rotateY(90deg);
+    background: linear-gradient(90deg, rgba(52, 44, 84, 0.6), rgba(52, 44, 84, 0));
+}
+.vc-v3-wall.right {
+    width: 950px; height: 860px; margin-left: -475px; margin-top: -640px;
+    transform: translateX(848px) rotateY(-90deg);
+    background: linear-gradient(270deg, rgba(52, 44, 84, 0.6), rgba(52, 44, 84, 0));
+}
+
+.vc-v3-wall.floor3d {
+    width: 1700px; height: 950px; margin-left: -850px; margin-top: -475px;
+    transform: translateY(220px) rotateX(90deg);
+    background:
+        linear-gradient(rgba(150, 170, 255, 0.13) 1px, transparent 1px) 0 0 / 80px 80px,
+        linear-gradient(90deg, rgba(150, 170, 255, 0.13) 1px, transparent 1px) 0 0 / 80px 80px,
+        radial-gradient(circle at 50% 35%, rgba(84, 74, 138, 0.55), rgba(8, 7, 16, 0.7));
+    mask-image: radial-gradient(circle at 50% 38%, #000 0%, transparent 74%);
+    -webkit-mask-image: radial-gradient(circle at 50% 38%, #000 0%, transparent 74%);
+}
+
+.vc-v3-wall.ceiling {
+    width: 1700px; height: 950px; margin-left: -850px; margin-top: -475px;
+    transform: translateY(-650px) rotateX(90deg);
+    background:
+        radial-gradient(ellipse at 50% 50%, rgba(120, 110, 190, 0.30), transparent 60%),
+        linear-gradient(180deg, rgba(30, 26, 52, 0.55), rgba(18, 16, 34, 0.4));
+    mask-image: radial-gradient(circle at 50% 55%, #000 0%, transparent 78%);
+    -webkit-mask-image: radial-gradient(circle at 50% 55%, #000 0%, transparent 78%);
+}
+
+/* ── avatars ──────────────────────────────────────────────────────────────── */
+.vc-v3-item {
+    position: absolute;
+    width: 120px; height: 150px;
+    margin-left: -60px; margin-top: -75px;
+    transform-style: preserve-3d;
+    text-align: center;
+    cursor: grab;
+    will-change: transform;
+}
+.vc-v3-item.dragging { cursor: grabbing; z-index: 10; }
+
+.vc-v3-av {
+    position: relative;
+    width: 96px; height: 96px;
+    margin: 0 auto;
+    border-radius: 50%;
+    transition: transform 180ms cubic-bezier(0.22, 1, 0.36, 1);
+    transform-style: preserve-3d;
+}
+.vc-v3-av::after {
+    content: "";
+    position: absolute;
+    left: 50%; bottom: -18px;
+    width: 86px; height: 20px;
+    transform: translateX(-50%);
+    background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.55), transparent 70%);
+    filter: blur(3px);
+    pointer-events: none;
+}
+.vc-v3-av img {
+    width: 96px; height: 96px;
+    border-radius: 50%;
+    display: block;
+    border: 3px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 12px 26px rgba(0, 0, 0, 0.55);
+}
+.vc-v3-item.speaking .vc-v3-av { transform: translateZ(48px) scale(1.16); }
+.vc-v3-item.dragging .vc-v3-av { transform: translateZ(60px) scale(1.2); }
+.vc-v3-item.speaking .vc-v3-av img {
+    border-color: rgba(235, 69, 158, 0.9);
+    animation: vc-v3-glow 0.9s ease-in-out infinite;
+}
+@keyframes vc-v3-glow {
+    0%, 100% { box-shadow: 0 12px 26px rgba(0, 0, 0, 0.55), 0 0 0 2px rgba(88, 101, 242, 0.8), 0 0 16px 4px rgba(88, 101, 242, 0.6); }
+    50% { box-shadow: 0 12px 26px rgba(0, 0, 0, 0.55), 0 0 0 5px rgba(235, 69, 158, 0.6), 0 0 28px 9px rgba(235, 69, 158, 0.7); }
+}
+
+.vc-v3-name {
+    margin-top: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.88);
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.8);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 120px;
+}
+
+/* ── chrome ───────────────────────────────────────────────────────────────── */
+.vc-v3-title {
+    position: absolute;
+    top: 22px; left: 50%;
+    transform: translateX(-50%);
+    font-size: 14px; font-weight: 600;
+    color: rgba(255, 255, 255, 0.7);
+    pointer-events: none;
+}
+.vc-v3-hint {
+    position: absolute;
+    bottom: 24px; left: 50%;
+    transform: translateX(-50%);
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.55);
+    background: rgba(0, 0, 0, 0.35);
+    padding: 8px 16px;
+    border-radius: 999px;
+    backdrop-filter: blur(8px);
+    pointer-events: none;
+}
+.vc-v3-empty {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.vc-v3-fab {
+    position: fixed;
+    right: 24px; bottom: 24px;
+    z-index: 100001;
+    display: none;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 18px;
+    border: none;
+    border-radius: 999px;
+    background: linear-gradient(135deg, #5865f2, #eb459e);
+    color: #fff;
+    font-weight: 700;
+    font-size: 14px;
+    cursor: pointer;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    user-select: none;
+    transition: transform 0.15s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.15s;
+}
+.vc-v3-fab:hover { transform: translateY(-2px) scale(1.04); box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5); }
+.vc-v3-fab:active { transform: scale(0.97); }

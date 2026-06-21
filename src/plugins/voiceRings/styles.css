@@ -1,0 +1,32 @@
+img.vc-vr-ring {
+    border-radius: 50% !important;
+    position: relative;
+    z-index: 5;
+    transform-origin: center center;
+    backface-visibility: hidden;
+    animation: vc-vr-3d var(--vc-vr-speed, 1.3s) cubic-bezier(0.45, 0, 0.55, 1) infinite !important;
+}
+
+@keyframes vc-vr-3d {
+    0% {
+        transform: perspective(440px) translateZ(0) rotateY(-24deg) rotateX(8deg) scale(1.02);
+        box-shadow:
+            0 4px 10px rgba(0, 0, 0, 0.5),
+            0 0 0 1px color-mix(in srgb, var(--vc-vr-c, #5865f2) 90%, transparent),
+            0 0 12px 3px color-mix(in srgb, var(--vc-vr-c, #5865f2) 55%, transparent);
+    }
+    50% {
+        transform: perspective(440px) translateZ(36px) rotateY(24deg) rotateX(-8deg) scale(1.15);
+        box-shadow:
+            0 16px 30px rgba(0, 0, 0, 0.55),
+            0 0 0 var(--vc-vr-size, 4px) color-mix(in srgb, var(--vc-vr-c2, #eb459e) 62%, transparent),
+            0 0 28px 9px color-mix(in srgb, var(--vc-vr-c2, #eb459e) 72%, transparent);
+    }
+    100% {
+        transform: perspective(440px) translateZ(0) rotateY(-24deg) rotateX(8deg) scale(1.02);
+        box-shadow:
+            0 4px 10px rgba(0, 0, 0, 0.5),
+            0 0 0 1px color-mix(in srgb, var(--vc-vr-c, #5865f2) 90%, transparent),
+            0 0 12px 3px color-mix(in srgb, var(--vc-vr-c, #5865f2) 55%, transparent);
+    }
+}
