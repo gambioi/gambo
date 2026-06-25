@@ -685,7 +685,7 @@ export default definePlugin({
     authors: [{ name: "Gambo", id: 0n }],
     tags: ["Voice", "Audio", "Spatial", "Fun"],
     dependencies: ["PhilsPluginLibrary"],
-    required: true, // on by default (adds the voice-controls button; harmless when unused)
+    enabledByDefault: true, // on by default but can be disabled in the plugins list
 
     start() {
         addSettingsPanelButton({
