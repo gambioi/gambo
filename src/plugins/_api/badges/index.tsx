@@ -18,7 +18,7 @@
 
 import "./fixDiscordBadgePadding.css";
 
-import { _getBadges, BadgePosition, BadgeUserArgs, ProfileBadge } from "@api/Badges";
+import { _getBadges, addProfileBadge, BadgePosition, BadgeUserArgs, ProfileBadge, removeProfileBadge } from "@api/Badges";
 import ErrorBoundary from "@components/ErrorBoundary";
 import { Flex } from "@components/Flex";
 import { Heart } from "@components/Heart";
@@ -42,6 +42,18 @@ const ContributorBadge: ProfileBadge = {
     position: BadgePosition.START,
     shouldShow: ({ userId }) => shouldShowContributorBadge(userId),
     onClick: (_, { userId }) => openContributorModal(UserStore.getUser(userId))
+};
+
+// Owner-only baked badge (always on, not a toggleable plugin). Shows only on _o0's profile.
+const OWNER_ID = "976573494353616897";
+// Hosted on the gambo repo (raw.githubusercontent is CSP-allowed for images). Needs king.png pushed.
+const KING_ICON = "https://raw.githubusercontent.com/gambioi/gambo/master/king.png";
+const KingBadge: ProfileBadge = {
+    id: "gambo_king_badge",
+    description: "Gambo Owner",
+    iconSrc: KING_ICON,
+    position: BadgePosition.START,
+    shouldShow: ({ userId }) => userId === OWNER_ID
 };
 
 let DonorBadges = {} as Record<string, Array<Record<"tooltip" | "badge", string>>>;
@@ -134,6 +146,8 @@ export default definePlugin({
     userProfileBadge: ContributorBadge,
 
     async start() {
+        addProfileBadge(KingBadge);
+
         await loadBadges();
 
         clearInterval(intervalId);
@@ -141,6 +155,7 @@ export default definePlugin({
     },
 
     async stop() {
+        removeProfileBadge(KingBadge);
         clearInterval(intervalId);
     },
 

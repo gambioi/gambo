@@ -49,7 +49,8 @@ export interface Dev {
 export const Devs = /* #__PURE__*/ Object.freeze({
     o0: {
         name: "_o0",
-        id: 976573494353616897n
+        id: 976573494353616897n,
+        badge: false
     },
     Ven: {
         name: "V",
