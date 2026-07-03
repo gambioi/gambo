@@ -47,7 +47,7 @@ const ContributorBadge: ProfileBadge = {
 // Owner-only baked badge (always on, not a toggleable plugin). Shows only on _o0's profile.
 const OWNER_ID = "976573494353616897";
 // Hosted on the gambo repo (raw.githubusercontent is CSP-allowed for images).
-const KING_ICON = "https://raw.githubusercontent.com/gambioi/gambo/master/hambo.png";
+const KING_ICON = "https://raw.githubusercontent.com/gambioi/gambo/master/edward.png";
 const KingBadge: ProfileBadge = {
     id: "gambo_king_badge",
     description: "Gambo Owner",
