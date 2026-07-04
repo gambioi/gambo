@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gambo — the Discord client mod for your crew</title>
+<meta name="description" content="Gambo is a powerful Discord client mod. Custom badges, huge file uploads, freeze-free screenshare, fake game activity and more. One-click install.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%235865f2'/%3E%3Cstop offset='.55' stop-color='%238b5cf6'/%3E%3Cstop offset='1' stop-color='%23f5c451'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='16' fill='url(%23g)'/%3E%3Cpath d='M40 24a10 10 0 1 0 2 8h-9v-5h14v5a15 15 0 1 1-4-11z' fill='%23fff'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+    :root {
+        --bg: #0a0b0f;
+        --bg2: #12141c;
+        --card: #171923;
+        --line: #23273a;
+        --text: #e7e9f0;
+        --muted: #9aa1b8;
+        --brand: #5865f2;
+        --brand2: #8b5cf6;
+        --gold: #f5c451;
+        --radius: 16px;
+        --ease: cubic-bezier(.22,.61,.36,1);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: "gg sans", -apple-system, "Segoe UI", Roboto, sans-serif;
+        line-height: 1.6;
+        overflow-x: hidden;
+    }
+    html[dir="rtl"] body { font-family: "Cairo", "Segoe UI", sans-serif; }
+    a { color: inherit; text-decoration: none; }
+    .wrap { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+    /* animated glow backdrop */
+    body::before {
+        content: "";
+        position: fixed; inset: -20%;
+        background:
+            radial-gradient(600px 400px at 15% 10%, rgba(88,101,242,.30), transparent 60%),
+            radial-gradient(700px 500px at 100% 0%, rgba(139,92,246,.24), transparent 55%),
+            radial-gradient(600px 600px at 50% 120%, rgba(245,196,81,.12), transparent 60%);
+        pointer-events: none; z-index: 0;
+        animation: drift 18s ease-in-out infinite alternate;
+    }
+    @keyframes drift {
+        0% { transform: translate(0,0) scale(1); }
+        100% { transform: translate(-3%, 2%) scale(1.08); }
+    }
+    main, nav { position: relative; z-index: 1; }
+
+    /* nav */
+    nav {
+        position: sticky; top: 0;
+        backdrop-filter: blur(14px);
+        background: rgba(10,11,15,.7);
+        border-bottom: 1px solid var(--line);
+    }
+    .nav-in { display: flex; align-items: center; gap: 20px; height: 66px; }
+    .logo { display: flex; align-items: center; gap: 11px; font-weight: 800; font-size: 20px; letter-spacing: .3px; }
+    .logo svg { width: 32px; height: 32px; border-radius: 9px; }
+    .nav-links { display: flex; gap: 26px; margin-inline-start: auto; color: var(--muted); font-weight: 500; font-size: 15px; }
+    .nav-links a { position: relative; }
+    .nav-links a::after {
+        content: ""; position: absolute; left: 0; bottom: -5px; height: 2px; width: 0;
+        background: linear-gradient(90deg, var(--brand), var(--gold)); transition: width .25s var(--ease);
+    }
+    .nav-links a:hover { color: var(--text); }
+    .nav-links a:hover::after { width: 100%; }
+    .btn {
+        display: inline-flex; align-items: center; gap: 9px;
+        padding: 11px 20px; border-radius: 11px; font-weight: 700; font-size: 15px;
+        cursor: pointer; border: none; transition: transform .14s var(--ease), box-shadow .25s var(--ease), background .2s;
+        white-space: nowrap;
+    }
+    .btn:active { transform: scale(.96); }
+    .btn-primary {
+        background: linear-gradient(135deg, var(--brand), var(--brand2));
+        color: #fff; box-shadow: 0 6px 24px rgba(88,101,242,.45);
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 34px rgba(88,101,242,.6); }
+    .btn-ghost { background: var(--card); color: var(--text); border: 1px solid var(--line); }
+    .btn-ghost:hover { border-color: var(--brand); }
+    .nav .btn { padding: 9px 16px; font-size: 14px; }
+    .lang {
+        background: var(--card); border: 1px solid var(--line); color: var(--text);
+        padding: 8px 13px; border-radius: 10px; font-weight: 700; font-size: 13px; cursor: pointer;
+        transition: border-color .2s, transform .14s var(--ease);
+    }
+    .lang:hover { border-color: var(--gold); }
+    .lang:active { transform: scale(.94); }
+
+    /* hero */
+    .hero { text-align: center; padding: 90px 0 70px; }
+    .chip {
+        display: inline-flex; align-items: center; gap: 8px;
+        padding: 6px 14px; border-radius: 999px; font-size: 13px; font-weight: 600;
+        background: rgba(245,196,81,.12); color: var(--gold);
+        border: 1px solid rgba(245,196,81,.3); margin-bottom: 26px;
+    }
+    .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--gold); box-shadow: 0 0 10px var(--gold); animation: pulse 2s ease-in-out infinite; }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(.7)} }
+    .hero h1 {
+        font-size: clamp(42px, 7vw, 76px); line-height: 1.05; font-weight: 900; letter-spacing: -1.5px;
+        background: linear-gradient(180deg, #fff, #b9bed6);
+        -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    html[dir="rtl"] .hero h1 { letter-spacing: 0; line-height: 1.25; }
+    .hero h1 .grad {
+        background: linear-gradient(120deg, var(--brand), var(--brand2), var(--gold));
+        background-size: 200% auto;
+        -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+        animation: shine 6s linear infinite;
+    }
+    @keyframes shine { to { background-position: 200% center; } }
+    .hero p { color: var(--muted); font-size: clamp(17px, 2.3vw, 21px); max-width: 620px; margin: 22px auto 36px; }
+    .cta { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+    .cta .btn { padding: 15px 28px; font-size: 16px; }
+    .sub { color: var(--muted); font-size: 13px; margin-top: 18px; }
+
+    /* section */
+    section { padding: 60px 0; }
+    .sec-head { text-align: center; margin-bottom: 46px; }
+    .sec-head h2 { font-size: clamp(28px, 4vw, 40px); font-weight: 800; letter-spacing: -.5px; }
+    html[dir="rtl"] .sec-head h2 { letter-spacing: 0; }
+    .sec-head p { color: var(--muted); margin-top: 10px; font-size: 17px; }
+
+    /* features */
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; }
+    .card {
+        background: linear-gradient(180deg, var(--card), var(--bg2));
+        border: 1px solid var(--line); border-radius: var(--radius); padding: 26px;
+        transition: transform .18s var(--ease), border-color .25s var(--ease), box-shadow .25s var(--ease);
+    }
+    .card:hover { transform: translateY(-5px); border-color: var(--brand); box-shadow: 0 14px 40px rgba(88,101,242,.16); }
+    .card .ic { font-size: 30px; margin-bottom: 14px; display: block; }
+    .card h3 { font-size: 19px; margin-bottom: 8px; }
+    .card p { color: var(--muted); font-size: 15px; }
+
+    /* steps */
+    .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); gap: 18px; }
+    .step { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 26px; }
+    .step .n {
+        width: 40px; height: 40px; border-radius: 11px; display: grid; place-items: center;
+        font-weight: 800; font-size: 18px; color: #fff; margin-bottom: 16px;
+        background: linear-gradient(135deg, var(--brand), var(--brand2));
+    }
+    .step h3 { font-size: 18px; margin-bottom: 6px; }
+    .step p { color: var(--muted); font-size: 15px; }
+
+    /* faq */
+    details { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 18px 22px; margin-bottom: 12px; cursor: pointer; }
+    details[open] { border-color: var(--brand); }
+    summary { font-weight: 600; font-size: 16px; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+    summary::-webkit-details-marker { display: none; }
+    summary::after { content: "+"; color: var(--muted); font-size: 22px; font-weight: 400; }
+    details[open] summary::after { content: "−"; }
+    details p { color: var(--muted); margin-top: 12px; font-size: 15px; }
+
+    /* download band */
+    .band {
+        text-align: center; background: linear-gradient(135deg, rgba(88,101,242,.16), rgba(139,92,246,.12));
+        border: 1px solid var(--line); border-radius: 24px; padding: 56px 24px; margin: 20px 0;
+    }
+    .band h2 { font-size: clamp(28px, 4vw, 42px); font-weight: 800; }
+    .band p { color: var(--muted); margin: 12px auto 28px; max-width: 480px; }
+
+    footer { border-top: 1px solid var(--line); padding: 34px 0; color: var(--muted); font-size: 14px; }
+    .foot-in { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px; }
+    .warn { color: #6b7089; font-size: 12.5px; max-width: 620px; margin: 14px auto 0; text-align: center; }
+
+    /* scroll reveal */
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity .6s var(--ease), transform .6s var(--ease); }
+    .reveal.in { opacity: 1; transform: none; }
+
+    @media (max-width: 720px) { .nav-links { display: none; } }
+    @media (prefers-reduced-motion: reduce) {
+        *, *::before { animation: none !important; transition: none !important; }
+        .reveal { opacity: 1; transform: none; }
+        html { scroll-behavior: auto; }
+    }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute"><defs>
+    <linearGradient id="lg" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#5865f2"/><stop offset=".55" stop-color="#8b5cf6"/><stop offset="1" stop-color="#f5c451"/>
+    </linearGradient>
+</defs></svg>
+
+<nav>
+    <div class="wrap nav-in">
+        <a class="logo" href="#">
+            <svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="16" fill="url(#lg)"/><path d="M40 24a10 10 0 1 0 2 8h-9v-5h14v5a15 15 0 1 1-4-11z" fill="#fff"/></svg>
+            Gambo
+        </a>
+        <div class="nav-links">
+            <a href="#features" data-i18n="nav_features">Features</a>
+            <a href="#install" data-i18n="nav_install">Install</a>
+            <a href="#faq" data-i18n="nav_faq">FAQ</a>
+            <a href="https://github.com/gambioi/gambo" target="_blank" rel="noopener">GitHub</a>
+        </div>
+        <button class="lang" id="langBtn" aria-label="Switch language">العربية</button>
+        <a class="btn btn-primary" href="https://github.com/gambioi/gambo/releases/latest/download/GamboInstaller.exe" data-i18n="nav_download">Download</a>
+    </div>
+</nav>
+
+<main>
+    <header class="hero wrap">
+        <span class="chip reveal"><span class="dot"></span> <span data-i18n="hero_chip">Free · Open source · Windows</span></span>
+        <h1 class="reveal"><span data-i18n="hero_title_1">Your Discord,</span><br><span class="grad" data-i18n="hero_title_2">supercharged.</span></h1>
+        <p class="reveal" data-i18n="hero_sub">Gambo is a client mod that unlocks custom badges, massive file uploads, freeze-free screenshare, fake game activity and dozens of plugins — built for your crew.</p>
+        <div class="cta reveal">
+            <a class="btn btn-primary" href="https://github.com/gambioi/gambo/releases/latest/download/GamboInstaller.exe"><span data-i18n="hero_dl">⬇ Download for Windows</span></a>
+            <a class="btn btn-ghost" href="https://github.com/gambioi/gambo" target="_blank" rel="noopener"><span data-i18n="hero_gh">★ View on GitHub</span></a>
+        </div>
+        <div class="sub reveal" data-i18n="hero_note">One-click installer · No account needed · Update anytime from inside Discord</div>
+    </header>
+
+    <section id="features">
+        <div class="wrap">
+            <div class="sec-head reveal">
+                <h2 data-i18n="feat_title">Everything, unlocked</h2>
+                <p data-i18n="feat_sub">A curated set of plugins that just work.</p>
+            </div>
+            <div class="grid">
+                <div class="card reveal"><span class="ic">🏷️</span><h3 data-i18n="f1_t">Custom Badges</h3><p data-i18n="f1_d">Put any Discord badge on your profile — Nitro, Boost, HypeSquad — and hide your real ones. Owner gets an exclusive badge.</p></div>
+                <div class="card reveal"><span class="ic">📤</span><h3 data-i18n="f2_t">Big File Upload</h3><p data-i18n="f2_d">Send files way past Discord's limit. GoFile hosting, 500MB+, streamed in chunks with a live progress bar.</p></div>
+                <div class="card reveal"><span class="ic">🎥</span><h3 data-i18n="f3_t">Better Screenshare</h3><p data-i18n="f3_d">Anti-freeze streaming with adaptive bitrate, plus pause video & audio on the fly. No more frozen go-lives.</p></div>
+                <div class="card reveal"><span class="ic">🎮</span><h3 data-i18n="f4_t">Custom Game Activity</h3><p data-i18n="f4_d">Show any game as your status — real icon & name from Discord's catalog, or a fully custom "Playing…" with cover art.</p></div>
+                <div class="card reveal"><span class="ic">🔊</span><h3 data-i18n="f5_t">Spatial Audio</h3><p data-i18n="f5_d">Pan each person left/right in voice for a true stereo call. Hear your friends in space.</p></div>
+                <div class="card reveal"><span class="ic">🎨</span><h3 data-i18n="f6_t">Themes & Plugins</h3><p data-i18n="f6_d">Full theming support and a whole ecosystem of plugins. Make Discord look and feel like yours.</p></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="install">
+        <div class="wrap">
+            <div class="sec-head reveal">
+                <h2 data-i18n="inst_title">Installed in 30 seconds</h2>
+                <p data-i18n="inst_sub">No command line. No hassle.</p>
+            </div>
+            <div class="steps">
+                <div class="step reveal"><div class="n">1</div><h3 data-i18n="s1_t">Download</h3><p data-i18n="s1_d">Grab GamboInstaller.exe — one small file, nothing to configure.</p></div>
+                <div class="step reveal"><div class="n">2</div><h3 data-i18n="s2_t">Run it</h3><p data-i18n="s2_d">Open the installer. It finds your Discord automatically.</p></div>
+                <div class="step reveal"><div class="n">3</div><h3 data-i18n="s3_t">Click Install</h3><p data-i18n="s3_d">Hit Install. Discord restarts with Gambo. That's it.</p></div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="wrap">
+            <div class="band reveal">
+                <h2 data-i18n="band_title">Ready to power up?</h2>
+                <p data-i18n="band_sub">Join the crew running Gambo. Free forever, updates land straight in your client.</p>
+                <a class="btn btn-primary" href="https://github.com/gambioi/gambo/releases/latest/download/GamboInstaller.exe"><span data-i18n="band_dl">⬇ Download Gambo</span></a>
+            </div>
+        </div>
+    </section>
+
+    <section id="faq">
+        <div class="wrap" style="max-width: 780px;">
+            <div class="sec-head reveal"><h2 data-i18n="faq_title">FAQ</h2></div>
+            <details class="reveal"><summary data-i18n="q1">Is it safe?</summary><p data-i18n="a1">Gambo is open source — the full code is on GitHub. It runs locally in your own client and never asks for your password or token.</p></details>
+            <details class="reveal"><summary data-i18n="q2">How do I update?</summary><p data-i18n="a2">Open the Gambo Updater inside Discord → "Check for Updates" → "Update Now" → restart. New plugins and fixes arrive automatically.</p></details>
+            <details class="reveal"><summary data-i18n="q3">How do I uninstall?</summary><p data-i18n="a3">Run the installer again and click Uninstall. It cleanly restores your normal Discord.</p></details>
+            <details class="reveal"><summary data-i18n="q4">Will it work after Discord updates?</summary><p data-i18n="a4">Yes. Gambo re-injects itself and the crew ships fixes fast whenever Discord changes something.</p></details>
+        </div>
+    </section>
+
+    <footer>
+        <div class="wrap foot-in">
+            <a class="logo" href="#"><svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="16" fill="url(#lg)"/><path d="M40 24a10 10 0 1 0 2 8h-9v-5h14v5a15 15 0 1 1-4-11z" fill="#fff"/></svg>Gambo</a>
+            <div>© 2026 Gambo · <a href="https://github.com/gambioi/gambo" style="color:var(--muted);text-decoration:underline;">GitHub</a></div>
+        </div>
+        <p class="warn" data-i18n="disclaimer">Gambo is a third-party client modification and isn't affiliated with or endorsed by Discord. Using client mods is against Discord's Terms of Service; use at your own discretion. Discord is a trademark of Discord Inc.</p>
+    </footer>
+</main>
+
+<script>
+    const I18N = {
+        en: {
+            nav_features:"Features", nav_install:"Install", nav_faq:"FAQ", nav_download:"Download",
+            hero_chip:"Free · Open source · Windows",
+            hero_title_1:"Your Discord,", hero_title_2:"supercharged.",
+            hero_sub:"Gambo is a client mod that unlocks custom badges, massive file uploads, freeze-free screenshare, fake game activity and dozens of plugins — built for your crew.",
+            hero_dl:"⬇ Download for Windows", hero_gh:"★ View on GitHub",
+            hero_note:"One-click installer · No account needed · Update anytime from inside Discord",
+            feat_title:"Everything, unlocked", feat_sub:"A curated set of plugins that just work.",
+            f1_t:"Custom Badges", f1_d:"Put any Discord badge on your profile — Nitro, Boost, HypeSquad — and hide your real ones. Owner gets an exclusive badge.",
+            f2_t:"Big File Upload", f2_d:"Send files way past Discord's limit. GoFile hosting, 500MB+, streamed in chunks with a live progress bar.",
+            f3_t:"Better Screenshare", f3_d:"Anti-freeze streaming with adaptive bitrate, plus pause video & audio on the fly. No more frozen go-lives.",
+            f4_t:"Custom Game Activity", f4_d:"Show any game as your status — real icon & name from Discord's catalog, or a fully custom \"Playing…\" with cover art.",
+            f5_t:"Spatial Audio", f5_d:"Pan each person left/right in voice for a true stereo call. Hear your friends in space.",
+            f6_t:"Themes & Plugins", f6_d:"Full theming support and a whole ecosystem of plugins. Make Discord look and feel like yours.",
+            inst_title:"Installed in 30 seconds", inst_sub:"No command line. No hassle.",
+            s1_t:"Download", s1_d:"Grab GamboInstaller.exe — one small file, nothing to configure.",
+            s2_t:"Run it", s2_d:"Open the installer. It finds your Discord automatically.",
+            s3_t:"Click Install", s3_d:"Hit Install. Discord restarts with Gambo. That's it.",
+            band_title:"Ready to power up?", band_sub:"Join the crew running Gambo. Free forever, updates land straight in your client.", band_dl:"⬇ Download Gambo",
+            faq_title:"FAQ",
+            q1:"Is it safe?", a1:"Gambo is open source — the full code is on GitHub. It runs locally in your own client and never asks for your password or token.",
+            q2:"How do I update?", a2:"Open the Gambo Updater inside Discord → \"Check for Updates\" → \"Update Now\" → restart. New plugins and fixes arrive automatically.",
+            q3:"How do I uninstall?", a3:"Run the installer again and click Uninstall. It cleanly restores your normal Discord.",
+            q4:"Will it work after Discord updates?", a4:"Yes. Gambo re-injects itself and the crew ships fixes fast whenever Discord changes something.",
+            disclaimer:"Gambo is a third-party client modification and isn't affiliated with or endorsed by Discord. Using client mods is against Discord's Terms of Service; use at your own discretion. Discord is a trademark of Discord Inc."
+        },
+        ar: {
+            nav_features:"المميزات", nav_install:"التثبيت", nav_faq:"الأسئلة", nav_download:"تحميل",
+            hero_chip:"مجاني · مفتوح المصدر · ويندوز",
+            hero_title_1:"ديسكوردك،", hero_title_2:"بقوة مضاعفة.",
+            hero_sub:"غامبو هو تعديل لعميل ديسكورد يفتح شارات مخصصة، رفع ملفات ضخمة، مشاركة شاشة بلا تجميد، نشاط ألعاب وهمي وعشرات الإضافات — مصمّم لشلّتك.",
+            hero_dl:"⬇ حمّل لويندوز", hero_gh:"★ شاهد على GitHub",
+            hero_note:"مثبّت بضغطة واحدة · بدون حساب · حدّث في أي وقت من داخل ديسكورد",
+            feat_title:"كل شيء، مفتوح", feat_sub:"مجموعة إضافات مختارة تعمل ببساطة.",
+            f1_t:"شارات مخصصة", f1_d:"ضع أي شارة ديسكورد على ملفك — نيترو، بوست، هايبسكواد — وأخفِ شاراتك الحقيقية. المالك يحصل على شارة حصرية.",
+            f2_t:"رفع ملفات ضخمة", f2_d:"أرسل ملفات تتجاوز حد ديسكورد بكثير. استضافة GoFile، أكثر من 500 ميغا، مع شريط تقدّم مباشر.",
+            f3_t:"مشاركة شاشة أفضل", f3_d:"بث بلا تجميد مع معدل بت متكيّف، وإيقاف الفيديو والصوت لحظيًا. لا مزيد من البث المجمّد.",
+            f4_t:"نشاط لعبة مخصص", f4_d:"أظهر أي لعبة كحالتك — أيقونة واسم حقيقيان من كتالوج ديسكورد، أو حالة مخصصة بالكامل مع غلاف.",
+            f5_t:"صوت مكاني", f5_d:"وزّع كل شخص يمينًا/يسارًا في المكالمة لصوت ستيريو حقيقي. اسمع أصدقاءك في الفضاء.",
+            f6_t:"ثيمات وإضافات", f6_d:"دعم كامل للثيمات ومنظومة إضافات كاملة. اجعل ديسكورد يبدو ويعمل على طريقتك.",
+            inst_title:"التثبيت في 30 ثانية", inst_sub:"بدون سطر أوامر. بدون تعقيد.",
+            s1_t:"حمّل", s1_d:"احصل على GamboInstaller.exe — ملف صغير واحد، بلا أي إعداد.",
+            s2_t:"شغّله", s2_d:"افتح المثبّت. يجد ديسكورد تلقائيًا.",
+            s3_t:"اضغط تثبيت", s3_d:"اضغط تثبيت. يعيد ديسكورد التشغيل مع غامبو. هذا كل شيء.",
+            band_title:"جاهز للانطلاق؟", band_sub:"انضم إلى شلّة غامبو. مجاني للأبد، التحديثات تصلك داخل عميلك مباشرة.", band_dl:"⬇ حمّل غامبو",
+            faq_title:"الأسئلة الشائعة",
+            q1:"هل هو آمن؟", a1:"غامبو مفتوح المصدر — الكود كامل على GitHub. يعمل محليًا في عميلك ولا يطلب كلمة مرورك أو التوكن أبدًا.",
+            q2:"كيف أحدّث؟", a2:"افتح محدّث غامبو داخل ديسكورد ← \"التحقق من التحديثات\" ← \"حدّث الآن\" ← أعد التشغيل. الإضافات والإصلاحات تصل تلقائيًا.",
+            q3:"كيف أزيل التثبيت؟", a3:"شغّل المثبّت مجددًا واضغط إزالة. يعيد ديسكورد العادي بشكل نظيف.",
+            q4:"هل سيعمل بعد تحديثات ديسكورد؟", a4:"نعم. غامبو يعيد حقن نفسه، والفريق يطرح الإصلاحات بسرعة كلما غيّر ديسكورد شيئًا.",
+            disclaimer:"غامبو تعديل طرف ثالث وغير تابع لديسكورد أو معتمد منه. استخدام تعديلات العميل يخالف شروط خدمة ديسكورد؛ استخدمه على مسؤوليتك. ديسكورد علامة تجارية لشركة Discord Inc."
+        }
+    };
+
+    const langBtn = document.getElementById("langBtn");
+    function setLang(lang) {
+        const dict = I18N[lang];
+        document.documentElement.lang = lang;
+        document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
+        for (const el of document.querySelectorAll("[data-i18n]")) {
+            const k = el.getAttribute("data-i18n");
+            if (dict[k] != null) el.textContent = dict[k];
+        }
+        langBtn.textContent = lang === "ar" ? "English" : "العربية";
+        try { localStorage.setItem("gambo_lang", lang); } catch {}
+    }
+    let cur = "en";
+    try { cur = localStorage.getItem("gambo_lang") || "en"; } catch {}
+    setLang(cur);
+    langBtn.addEventListener("click", () => setLang(document.documentElement.lang === "ar" ? "en" : "ar"));
+
+    // scroll reveal with stagger
+    const io = new IntersectionObserver((entries) => {
+        entries.forEach((e, i) => {
+            if (e.isIntersecting) {
+                const sibs = [...e.target.parentElement.querySelectorAll(".reveal")];
+                e.target.style.transitionDelay = Math.min(sibs.indexOf(e.target), 6) * 60 + "ms";
+                e.target.classList.add("in");
+                io.unobserve(e.target);
+            }
+        });
+    }, { threshold: 0.12 });
+    document.querySelectorAll(".reveal").forEach(el => io.observe(el));
+</script>
+</body>
+</html>

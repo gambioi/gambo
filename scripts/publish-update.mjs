@@ -66,7 +66,9 @@ const distFiles = [
 ].map(f => join(DIST, f));
 
 // IMPORTANT : inclure aussi l'installer + openasar pour le .bat "online" standalone
+// GamboInstaller.exe = installeur GUI 1-clic (téléchargeable direct depuis le site / releases/latest)
 const installerFiles = [
+    join(ROOT, "installer", "GamboInstaller.exe"),
     join(ROOT, "installer", "GamboInstaller.ps1"),
     join(ROOT, "installer", "openasar.asar")
 ];
