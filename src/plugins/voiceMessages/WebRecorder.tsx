@@ -39,7 +39,9 @@ export const VoiceRecorderWeb: VoiceRecorder = ({ setAudioBlob, onRecordingChang
             navigator.mediaDevices.getUserMedia({
                 audio: {
                     echoCancellation: settings.store.echoCancellation,
-                    noiseSuppression: settings.store.noiseSuppression,
+                    // Noise gate removed — record raw.
+                    noiseSuppression: false,
+                    autoGainControl: false,
                     deviceId: MediaEngineStore.getInputDeviceId()
                 }
             }).then(stream => {

@@ -28,3 +28,8 @@ src/userplugins
 ExtensionCache/
 /settings
 .github/workflows/
+
+# local tooling / publish temp
+.claude/launch.json
+.publish-msg.txt
+.publish-notes.txt

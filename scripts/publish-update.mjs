@@ -19,12 +19,17 @@
  */
 
 import { execSync } from "child_process";
-import { existsSync } from "fs";
+import { existsSync, unlinkSync, writeFileSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const DIST = join(ROOT, "dist");
+
+// Changelog = tout ce qui suit la commande. S'affiche dans le Gambo Updater
+// (l'updater lit le message du commit via l'API GitHub compare).
+// Ex : pnpm publish-update "Retiré le noise gate des messages vocaux"
+const CHANGELOG = process.argv.slice(2).join(" ").trim();
 
 function run(cmd, opts = {}) {
     console.log(`\n$ ${cmd}`);
@@ -49,7 +54,13 @@ tryRun("git add -A");
 // --allow-empty garantit un NOUVEAU hash à chaque publication (même sans changement),
 // indispensable pour que l'updater détecte une nouvelle version.
 const stamp = new Date().toISOString().replace(/[:.]/g, "-");
-tryRun(`git commit --allow-empty -m "publish update ${stamp}"`);
+// Le message du commit = le changelog affiché aux potes dans l'Updater.
+// Passé par fichier (-F) pour gérer accents / guillemets / multi-lignes proprement.
+const commitMsg = CHANGELOG || `publish update ${stamp}`;
+const msgFile = join(ROOT, ".publish-msg.txt");
+writeFileSync(msgFile, commitMsg, "utf-8");
+tryRun(`git commit --allow-empty -F "${msgFile}"`);
+try { unlinkSync(msgFile); } catch { /* ignore */ }
 run("git push");
 
 console.log("\n=== 2/4 : Build ===");
@@ -80,7 +91,11 @@ const assets = [...distFiles, ...installerFiles]
 
 console.log("\n=== 4/4 : Création de la Release GitHub ===");
 // Le NOM de la release DOIT finir par le hash : l'updater lit le dernier mot.
-run(`gh release create "${hash}" ${assets} --title "Gambo ${hash}" --notes "Mise à jour Gambo ${stamp}"`);
+// Les notes de release = le changelog (via fichier pour gérer accents/multi-lignes).
+const notesFile = join(ROOT, ".publish-notes.txt");
+writeFileSync(notesFile, CHANGELOG || `Mise à jour Gambo ${stamp}`, "utf-8");
+run(`gh release create "${hash}" ${assets} --title "Gambo ${hash}" --notes-file "${notesFile}"`);
+try { unlinkSync(notesFile); } catch { /* ignore */ }
 
 console.log(`\n✅ Publié ! Release "Gambo ${hash}" en ligne.`);
 console.log("   Tes amis -> Gambo -> Updater -> 'Check for Updates' -> 'Update Now' -> redémarrer.");

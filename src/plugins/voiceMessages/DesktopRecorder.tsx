@@ -40,7 +40,8 @@ export const VoiceRecorderDesktop: VoiceRecorder = ({ setAudioBlob, onRecordingC
             discordVoice.startLocalAudioRecording(
                 {
                     echoCancellation: settings.store.echoCancellation,
-                    noiseCancellation: settings.store.noiseSuppression,
+                    // Noise gate removed — record raw so quiet/ambient audio passes through.
+                    noiseCancellation: false,
                     deviceId: MediaEngineStore.getInputDeviceId(),
                 },
                 (success: boolean) => {
