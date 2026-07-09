@@ -16,5 +16,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+// Gambo se distribue via les Releases GitHub (publish-update), pas via `git pull`.
+// On force donc l'updater HTTP (lit /releases/latest) dans tous les cas — le git
+// updater échouait ("not a git repository") selon l'emplacement d'exécution.
 if (!IS_UPDATER_DISABLED)
-    require(IS_STANDALONE ? "./http" : "./git");
+    require("./http");
