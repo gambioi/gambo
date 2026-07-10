@@ -9,10 +9,11 @@ import { definePluginSettings } from "@api/Settings";
 import BadgeAPIPlugin from "@plugins/_api/badges";
 import { Devs } from "@utils/constants";
 import definePlugin, { OptionType } from "@utils/types";
+import { UserStore } from "@webpack/common";
 
-// Shows the chosen badges on YOUR OWN profile, in real Discord order.
+// Shows the chosen badges on YOUR OWN profile (whatever account is logged in), in real Discord order.
 // Nitro & Boost are single sliders → only ONE tier shows at a time (pick your level).
-const OWNER_ID = "976573494353616897";
+const myId = () => UserStore.getCurrentUser()?.id;
 
 // Icons via jsDelivr (mezotv/discord-badges) — CSP-friendly CDN.
 const CDN = "https://cdn.jsdelivr.net/gh/mezotv/discord-badges@main/";
@@ -91,9 +92,9 @@ const settings = definePluginSettings(settingsDef);
 const provider: ProfileBadge = {
     id: "custombadges-provider",
     position: BadgePosition.END,
-    shouldShow: ({ userId }) => userId === OWNER_ID,
+    shouldShow: ({ userId }) => userId === myId(),
     getBadges: ({ userId }) => {
-        if (userId !== OWNER_ID) return [];
+        if (userId !== myId()) return [];
         const s = settings.store as any;
         const out: { name: string; icon: string; }[] = [];
 
@@ -136,7 +137,7 @@ export default definePlugin({
     ],
 
     shouldHideReal(profile: any) {
-        try { return profile?.userId === OWNER_ID && !!(settings.store as any).hideRealBadges; } catch { return false; }
+        try { return profile?.userId === myId() && !!(settings.store as any).hideRealBadges; } catch { return false; }
     },
 
     ownBadges(profile: any) {
