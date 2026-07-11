@@ -24,9 +24,12 @@ import { Author, Contributor } from "@plugins/philsPluginLibrary/types";
 import { ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalRoot } from "@utils/modal";
 import React, { JSX } from "react";
 
+import { ensurePhilModernStyle } from "../../styles/modern";
+
 
 export interface SettingsModalProps extends React.ComponentProps<typeof ModalRoot> {
     title?: string;
+    subtitle?: string;
     onClose: () => void;
     onDone?: () => void;
     footerContent?: JSX.Element;
@@ -36,8 +39,11 @@ export interface SettingsModalProps extends React.ComponentProps<typeof ModalRoo
 }
 
 export const SettingsModal = (props: SettingsModalProps) => {
+    ensurePhilModernStyle();
+
     const doneButton =
         <Button
+            className="phil-apply"
             size="small"
             variant="primary"
             onClick={props.onDone}
@@ -48,9 +54,19 @@ export const SettingsModal = (props: SettingsModalProps) => {
     return (
         <ModalRoot {...props}>
             <ModalHeader separator={false}>
-                {props.title && <BaseText size="lg" weight="semibold" style={{ flexGrow: 1 }}>{props.title}</BaseText>}
-                <div style={{ marginLeft: "auto" }}>
-                    <ModalCloseButton onClick={props.onClose} />
+                <div className="phil-head">
+                    <div className="phil-head-ic">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="#fff">
+                            <path d="M4 18V6h2v12H4Zm4 0V9h2v9H8Zm4 0v-6h2v6h-2Zm4 0V4h2v14h-2Z" />
+                        </svg>
+                    </div>
+                    <div className="phil-head-text">
+                        {props.title && <div className="phil-head-title">{props.title}</div>}
+                        <div className="phil-head-sub">{props.subtitle ?? "Gambo · advanced controls"}</div>
+                    </div>
+                    <div style={{ marginLeft: "auto" }}>
+                        <ModalCloseButton onClick={props.onClose} />
+                    </div>
                 </div>
             </ModalHeader>
             <ModalContent style={{ marginBottom: "1em", display: "flex", flexDirection: "column", gap: "1em" }}>

@@ -40,6 +40,9 @@ export function getReplaceableAudioTransportationOptions(
         agcBoost, agcBoostEnabled,
         boostLevel, boostLevelEnabled,
         noiseSuppressionOff, echoCancellationOff, opusAudioMode,
+        fec, fecEnabled,
+        expectedPacketLoss, expectedPacketLossEnabled,
+        complexity, complexityEnabled,
     } = currentProfile as any;
 
     const forceBitrate = (store as any).forceBitrate;
@@ -70,7 +73,12 @@ export function getReplaceableAudioTransportationOptions(
             ...(rateEnabled && rate ? { rate } : {}),
             ...(pacsizeEnabled && pacsize ? { pacsize } : {}),
             ...(freqEnabled && freq ? { freq } : {}),
-            ...(channelsEnabled && channels ? { channels } : {})
+            ...(channelsEnabled && channels ? { channels } : {}),
+            // Quality levers: FEC recovers lost packets, pltp plans redundancy for
+            // expected loss %, complexity 0-10 sets Opus encode quality.
+            ...(fecEnabled && fec != null ? { fec } : {}),
+            ...(expectedPacketLossEnabled && expectedPacketLoss != null ? { pltp: expectedPacketLoss } : {}),
+            ...(complexityEnabled && complexity != null ? { complexity } : {})
         }
     };
 }

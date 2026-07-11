@@ -104,7 +104,7 @@ export const defaultHeadsetProfiles = {
         jitterBufferEnabled: false,
     },
     headphones: {
-        name: "Casque (Qualité max)",
+        name: "Headphones (Max Quality)",
         outputVolume: 150,
         outputVolumeEnabled: true,
         attenuateWhileSpeaking: false,

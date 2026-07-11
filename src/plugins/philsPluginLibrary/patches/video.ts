@@ -241,13 +241,12 @@ export function patchConnectionVideoTransportOptions(
         if (videoBitrateEnabled && videoBitrate) {
             const target = Math.round(videoBitrate * 1000);
             if (stabilityMode) {
-                // Adaptatif : laisse le congestion-control de Discord rouler entre un
-                // plancher correct et le plafond -> il DESCEND avant de freezer chez le
-                // viewer, puis remonte. Plancher 40% (pas 25% : evite l'image qui s'ecroule),
-                // cible 75% pour demarrer sans saturer.
+                // Qualite max : demarre a fond et ne descend qu'un peu sous grosse
+                // congestion (plancher 85%). Evite l'image qui s'ecroule tout en
+                // restant a la qualite max quasi tout le temps.
                 quality.bitrateMax = target;
-                quality.bitrateMin = Math.round(target * 0.4);
-                quality.bitrateTarget = Math.round(target * 0.75);
+                quality.bitrateMin = Math.round(target * 0.85);
+                quality.bitrateTarget = target;
             } else {
                 quality.bitrateMax = target;
                 quality.bitrateMin = target;
@@ -259,6 +258,8 @@ export function patchConnectionVideoTransportOptions(
         // baissant la resolution plutot qu'en gelant le stream. Enum libwebrtc :
         // DISABLED=0, MAINTAIN_FRAMERATE=1, MAINTAIN_RESOLUTION=2, BALANCED=3.
         if (stabilityMode) {
+            // MAINTAIN_FRAMERATE : sous congestion, garde le framerate fluide sans
+            // freezer. Le bitrate est deja epingle haut au-dessus -> image nette.
             connection.videoDegradationPreference = 1;
             connection.desktopDegradationPreference = 1;
             connection.sourceDesktopDegradationPreference = 1;

@@ -8,7 +8,7 @@ import { addChatBarButton, ChatBarButton, ChatBarButtonFactory, removeChatBarBut
 import { definePluginSettings } from "@api/Settings";
 import { insertTextIntoChatInputBox } from "@utils/discord";
 import definePlugin, { OptionType, PluginNative } from "@utils/types";
-import { Toasts } from "@webpack/common";
+import { FluxDispatcher, SelectedChannelStore, Toasts } from "@webpack/common";
 
 const Native = GamboNative.pluginHelpers.BigFileUpload as PluginNative<typeof import("./native")>;
 
@@ -53,6 +53,14 @@ let box: HTMLDivElement | null = null;
 let barFill: HTMLDivElement | null = null;
 let label: HTMLDivElement | null = null;
 let onCancel: (() => void) | null = null;
+
+// The box is tied to the channel where the upload started: shown only there,
+// hidden when you switch to another channel (the upload keeps running).
+let uploadChannelId: string | null = null;
+function applyVisibility() {
+    if (box) box.style.display = SelectedChannelStore.getChannelId() === uploadChannelId ? "" : "none";
+}
+const onChannelSelect = () => applyVisibility();
 
 function fmtBytes(n: number) {
     if (n >= 1e9) return (n / 1e9).toFixed(2) + " GB";
@@ -103,6 +111,11 @@ function showProgress(name: string, cancel: () => void) {
     }
     if (label) label.textContent = `Uploading ${name}…`;
     if (barFill) barFill.style.width = "0%";
+
+    // Anchor to the current channel + track switches.
+    uploadChannelId = SelectedChannelStore.getChannelId();
+    FluxDispatcher.subscribe("CHANNEL_SELECT", onChannelSelect);
+    applyVisibility();
 }
 
 let lastTick = 0, lastLoaded = 0, speed = 0;
@@ -122,8 +135,10 @@ function updateProgress(name: string, loaded: number, total: number) {
 }
 
 function hideProgress() {
+    FluxDispatcher.unsubscribe("CHANNEL_SELECT", onChannelSelect);
     box?.remove();
     box = null; barFill = null; label = null; onCancel = null;
+    uploadChannelId = null;
     lastTick = 0; lastLoaded = 0; speed = 0;
 }
 

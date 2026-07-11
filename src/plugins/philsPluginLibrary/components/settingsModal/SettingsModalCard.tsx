@@ -18,8 +18,9 @@
 
 import { Card } from "@components/Card";
 import { Switch } from "@components/Switch";
-import { Forms } from "@webpack/common";
 import React from "react";
+
+import { ensurePhilModernStyle } from "../../styles/modern";
 
 export interface SettingsModalItemProps extends Pick<React.ComponentProps<"div">,
     | "children"> {
@@ -31,54 +32,31 @@ export interface SettingsModalItemProps extends Pick<React.ComponentProps<"div">
 }
 
 export const SettingsModalCard = ({ children, title, switchProps, switchEnabled, flex, cardProps }: SettingsModalItemProps) => {
+    ensurePhilModernStyle();
+
     return (
         <Card
             {...cardProps}
+            className={`phil-card ${cardProps?.className ?? ""}`}
             style={{
-                padding: "1em",
-                boxSizing: "border-box",
-                display: "flex",
-                flexDirection: "column",
                 flex: flex ?? 1,
                 ...(cardProps?.style ? cardProps.style : {})
             }}>
-            {title && <Forms.FormTitle tag="h5" style={{ margin: 0 }}>{title}</Forms.FormTitle>}
-            <div style={{
-                display: "flex",
-                gap: "1em",
-                height: "100%",
-                justifyContent: "center",
-                alignItems: "center",
-                paddingTop: "0.6em",
-            }}>
-                {children &&
-                    <div style={{
-                        display: "flex",
-                        alignItems: "flex-end",
-                        gap: "1em",
-                        flex: 1
-                    }}>
-                        {children}
-                    </div>
-                }
-                {switchEnabled &&
-                    <div style={{
-                        display: "flex",
-                        height: "100%",
-                        flexDirection: "column",
-                        justifyContent: "center",
-                        alignItems: "center",
-                    }}>
-                        <Forms.FormTitle tag="h5">Status</Forms.FormTitle>
+            {(title || switchEnabled) && (
+                <div className="phil-card-top">
+                    {title && <div className="phil-card-title">{title}</div>}
+                    {switchEnabled &&
                         <Switch
+                            className="phil-card-switch"
                             checked={false}
                             onChange={() => void 0}
                             disabled={false}
                             {...switchProps}
                         />
-                    </div>
-                }
-            </div>
-        </Card >
+                    }
+                </div>
+            )}
+            {children && <div className="phil-card-ctl">{children}</div>}
+        </Card>
     );
 };

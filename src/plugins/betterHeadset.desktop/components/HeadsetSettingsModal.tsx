@@ -52,32 +52,12 @@ export const HeadsetSettingsModal = (props: HeadsetSettingsModalProps) => {
         currentProfile,
         simpleMode,
         setSimpleMode,
-        deleteProfile,
-        duplicateProfile,
-        getCurrentProfile,
-        getDefaultProfiles,
-        getProfile,
-        getProfiles,
-        isCurrentProfileADefaultProfile,
-        profiles,
-        saveProfile,
-        setCurrentProfile,
 
         setOutputVolume,
         setOutputVolumeEnabled,
         setAttenuateWhileSpeaking,
         setAttenuateWhileSpeakingEnabled,
         setAttenuationFactor,
-        setAttenuationFactorEnabled,
-        setNormalizeAudio,
-        setNormalizeAudioEnabled,
-
-        setEchoCancellation,
-        setEchoCancellationEnabled,
-        setNoiseSuppression,
-        setNoiseSuppressionEnabled,
-        setNoiseCancellation,
-        setNoiseCancellationEnabled,
         setQos,
         setQosEnabled,
         setJitterBuffer,
@@ -90,16 +70,6 @@ export const HeadsetSettingsModal = (props: HeadsetSettingsModalProps) => {
         attenuateWhileSpeaking,
         attenuateWhileSpeakingEnabled,
         attenuationFactor,
-        attenuationFactorEnabled,
-        normalizeAudio,
-        normalizeAudioEnabled,
-
-        echoCancellation,
-        echoCancellationEnabled,
-        noiseSuppression,
-        noiseSuppressionEnabled,
-        noiseCancellation,
-        noiseCancellationEnabled,
         qos,
         qosEnabled,
         jitterBuffer,
@@ -114,10 +84,9 @@ export const HeadsetSettingsModal = (props: HeadsetSettingsModalProps) => {
             <Switch checked={simpleMode ?? false} disabled={isSaving} onChange={checked => setSimpleMode(checked)} />
         </Flex>;
 
-    // ─── Simple mode ──────────────────────────────────────────────────────────
-
+    // ─── Output Volume ────────────────────────────────────────────────────────
     const cardOutputVolumeSimple =
-        <SettingsModalCard title="Output Volume" switchEnabled flex={0.5}
+        <SettingsModalCard title="Output Volume" switchEnabled flex={0.6}
             switchProps={{ checked: outputVolumeEnabled ?? false, disabled: isSaving, onChange: status => setOutputVolumeEnabled(status) }}>
             <SettingsModalCardItem>
                 <Select
@@ -128,35 +97,6 @@ export const HeadsetSettingsModal = (props: HeadsetSettingsModalProps) => {
                     serialize={() => ""} />
             </SettingsModalCardItem>
         </SettingsModalCard>;
-
-    const cardAttenuationSimple =
-        <SettingsModalCard title="Duck" flex={0.2} switchEnabled
-            switchProps={{
-                checked: (attenuateWhileSpeakingEnabled && attenuateWhileSpeaking) ?? false,
-                disabled: isSaving,
-                onChange: status => { setAttenuateWhileSpeakingEnabled(status); setAttenuateWhileSpeaking(status); }
-            }}>
-        </SettingsModalCard>;
-
-    const cardEchoSimple =
-        <SettingsModalCard title="Echo Cancel" flex={0.15} switchEnabled
-            switchProps={{
-                checked: echoCancellationEnabled ?? false,
-                disabled: isSaving,
-                onChange: status => setEchoCancellationEnabled(status)
-            }}>
-        </SettingsModalCard>;
-
-    const cardNoiseSimple =
-        <SettingsModalCard title="Noise Suppression" flex={0.15} switchEnabled
-            switchProps={{
-                checked: noiseSuppressionEnabled ?? false,
-                disabled: isSaving,
-                onChange: status => setNoiseSuppressionEnabled(status)
-            }}>
-        </SettingsModalCard>;
-
-    // ─── Advanced cards ───────────────────────────────────────────────────────
 
     const cardOutputVolume =
         <SettingsModalCard title="Output Volume" switchEnabled flex={0.5}
@@ -174,10 +114,20 @@ export const HeadsetSettingsModal = (props: HeadsetSettingsModalProps) => {
             </SettingsModalCardItem>
         </SettingsModalCard>;
 
+    // ─── Duck while speaking ──────────────────────────────────────────────────
+    const cardAttenuationSimple =
+        <SettingsModalCard title="Duck while speaking" flex={0.4} switchEnabled
+            switchProps={{
+                checked: (attenuateWhileSpeakingEnabled && attenuateWhileSpeaking) ?? false,
+                disabled: isSaving,
+                onChange: status => { setAttenuateWhileSpeakingEnabled(status); setAttenuateWhileSpeaking(status); }
+            }}>
+        </SettingsModalCard>;
+
     const cardAttenuation =
         <SettingsModalCard title="Duck while speaking" switchEnabled flex={0.5}
             switchProps={{ checked: attenuateWhileSpeakingEnabled ?? false, disabled: isSaving, onChange: status => { setAttenuateWhileSpeakingEnabled(status); setAttenuateWhileSpeaking(status); } }}>
-            <SettingsModalCardItem title="Factor %">
+            <SettingsModalCardItem title="Amount %">
                 <div style={{ paddingTop: "0.3em", paddingRight: "0.4em", paddingLeft: "0.4em", boxSizing: "border-box" }}>
                     <Slider
                         disabled={!attenuateWhileSpeakingEnabled || isSaving}
@@ -190,67 +140,7 @@ export const HeadsetSettingsModal = (props: HeadsetSettingsModalProps) => {
             </SettingsModalCardItem>
         </SettingsModalCard>;
 
-    // Echo cancellation — switch toggles the override on/off, inner switch sets the value
-    const cardEchoCancellation =
-        <SettingsModalCard title="Echo Cancellation" switchEnabled flex={0.5}
-            switchProps={{
-                checked: echoCancellationEnabled ?? false,
-                disabled: isSaving,
-                onChange: status => setEchoCancellationEnabled(status)
-            }}>
-            <SettingsModalCardItem title="Activé">
-                <Switch
-                    checked={echoCancellation ?? true}
-                    disabled={!echoCancellationEnabled || isSaving}
-                    onChange={val => setEchoCancellation(val)} />
-            </SettingsModalCardItem>
-            <SettingsModalCardItem>
-                <Forms.FormText style={{ opacity: 0.6, fontSize: "0.75em" }}>
-                    Désactiver avec casque = voix plus naturelle
-                </Forms.FormText>
-            </SettingsModalCardItem>
-        </SettingsModalCard>;
-
-    const cardNoiseSuppression =
-        <SettingsModalCard title="Noise Suppression" switchEnabled flex={0.5}
-            switchProps={{
-                checked: noiseSuppressionEnabled ?? false,
-                disabled: isSaving,
-                onChange: status => setNoiseSuppressionEnabled(status)
-            }}>
-            <SettingsModalCardItem title="Activé">
-                <Switch
-                    checked={noiseSuppression ?? true}
-                    disabled={!noiseSuppressionEnabled || isSaving}
-                    onChange={val => setNoiseSuppression(val)} />
-            </SettingsModalCardItem>
-            <SettingsModalCardItem>
-                <Forms.FormText style={{ opacity: 0.6, fontSize: "0.75em" }}>
-                    Désactiver = voix brute sans artefacts
-                </Forms.FormText>
-            </SettingsModalCardItem>
-        </SettingsModalCard>;
-
-    const cardKrisp =
-        <SettingsModalCard title="Krisp (IA)" switchEnabled flex={0.5}
-            switchProps={{
-                checked: noiseCancellationEnabled ?? false,
-                disabled: isSaving,
-                onChange: status => setNoiseCancellationEnabled(status)
-            }}>
-            <SettingsModalCardItem title="Activé">
-                <Switch
-                    checked={noiseCancellation ?? false}
-                    disabled={!noiseCancellationEnabled || isSaving}
-                    onChange={val => setNoiseCancellation(val)} />
-            </SettingsModalCardItem>
-            <SettingsModalCardItem>
-                <Forms.FormText style={{ opacity: 0.6, fontSize: "0.75em" }}>
-                    Réduction de bruit IA (Krisp)
-                </Forms.FormText>
-            </SettingsModalCardItem>
-        </SettingsModalCard>;
-
+    // ─── Network / output quality ─────────────────────────────────────────────
     const cardQos =
         <SettingsModalCard title="QoS" switchEnabled flex={0.35}
             switchProps={{
@@ -258,7 +148,7 @@ export const HeadsetSettingsModal = (props: HeadsetSettingsModalProps) => {
                 disabled: isSaving,
                 onChange: status => setQosEnabled(status)
             }}>
-            <SettingsModalCardItem title="Activé">
+            <SettingsModalCardItem title="Enabled">
                 <Switch
                     checked={qos ?? true}
                     disabled={!qosEnabled || isSaving}
@@ -266,7 +156,7 @@ export const HeadsetSettingsModal = (props: HeadsetSettingsModalProps) => {
             </SettingsModalCardItem>
             <SettingsModalCardItem>
                 <Forms.FormText style={{ opacity: 0.6, fontSize: "0.75em" }}>
-                    Priorisation paquets audio
+                    Prioritise audio packets
                 </Forms.FormText>
             </SettingsModalCardItem>
         </SettingsModalCard>;
@@ -278,7 +168,7 @@ export const HeadsetSettingsModal = (props: HeadsetSettingsModalProps) => {
                 disabled: isSaving,
                 onChange: status => setJitterBufferEnabled(status)
             }}>
-            <SettingsModalCardItem title="Niveau">
+            <SettingsModalCardItem title="Level">
                 <div style={{ paddingTop: "0.3em", paddingRight: "0.4em", paddingLeft: "0.4em", boxSizing: "border-box" }}>
                     <Slider
                         disabled={!jitterBufferEnabled || isSaving}
@@ -287,20 +177,11 @@ export const HeadsetSettingsModal = (props: HeadsetSettingsModalProps) => {
                         minValue={0} maxValue={4}
                         markers={[0, 1, 2, 3, 4]}
                         onValueRender={value => {
-                            const labels = ["Min (latence)", "1", "2 (défaut)", "3", "Max (stable)"];
+                            const labels = ["Min (low latency)", "1", "2 (default)", "3", "Max (stable)"];
                             return labels[Math.round(value)] ?? `${Math.round(value)}`;
                         }} />
                 </div>
             </SettingsModalCardItem>
-        </SettingsModalCard>;
-
-    const cardNormalize =
-        <SettingsModalCard title="Normalize (AGC)" flex={0.4} switchEnabled
-            switchProps={{
-                checked: (normalizeAudioEnabled && normalizeAudio) ?? false,
-                disabled: isSaving,
-                onChange: status => { setNormalizeAudioEnabled(status); setNormalizeAudio(status); }
-            }}>
         </SettingsModalCard>;
 
     const cardProfiles =
@@ -311,13 +192,12 @@ export const HeadsetSettingsModal = (props: HeadsetSettingsModalProps) => {
 
     const infoCard =
         <Card style={{ ...Styles.infoCard }}>
-            <Forms.FormTitle tag="h5">Paramètres avancés — Qualité audio</Forms.FormTitle>
+            <Forms.FormTitle tag="h5">Headset — output quality</Forms.FormTitle>
             <Forms.FormText>
-                <span style={{ fontWeight: "bold" }}>Echo Cancel OFF</span> avec casque → voix plus naturelle. &nbsp;
-                <span style={{ fontWeight: "bold" }}>Noise Suppression OFF</span> → voix brute sans artefacts robotiques. &nbsp;
-                <span style={{ fontWeight: "bold" }}>QoS ON</span> → packets audio prioritaires. &nbsp;
-                <span style={{ fontWeight: "bold" }}>Jitter Buffer bas</span> → moins de latence (connexion stable). &nbsp;
-                Profil <span style={{ fontWeight: "bold" }}>"Casque (Qualité max)"</span> = configuration optimale pour casque.
+                <span style={{ fontWeight: "bold" }}>Output Volume</span> boosts your headset past 100%. &nbsp;
+                <span style={{ fontWeight: "bold" }}>Duck while speaking</span> lowers other users/apps while you talk. &nbsp;
+                <span style={{ fontWeight: "bold" }}>QoS ON</span> → audio packets prioritised. &nbsp;
+                <span style={{ fontWeight: "bold" }}>Jitter Buffer low</span> → less latency (stable connection).
             </Forms.FormText>
         </Card>;
 
@@ -325,6 +205,7 @@ export const HeadsetSettingsModal = (props: HeadsetSettingsModalProps) => {
         <SettingsModal
             size={ModalSize.DYNAMIC}
             title="Headset Settings"
+            subtitle="Output volume, ducking & audio reception"
             closeButtonName="Apply"
             footerContent={
                 <Flex style={{ justifyContent: "center", alignItems: "center", marginLeft: "auto" }}>
@@ -342,31 +223,19 @@ export const HeadsetSettingsModal = (props: HeadsetSettingsModalProps) => {
                     <SettingsModalCardRow>
                         {cardOutputVolumeSimple}
                         {cardAttenuationSimple}
-                        {cardEchoSimple}
-                        {cardNoiseSimple}
                     </SettingsModalCardRow>
                     {showInfo && <SettingsModalCardRow>{infoCard}</SettingsModalCardRow>}
                 </div>
-                : <div style={{ display: "flex", flexDirection: "column", width: "56em", gap: "1em" }}>
-                    {/* Row 1 – Volume + Duck */}
+                : <div style={{ display: "flex", flexDirection: "column", width: "52em", gap: "1em" }}>
                     <SettingsModalCardRow>
                         {cardOutputVolume}
                         {cardAttenuation}
                     </SettingsModalCardRow>
-                    {/* Row 2 – Echo + Noise Suppression */}
                     <SettingsModalCardRow>
-                        {cardEchoCancellation}
-                        {cardNoiseSuppression}
-                    </SettingsModalCardRow>
-                    {/* Row 3 – Krisp + QoS + Jitter */}
-                    <SettingsModalCardRow>
-                        {cardKrisp}
                         {cardQos}
                         {cardJitterBuffer}
                     </SettingsModalCardRow>
-                    {/* Row 4 – Normalize + Profiles */}
                     <SettingsModalCardRow>
-                        {cardNormalize}
                         {cardProfiles}
                     </SettingsModalCardRow>
                     {showInfo && <SettingsModalCardRow>{infoCard}</SettingsModalCardRow>}

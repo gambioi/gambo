@@ -49,6 +49,15 @@ export interface MicrophoneProfile {
     echoCancellationOff?: boolean;
     /** Use Opus "audio" mode instead of "voip" (full frequency range) */
     opusAudioMode?: boolean;
+    /** Opus in-band Forward Error Correction — recovers lost packets (less choppy voice) */
+    fec?: boolean;
+    fecEnabled?: boolean;
+    /** Packet loss % (0-100) the encoder plans for → adds FEC redundancy proactively */
+    expectedPacketLoss?: number;
+    expectedPacketLossEnabled?: boolean;
+    /** Opus encoding complexity 0-10 (10 = best quality, slightly more CPU) */
+    complexity?: number;
+    complexityEnabled?: boolean;
 }
 
 export interface MicrophoneStore {
@@ -75,6 +84,12 @@ export interface MicrophoneStore {
     setNoiseSuppressionOff: (off?: boolean) => void;
     setEchoCancellationOff: (off?: boolean) => void;
     setOpusAudioMode: (enabled?: boolean) => void;
+    setFec: (enabled?: boolean) => void;
+    setFecEnabled: (enabled?: boolean) => void;
+    setExpectedPacketLoss: (value?: number) => void;
+    setExpectedPacketLossEnabled: (enabled?: boolean) => void;
+    setComplexity: (value?: number) => void;
+    setComplexityEnabled: (enabled?: boolean) => void;
 }
 
 export const defaultMicrophoneProfiles = {
@@ -90,7 +105,14 @@ export const defaultMicrophoneProfiles = {
         channels: 2,
         channelsEnabled: true,
         voiceBitrate: 320,
-        voiceBitrateEnabled: true
+        voiceBitrateEnabled: true,
+        // best-quality Opus levers
+        fec: true,
+        fecEnabled: true,
+        expectedPacketLoss: 15,
+        expectedPacketLossEnabled: true,
+        complexity: 10,
+        complexityEnabled: true,
     },
 } as const satisfies Record<string, MicrophoneProfile & ProfileableProfile>;
 
@@ -118,6 +140,12 @@ export const microphoneStoreDefault: ProfilableInitializer<MicrophoneStore, Micr
     setNoiseSuppressionOff: off => get().currentProfile.noiseSuppressionOff = off,
     setEchoCancellationOff: off => get().currentProfile.echoCancellationOff = off,
     setOpusAudioMode: enabled => get().currentProfile.opusAudioMode = enabled,
+    setFec: val => get().currentProfile.fec = val,
+    setFecEnabled: enabled => get().currentProfile.fecEnabled = enabled,
+    setExpectedPacketLoss: val => get().currentProfile.expectedPacketLoss = val,
+    setExpectedPacketLossEnabled: enabled => get().currentProfile.expectedPacketLossEnabled = enabled,
+    setComplexity: val => get().currentProfile.complexity = val,
+    setComplexityEnabled: enabled => get().currentProfile.complexityEnabled = enabled,
 });
 
 export let microphoneStore: ProfilableStore<MicrophoneStore, MicrophoneProfile>;

@@ -25,31 +25,9 @@ import { Emitter, MediaEngineStore, Patcher, types } from "@plugins/philsPluginL
 
 export function getHeadsetTransportOptions(get: typeof headsetStore["get"]) {
     const { currentProfile } = get();
-    const {
-        attenuateWhileSpeaking, attenuateWhileSpeakingEnabled,
-        attenuationFactor, attenuationFactorEnabled,
-        normalizeAudio, normalizeAudioEnabled,
-        echoCancellation, echoCancellationEnabled,
-        noiseSuppression, noiseSuppressionEnabled,
-        qos, qosEnabled,
-    } = currentProfile;
+    const { qos, qosEnabled } = currentProfile;
 
     return {
-        ...(attenuateWhileSpeakingEnabled && attenuateWhileSpeaking != null
-            ? { attenuateWhileSpeakingOthers: attenuateWhileSpeaking, attenuateWhileSpeakingSelf: attenuateWhileSpeaking }
-            : {}),
-        ...(attenuationFactorEnabled && attenuationFactor != null
-            ? { attenuationFactor: attenuationFactor / 100 }
-            : {}),
-        ...(normalizeAudioEnabled && normalizeAudio != null
-            ? { automaticGainControl: normalizeAudio }
-            : {}),
-        ...(echoCancellationEnabled && echoCancellation != null
-            ? { echoCancellation }
-            : {}),
-        ...(noiseSuppressionEnabled && noiseSuppression != null
-            ? { noiseSuppression }
-            : {}),
         ...(qosEnabled && qos != null
             ? { qos }
             : {}),
@@ -105,26 +83,20 @@ export function applyAudioProcessing(
 ) {
     const { currentProfile } = get();
     const {
-        echoCancellation, echoCancellationEnabled,
-        noiseSuppression, noiseSuppressionEnabled,
-        noiseCancellation, noiseCancellationEnabled,
+        attenuateWhileSpeaking, attenuateWhileSpeakingEnabled,
+        attenuationFactor,
         qos, qosEnabled,
         jitterBuffer, jitterBufferEnabled,
     } = currentProfile;
 
+    // Duck while speaking — the REAL Discord API. setAttenuation(percent, others, self):
+    // lowers other apps/users by `percent` when someone speaks. This is what actually
+    // works (the old transport-option approach did nothing).
     try {
-        if (echoCancellationEnabled && echoCancellation != null)
-            connection.setEchoCancellation(echoCancellation);
-    } catch { }
-
-    try {
-        if (noiseSuppressionEnabled && noiseSuppression != null)
-            connection.setNoiseSuppression(noiseSuppression);
-    } catch { }
-
-    try {
-        if (noiseCancellationEnabled && noiseCancellation != null)
-            (connection as any).setNoiseCancellation(noiseCancellation);
+        if (attenuateWhileSpeakingEnabled) {
+            const on = attenuateWhileSpeaking ?? true;
+            connection.setAttenuation(on ? (attenuationFactor ?? 50) : 0, on, on);
+        }
     } catch { }
 
     try {

@@ -94,7 +94,13 @@ export const MicrophoneSettingsModal = (props: MicrophoneSettingsModalProps) => 
         setForceBitrate,
         setNoiseSuppressionOff,
         setEchoCancellationOff,
-        setOpusAudioMode
+        setOpusAudioMode,
+        setFec,
+        setFecEnabled,
+        setExpectedPacketLoss,
+        setExpectedPacketLossEnabled,
+        setComplexity,
+        setComplexityEnabled
     } = microphoneStore.use();
 
     const {
@@ -115,7 +121,13 @@ export const MicrophoneSettingsModal = (props: MicrophoneSettingsModalProps) => 
         boostLevelEnabled,
         noiseSuppressionOff,
         echoCancellationOff,
-        opusAudioMode
+        opusAudioMode,
+        fec,
+        fecEnabled,
+        expectedPacketLoss,
+        expectedPacketLossEnabled,
+        complexity,
+        complexityEnabled
     } = currentProfile;
 
     const [isSaving, setIsSaving] = useState(false);
@@ -400,6 +412,61 @@ export const MicrophoneSettingsModal = (props: MicrophoneSettingsModalProps) => 
             </SettingsModalCardItem>
         </SettingsModalCard>;
 
+    // ─── Voice quality (Opus) ─────────────────────────────────────────────────
+    const settingsCardFec =
+        <SettingsModalCard title="FEC" flex={0.25} switchEnabled
+            switchProps={{
+                checked: (fecEnabled && fec) ?? false,
+                disabled: isSaving,
+                onChange: status => { setFecEnabled(status); setFec(status); }
+            }}>
+            <SettingsModalCardItem>
+                <Forms.FormText style={{ opacity: 0.6, fontSize: "0.75em" }}>
+                    Recovers lost packets (less choppy voice)
+                </Forms.FormText>
+            </SettingsModalCardItem>
+        </SettingsModalCard>;
+
+    const settingsCardPacketLoss =
+        <SettingsModalCard title="Expected Packet Loss" flex={0.4} switchEnabled
+            switchProps={{
+                checked: expectedPacketLossEnabled ?? false,
+                disabled: isSaving,
+                onChange: status => setExpectedPacketLossEnabled(status)
+            }}>
+            <SettingsModalCardItem title="%">
+                <div style={{ paddingTop: "0.3em", paddingRight: "0.4em", paddingLeft: "0.4em", boxSizing: "border-box" }}>
+                    <Slider
+                        disabled={!expectedPacketLossEnabled || isSaving}
+                        onValueChange={value => setExpectedPacketLoss(Math.round(value))}
+                        initialValue={expectedPacketLoss ?? 15}
+                        minValue={0} maxValue={50}
+                        markers={[0, 10, 15, 25, 50]}
+                        onValueRender={value => `${value.toFixed(0)}%`} />
+                </div>
+            </SettingsModalCardItem>
+        </SettingsModalCard>;
+
+    const settingsCardComplexity =
+        <SettingsModalCard title="Opus Complexity" flex={0.35} switchEnabled
+            switchProps={{
+                checked: complexityEnabled ?? false,
+                disabled: isSaving,
+                onChange: status => setComplexityEnabled(status)
+            }}>
+            <SettingsModalCardItem title="0-10">
+                <div style={{ paddingTop: "0.3em", paddingRight: "0.4em", paddingLeft: "0.4em", boxSizing: "border-box" }}>
+                    <Slider
+                        disabled={!complexityEnabled || isSaving}
+                        onValueChange={value => setComplexity(Math.round(value))}
+                        initialValue={complexity ?? 10}
+                        minValue={0} maxValue={10}
+                        markers={[0, 5, 8, 10]}
+                        onValueRender={value => `${Math.round(value)}`} />
+                </div>
+            </SettingsModalCardItem>
+        </SettingsModalCard>;
+
     const settingsCardProfiles =
         <SettingsModalProfilesCard
             flex={0.6}
@@ -478,6 +545,12 @@ export const MicrophoneSettingsModal = (props: MicrophoneSettingsModalProps) => 
                     <SettingsModalCardRow>
                         {settingsCardAgcBoost}
                         {settingsCardBoostLevel}
+                    </SettingsModalCardRow>
+                    {sectionLabel("Voice Quality (Opus)")}
+                    <SettingsModalCardRow>
+                        {settingsCardFec}
+                        {settingsCardPacketLoss}
+                        {settingsCardComplexity}
                     </SettingsModalCardRow>
                     {sectionLabel("Codec avancé")}
                     <SettingsModalCardRow>
